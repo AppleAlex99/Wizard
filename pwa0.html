@@ -48,7 +48,7 @@
     </nav>
 
     <!-- Page Content  -->
-    <div id="content" class="text-left">
+    <div id="content" class="text-left border border-dark">
 
         <h1>Grundlegende Webanwendung</h1>
     Bevor eine eine PWA erstellt werden kann, muss als erstes eine grundlegende Webanwendungen entstehen, die den Inhalt enthält, der später den Besuchern/Nutzern der Webseite dargeboten werden soll.
@@ -71,33 +71,196 @@
     <br>
     Wird eine Person bearbeitet, so wird das Token des Nutzers, der die Person bearbeitet hat, automatisch in das Feld "Edited" eingesetzt.
     Die Masken von "Add Person" und "Edit Person" haben den gleichen Aufbau.
-
-
+    <br>
+    <br>
         <h2>Datenbank</h2>
     Die Datenbank des Beispiels besteht lediglich aus 2 Tabellen, den User (Nutzern) und den Persons (Personen).
     Die Nutzer sind dabei diejenigen, die sich auf der Webseite registriert haben.
     Die Personen werden durch die Nutzer zur Personentabelle hinzugefügt und besitzen, anders als die User, keinen Login.
 
-        <h5>Spalten der Personen</h5>
-        <ul>
-            <li><b>ID:</b> Jede Person hat eine einzigartige ID, die vom Datenbanksystem automatisch vergeben wird</li>
-            <li>Tea</li>
-            <li>Milk</li>
-        </ul>
+        <h5>Spalten der Personen:</h5>
+        <div class="border border-dark">
+            <ul>
+                <li><b>ID:</b> Jede Person hat eine einzigartige ID, die vom Datenbanksystem automatisch vergeben wird</li>
+                <li><b>Name:</b> Nachname der Person</li>
+                <li><b>Prename:</b> Vorname der Person</li>
+                <li><b>Street:</b> Straße und Hausnummer</li>
+                <li><b>Zip:</b> Postleitzahl</li>
+                <li><b>City:</b> Stadt</li>
+                <li><b>Created:</b> Nutzerkürzel (Token) vom Ersteller (Nutzer) der Person</li>
+                <li><b>Edited:</b> Token des Nutzers, die diese Person als letztes bearbeitet hat</li>
+            </ul>
+        </div>
+    <br>
+        <h5>Spalten der Nutzer:</h5>
+        <div class="border border-dark">
+            <ul>
+                <li><b>ID:</b> Jeder Nutzer hat eine einzigartige ID, die vom Datenbanksystem automatisch vergeben wird</li>
+                <li><b>Email:</b> E-Mail-Adresse für den Login</li>
+                <li><b>Password:</b> Passwort für den Login</li>
+                <li><b>Token:</b> Das persönliche Token des Nutzers</li>
+            </ul>
+        </div>
+
+        <h2>Funktionsweise</h2>
+        Die grundlegenden Webanwendung funktioniert strikt nach dem MVC-Konzept von CodeIgniter.
+        Um zu visualisieren, wie das MVC-Pattern funktioniert, folgen 2 Ausschnitte aus dem Beispielcode,
+        wie Daten in die Datenbank eingefügt werden und wie diese wieder auf der Webseite ausgegeben werden.
+
+        <h5>Daten Eingabe:</h5>
+        Für das Hinzufügen einer neuen Person in die Personentabelle,
+        werden in der View alle Daten über ein Formular eingelesen und mit der
+        <i><b>Post</b></i>-Methode an die entsprechende Funktion des Controllers übergeben.
+        <br>
+
+
+        <div class="border border-dark">
+        <pre><code>
+        <form action="<?php echo base_url("people/addPerson_Validation")?>" method="post" id="new-person-form">
+            <label for="new-prename">Prename:</label>
+            <input type="text" class="form-control" name="new-prename" id="new-prename" placeholder="Peter">
+        </form>
+        </code></pre>
+        </div>
+
+        <br>
+        Die <i><b>addPerson_Validation</b></i>-Funktion führt die Validierung der
+        Eingaben durch und ruft bei korrekten Eingaben die Funktion <i><b>addPerson</b></i> im Model auf.
+        <br>
+
+        <div class="border border-dark">
+        <pre><code>
+{
+    echo view('header');
+    echo view('addPerson', ['error' => $this->validator]);
+
+    $this->_peopleModel->addPerson(
+        $this->request->getVar('new-prename'),
+        $this->request->getVar('new-surname'),
+        $this->request->getVar('new-street'),
+        $this->request->getVar('new-plz'),
+        $this->request->getVar('new-city'),
+        $this->_session->get('token')
+    );
+    $this->_session->setFlashdata('success', 'Person added');
+    return $this->response->redirect(site_url("people"));
+
+echo view('footer');
+}
+        </code></pre>
+        </div>
+
+        <br>
+        Die <i><b>addPerson</b></i>-Funktion des Models schreibt letztlich die Informationen
+        in ein <i><b>$data</b></i>-Array und schreibt dieses Array, mit Hilfe des <i><b>insert</b></i>-Befehls, in die Datenbank.
+        <br>
+
+        <div class="border border-dark">
+        <pre><code>
+public function addPerson($prename, $name, $street, $zip, $city, $created_by) {
+    $data = [
+        'prename' => $prename,
+        'name' => $name,
+        'street' => $street,
+        'zip' => $zip,
+        'city' => $city,
+        'created_by' => $created_by
+    ];
+    $this->_people->insert($data);
+}
+        </code></pre>
+        </div>
+
+      <br>
+        <h5>Daten Ausgabe:</h5>
+        Die Ausgabe aller Personen aus der Datenbank funktioniert in umgekehrter Reihenfolge.
+        Die <i><b>getPeople</b></i>-Funktion des Models greift auf die Tabelle der Personen,
+        die in der Datenbank gespeichert sind, zu und liefert diese als Array zurück.
+        <br>
+        <div class="border border-dark">
+        <pre><code>
+public function getPeople(): array
+{
+    return $this->_people->get()->getResult();
+}
+        </code></pre>
+        </div>
+        <br>
+        Die <i><b>getPeople</b></i>-Funktion des Models wird daraufhin von der <i><b>index</b></i>-Funktion im Controller aufgerufen.
+        Diese speichert die erhaltenen Daten in das <i><b>$data['people']</b></i>-Array.
+        Daraufhin werden die Bestandteile, die auf alle Unterseiten gleich sind, also der Header und der Footer,
+        gemeinsam mit der View der Personentabelle und den im <i><b>$data['people']</b></i>-Array gespeicherten Daten aufgerufen.
+        <br>
+        <div class="border border-dark">
+        <pre><code>
+public function index()
+{
+    $data['people'] = $this->_peopleModel->getPeople();
+    echo view('header');
+    echo view('people', $data);
+    echo view('footer');
+}
+        </code></pre>
+        </div>
+
+        <br>
+        Die View gibt die erhaltenen Informationen aller Personen schließlich mit Hilfe einer Schleife aus.
+        <br>
+        <div class="border border-dark">
+        <pre><code>
+<tbody>
+<?php
+if ($people):
+    foreach ($people as $person) :
+        ?>
+<tr>
+            <td><?= $person->id ?></td>
+            <td><?= $person->prename . " " . $person->name ?></td>
+            <td><?= $person->street ?></td>
+            ...
+        </tr>
+<?php endforeach;
+endif;
+?>
+</tbody>
+        </code></pre>
+        </div>
+
+        <br>
+        <h5>Sessions:</h5>
+        Da HTTP ein zustandsloses Protokoll ist, werden Informationen zwischen Aufrufen verschiedener Unterseiten
+        nicht gespeichert. Um dieses Problem zu lösen, werden in der grundlegenden Webanwendung Sessions verwendet.
+        Nach erfolgreicher Eingabe der Login-Informationen des Nutzers werden diese wie folgt in einer Session gespeichert.
+
+        <div class="border border-dark">
+        <pre><code>
+$this->_session->set([
+    'id' => $user->id,
+    'email' => $user->email,
+    'isLoggedIn' => true,
+    'token' => $user->token
+        </code></pre>
+        </div>
+
+        Solange die Session nicht abgelaufen ist oder durch einen Logout beendet wurde,
+        wird beim Aufrufen anderer Unterseiten die Session-ID <i>'id'</i> mit dem Webserver abgeglichen.
+        Aber auch alle anderen Daten können bei Bedarf aus der Session ausgelesen werden.
+        Die Session kann über das Betätigen des Logout-Knopfes und mit der dahinter liegenden <i><b>logout</b></i>-Funktion beendet werden.
+
+        <div class="border border-dark">
+        <pre><code>
+public function logout()
+{
+    $this->_session->destroy();
+    return redirect()->to('/');
+}
+        </code></pre>
+        </div>
 
 
 
 
 
-
-
-
-
-
-
-    <code>
-
-    </code>
     </div>
 </div>
 </body>
