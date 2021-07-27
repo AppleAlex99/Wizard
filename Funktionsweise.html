@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="script" href="script.js">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <title>Grundlegende Webanwendung</title>
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>PWA Wizard</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            <p>Kapitel</p>
+
+            <li class="active">
+                <a href="start.html"  aria-expanded="false" class="dropdown-toggle">Startseite</a>
+            </li>
+
+            <li class="active">
+                <a href="pwa0.html"  aria-expanded="false" class="dropdown-toggle">Beispiel</a>
+            </li>
+
+            <li class="active">
+                <a style="font-size: small; text-indent:20px" href="Datenbank.html"
+                   aria-expanded="false" class="dropdown-toggle">- Datenbank</a>
+            </li>
+
+            <li class="active">
+                <a style="font-size: small; text-indent:20px" href="Funktionsweise.html"
+                   aria-expanded="false" class="dropdown-toggle">- Funktionsweise</a>
+            </li>
+
+            <li style="background-color: lightgrey">
+                <a href="pwa1.html"  aria-expanded="false" class="dropdown-toggle">Ausführung 1</a>
+            </li>
+
+            <li class="active">
+                <a style="font-size: small; text-indent:20px" href="Manifest.html"
+                   aria-expanded="false" class="dropdown-toggle">- Web-App-Manifest</a>
+            </li>
+
+            <li class="active">
+                <a style="font-size: small; text-indent:20px" href="ServiceWorker.html"
+                   aria-expanded="false" class="dropdown-toggle">- ServiceWorker</a>
+            </li>
+
+            <li class="active">
+                <a style="font-size: small; text-indent:20px" href="Fallbackpage.html"
+                   aria-expanded="false" class="dropdown-toggle">- Fallbackpage</a>
+            </li>
+
+            <li class="active">
+                <a style="font-size: small; text-indent:20px" href="WebAPI.html"
+                   aria-expanded="false" class="dropdown-toggle">- Web-API</a>
+            </li>
+
+            <li class="active">
+                <a href="pwa2.html"  aria-expanded="false" class="dropdown-toggle">Ausführung 2</a>
+            </li>
+
+            <li class="active">
+                <a href="pwa3.html"  aria-expanded="false" class="dropdown-toggle">Ausführung 3</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content" class="text-left border border-dark">
+
+        <h2>Funktionsweise</h2>
+        Die grundlegenden Webanwendung funktioniert strikt nach dem MVC-Konzept von CodeIgniter.
+        Um zu visualisieren, wie das MVC-Pattern funktioniert, folgen 2 Ausschnitte aus dem Beispielcode,
+        wie Daten in die Datenbank eingefügt werden und wie diese wieder auf der Webseite ausgegeben werden.
+
+        <h5>Daten Eingabe:</h5>
+        Für das Hinzufügen einer neuen Person in die Personentabelle,
+        werden in der View alle Daten über ein Formular eingelesen und mit der
+        <i><b>Post</b></i>-Methode an die entsprechende Funktion des Controllers übergeben.
+        <br>
+
+
+        <div class="border border-dark">
+        <pre><code>
+        <form action="<?php echo base_url("people/addPerson_Validation")?>" method="post" id="new-person-form">
+            <label for="new-prename">Prename:</label>
+            <input type="text" class="form-control" name="new-prename" id="new-prename" placeholder="Peter">
+            </form>
+        </code></pre>
+        </div>
+
+        <br>
+        Die <i><b>addPerson_Validation</b></i>-Funktion führt die Validierung der
+        Eingaben durch und ruft bei korrekten Eingaben die Funktion <i><b>addPerson</b></i> im Model auf.
+        <br>
+
+        <div class="border border-dark">
+        <pre><code>
+{
+    echo view('header');
+    echo view('addPerson', ['error' => $this->validator]);
+
+    $this->_peopleModel->addPerson(
+        $this->request->getVar('new-prename'),
+        $this->request->getVar('new-surname'),
+        $this->request->getVar('new-street'),
+        $this->request->getVar('new-plz'),
+        $this->request->getVar('new-city'),
+        $this->_session->get('token')
+    );
+    $this->_session->setFlashdata('success', 'Person added');
+    return $this->response->redirect(site_url("people"));
+
+echo view('footer');
+}
+        </code></pre>
+        </div>
+
+        <br>
+        Die <i><b>addPerson</b></i>-Funktion des Models schreibt letztlich die Informationen
+        in ein <i><b>$data</b></i>-Array und schreibt dieses Array, mit Hilfe des <i><b>insert</b></i>-Befehls, in die Datenbank.
+        <br>
+
+        <div class="border border-dark">
+        <pre><code>
+public function addPerson($prename, $name, $street, $zip, $city, $created_by) {
+    $data = [
+        'prename' => $prename,
+        'name' => $name,
+        'street' => $street,
+        'zip' => $zip,
+        'city' => $city,
+        'created_by' => $created_by
+    ];
+    $this->_people->insert($data);
+}
+        </code></pre>
+        </div>
+
+        <br>
+        <h5>Daten Ausgabe:</h5>
+        Die Ausgabe aller Personen aus der Datenbank funktioniert in umgekehrter Reihenfolge.
+        Die <i><b>getPeople</b></i>-Funktion des Models greift auf die Tabelle der Personen,
+        die in der Datenbank gespeichert sind, zu und liefert diese als Array zurück.
+        <br>
+        <div class="border border-dark">
+        <pre><code>
+public function getPeople(): array
+{
+    return $this->_people->get()->getResult();
+}
+        </code></pre>
+        </div>
+        <br>
+        Die <i><b>getPeople</b></i>-Funktion des Models wird daraufhin von der <i><b>index</b></i>-Funktion im Controller aufgerufen.
+        Diese speichert die erhaltenen Daten in das <i><b>$data['people']</b></i>-Array.
+        Daraufhin werden die Bestandteile, die auf alle Unterseiten gleich sind, also der Header und der Footer,
+        gemeinsam mit der View der Personentabelle und den im <i><b>$data['people']</b></i>-Array gespeicherten Daten aufgerufen.
+        <br>
+        <div class="border border-dark">
+        <pre><code>
+public function index()
+{
+    $data['people'] = $this->_peopleModel->getPeople();
+    echo view('header');
+    echo view('people', $data);
+    echo view('footer');
+}
+        </code></pre>
+        </div>
+
+        <br>
+        Die View gibt die erhaltenen Informationen aller Personen schließlich mit Hilfe einer Schleife aus.
+        <br>
+        <div class="border border-dark">
+        <pre><code>
+<tbody>
+<?php
+if ($people):
+    foreach ($people as $person) :
+        ?>
+<tr>
+            <td><?= $person->id ?></td>
+            <td><?= $person->prename . " " . $person->name ?></td>
+            <td><?= $person->street ?></td>
+            ...
+        </tr>
+<?php endforeach;
+endif;
+?>
+</tbody>
+        </code></pre>
+        </div>
+
+        <br>
+        <h5>Sessions:</h5>
+        Da HTTP ein zustandsloses Protokoll ist, werden Informationen zwischen Aufrufen verschiedener Unterseiten
+        nicht gespeichert. Um dieses Problem zu lösen, werden in der grundlegenden Webanwendung Sessions verwendet.
+        Nach erfolgreicher Eingabe der Login-Informationen des Nutzers werden diese wie folgt in einer Session gespeichert.
+
+        <div class="border border-dark">
+        <pre><code>
+$this->_session->set([
+    'id' => $user->id,
+    'email' => $user->email,
+    'isLoggedIn' => true,
+    'token' => $user->token
+        </code></pre>
+        </div>
+
+        Solange die Session nicht abgelaufen ist oder durch einen Logout beendet wurde,
+        wird beim Aufrufen anderer Unterseiten die Session-ID <i>'id'</i> mit dem Webserver abgeglichen.
+        Aber auch alle anderen Daten können bei Bedarf aus der Session ausgelesen werden.
+        Die Session kann über das Betätigen des Logout-Knopfes und mit der dahinter liegenden <i><b>logout</b></i>-Funktion beendet werden.
+
+        <div class="border border-dark">
+        <pre><code>
+public function logout()
+{
+    $this->_session->destroy();
+    return redirect()->to('/');
+}
+        </code></pre>
+        </div>
+
+
+
+
+
+    </div>
+</div>
+</body>
+</html>

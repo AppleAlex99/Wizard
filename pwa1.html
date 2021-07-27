@@ -29,12 +29,42 @@
                 <a href="start.html"  aria-expanded="false" class="dropdown-toggle">Startseite</a>
             </li>
 
-            <li style="background-color: lightgrey">
+            <li class="active">
                 <a href="pwa0.html"  aria-expanded="false" class="dropdown-toggle">Beispiel</a>
             </li>
 
             <li class="active">
+                <a style="font-size: small; text-indent:20px" href="Datenbank.html"
+                   aria-expanded="false" class="dropdown-toggle">- Datenbank</a>
+            </li>
+
+            <li class="active">
+                <a style="font-size: small; text-indent:20px" href="Funktionsweise.html"
+                   aria-expanded="false" class="dropdown-toggle">- Funktionsweise</a>
+            </li>
+
+            <li style="background-color: lightgrey">
                 <a href="pwa1.html"  aria-expanded="false" class="dropdown-toggle">Ausführung 1</a>
+            </li>
+
+            <li class="active">
+                <a style="font-size: small; text-indent:20px" href="Manifest.html"
+                   aria-expanded="false" class="dropdown-toggle">- Web-App-Manifest</a>
+            </li>
+
+            <li class="active">
+                <a style="font-size: small; text-indent:20px" href="ServiceWorker.html"
+                   aria-expanded="false" class="dropdown-toggle">- ServiceWorker</a>
+            </li>
+
+            <li class="active">
+                <a style="font-size: small; text-indent:20px" href="Fallbackpage.html"
+                   aria-expanded="false" class="dropdown-toggle">- Fallbackpage</a>
+            </li>
+
+            <li class="active">
+                <a style="font-size: small; text-indent:20px" href="WebAPI.html"
+                   aria-expanded="false" class="dropdown-toggle">- Web-API</a>
             </li>
 
             <li class="active">
@@ -53,7 +83,8 @@
         Die erste Ausführung von Progressive Web Apps soll installierbar sein, eine offline- Fallbackpage
         beinhalten und die Push-Benachrichtigungs-API verwenden können.
         Damit eine PWA installierbar ist, sind mehrere Kriterien zu erfüllen
-
+        <br>
+        <br>
         <div class="border border-dark">
             <ul>
                 <li> Die PWA darf noch nicht installiert sein</li>
@@ -63,99 +94,12 @@
                 <li> Die PWA erfüllt eine User-Engagement-Heuristik</li>
             </ul>
         </div>
-
+        <br>
         Die Sicherung über HTTPS und der Fakt, dass die PWA noch nicht installiert sein darf sind bereits gegeben.
         Nun fehlt als Mindestanforderung nur noch das Web-App-Manifest und der ServiceWorker.
         Die User-Engagement-Heuristic beschreibt, dass die Webseite erst für eine bestimmte Zeit
         vom Nutzer besucht sein muss, bis die Aufforderung zum Installieren auftaucht.
         Das geschieht meist nach wenigen Sekunden.
-
-            <h2>Web-App-Manifest</h2>
-
-        Der erste Schritt für die Erstellung der ersten Ausführung von PWAs ist das Web-App-Manifest.
-        Dieses befindet sich im root-Verzeichnis des Projektes und beschreibt die Eigenschaften einer PWA.
-        Das macht die PWA über den Browser für alle Endgeräte installierbar.
-        Die Datei liegt im JSON Format vor (.JSON oder .webmanifest) und wird im Head aller
-        HTML-Seiten verlinkt.
-
-        <div class="border border-dark">
-        <pre><code>
-<link rel="manifest" href="manifest.webmanifest">
-        </code></pre>
-        </div>
-
-        Das Manifest wird von Chrome, Edge, Opera, Firefox, UC Browser
-        und dem Browser von Samsung vollständig unterstützt.
-        Da die Anforderungen der verschiedenen Browser an ein Web-App-Manifest
-        teilweise etwas voneinander abweichen, wird der Wizard sich auf die
-        Anforderungen von Google Chrome stützen.
-        Lediglich Safari unterstützt das Web-App-Manifest nur teilweise.
-        Welche Anforderungen sich konkret voneinander unterscheiden,
-        ist hier zu finden: <a href="https://web.dev/install-criteria/">Web-App-Manifest</a>.
-
-        Die Mindestanforderungen für ein Web-App-Manifest in Chrome sind die folgenden:
-
-        <div class="border border-dark">
-            <ul>
-                <li> short\_name oder name</li>
-                <li> 192x192 Icon</li>
-                <li> 512x512 Icon</li>
-                <li> start_url</li>
-                <li> display - muss auf fullscreen, standalone oder minimal-ui gesetzt sein</li>
-                <li> prefer_related_applications darf nicht vorhanden sein oder muss auf false gesetzt werden</li>
-            </ul>
-        </div>
-
-        Weitere Elemente, die im Web-App-Manifest gesetzt werden können, sind hier zu finden: <a href=" https://web.dev/add-manifest/">Elemente</a>.
-
-        Eine der Eigenschaften von "name" oder "short_name" muss enthalten sein.
-        Bei einem längeren Namen der PWA kann es jedoch auch durchaus sinnvoll sein, beide Eigenschaften anzugeben.
-        Wenn beide angegeben werden, wird die Eigenschaft "short_name" an Stellen verwendet, an denen der
-        Platz begrenzt ist. Die Eigenschaft "name" wird hingegen angezeigt, wenn die App installiert wurde.
-
-        Das Web-App-Manifest muss mindestens ein Icon der Größe 192x192 und eins der Größe 512x512 im enthalten.
-        Die Eigenschaft Icon ist ein Array und kann beliebig viele Icons enthalten.
-        Jedes Icon muss dabei eine Quelle ("src"), einen Typ ("type") und eine Größe ("size") als Attribut haben.
-        Des Weiteren sollte es mindestens ein Icon mit "purpuse": "maskable any"
-        für die Unterstüzung des Betriebssystems Android geben.
-
-        Die Eigenschaft "start_url" im Manifest gibt an, wo die Anwendung gestartet werden soll.
-
-        Mit Hilfe der Eigenschaft "display" kann eingestellt werden, wie die PWA dargestellt werden soll.
-        Standalone ist dabei die Eigenschaft, mit der die PWA noch mehr wie eine native App aussieht,
-        da keine URL oder andere für Browser typischen Dinge angezeigt werden.
-
-        <div class="border border-dark">
-        <pre><code>
-{
-  "name": "PWA 1",
-  "short_name": "PWA 1",
-  "start_url": "http://localhost/",
-  "description": "Fallbackpage, no offline usage",
-  "display": "standalone",
-  "background_color": "#8BEF9B",
-  "theme_color": "#0032FF",
-  "orientation": "portrait-primary",
-  "icons": [
-    {
-      "src": "icon/icon192.png",
-      "type": "image/png",
-      "sizes": "192x192",
-      "purpose": "maskable any"
-    },
-    {
-      "src": "icon/icon512.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "maskable any"
-    }
-  ]
-}
-        </code></pre>
-        </div>
-
-
-
 
     </div>
 </div>
