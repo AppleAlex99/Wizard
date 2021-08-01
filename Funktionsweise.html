@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <title>Grundlegende Webanwendung</title>
+    <title>PWA0 - Funktionsweise</title>
 </head>
 <body>
 
@@ -26,7 +26,7 @@
             <p>Kapitel</p>
 
             <li class="active">
-                <a href="start.html"  aria-expanded="false" class="dropdown-toggle">Startseite</a>
+                <a href="index.html" aria-expanded="false" class="dropdown-toggle">Startseite</a>
             </li>
 
             <li class="active">
@@ -78,36 +78,33 @@
     </nav>
 
     <!-- Page Content  -->
-    <div id="content" class="text-left border border-dark">
+    <div id="content" class="text-left border border-primary mt-3 mb-3">
 
         <h2>Funktionsweise</h2>
         Die grundlegenden Webanwendung funktioniert strikt nach dem MVC-Konzept von CodeIgniter.
         Um zu visualisieren, wie das MVC-Pattern funktioniert, folgen 2 Ausschnitte aus dem Beispielcode,
         wie Daten in die Datenbank eingefügt werden und wie diese wieder auf der Webseite ausgegeben werden.
-
+        <br>
+        <br>
         <h5>Daten Eingabe:</h5>
         Für das Hinzufügen einer neuen Person in die Personentabelle,
         werden in der View alle Daten über ein Formular eingelesen und mit der
         <i><b>Post</b></i>-Methode an die entsprechende Funktion des Controllers übergeben.
         <br>
 
-
-        <div class="border border-dark">
-        <pre><code>
-        <form action="<?php echo base_url("people/addPerson_Validation")?>" method="post" id="new-person-form">
-            <label for="new-prename">Prename:</label>
-            <input type="text" class="form-control" name="new-prename" id="new-prename" placeholder="Peter">
-            </form>
-        </code></pre>
-        </div>
+        <div class="border border-primary mb-2 mt-2"><pre><code>
+&ltform action="&lt?php echo base_url("people/addPerson_Validation")?&gt" method="post" id="new-person-form"&gt
+    &ltlabel for="new-prename"&gtPrename:&lt/label&gt
+    &ltinput type="text" class="form-control" name="new-prename" id="new-prename" placeholder="Peter"&gt
+&lt/form&gt
+        </code></pre></div>
 
         <br>
         Die <i><b>addPerson_Validation</b></i>-Funktion führt die Validierung der
         Eingaben durch und ruft bei korrekten Eingaben die Funktion <i><b>addPerson</b></i> im Model auf.
         <br>
 
-        <div class="border border-dark">
-        <pre><code>
+        <div class="border border-primary mb-2 mt-2"><pre><code>
 {
     echo view('header');
     echo view('addPerson', ['error' => $this->validator]);
@@ -125,16 +122,14 @@
 
 echo view('footer');
 }
-        </code></pre>
-        </div>
+        </code></pre></div>
 
         <br>
         Die <i><b>addPerson</b></i>-Funktion des Models schreibt letztlich die Informationen
         in ein <i><b>$data</b></i>-Array und schreibt dieses Array, mit Hilfe des <i><b>insert</b></i>-Befehls, in die Datenbank.
         <br>
 
-        <div class="border border-dark">
-        <pre><code>
+        <div class="border border-primary mb-2 mt-2"><pre><code>
 public function addPerson($prename, $name, $street, $zip, $city, $created_by) {
     $data = [
         'prename' => $prename,
@@ -146,31 +141,29 @@ public function addPerson($prename, $name, $street, $zip, $city, $created_by) {
     ];
     $this->_people->insert($data);
 }
-        </code></pre>
-        </div>
+        </code></pre></div>
 
+        <br>
         <br>
         <h5>Daten Ausgabe:</h5>
         Die Ausgabe aller Personen aus der Datenbank funktioniert in umgekehrter Reihenfolge.
         Die <i><b>getPeople</b></i>-Funktion des Models greift auf die Tabelle der Personen,
         die in der Datenbank gespeichert sind, zu und liefert diese als Array zurück.
         <br>
-        <div class="border border-dark">
-        <pre><code>
+        <div class="border border-primary mb-2 mt-2"><pre><code>
 public function getPeople(): array
 {
     return $this->_people->get()->getResult();
 }
-        </code></pre>
-        </div>
+        </code></pre></div>
         <br>
         Die <i><b>getPeople</b></i>-Funktion des Models wird daraufhin von der <i><b>index</b></i>-Funktion im Controller aufgerufen.
         Diese speichert die erhaltenen Daten in das <i><b>$data['people']</b></i>-Array.
         Daraufhin werden die Bestandteile, die auf alle Unterseiten gleich sind, also der Header und der Footer,
         gemeinsam mit der View der Personentabelle und den im <i><b>$data['people']</b></i>-Array gespeicherten Daten aufgerufen.
         <br>
-        <div class="border border-dark">
-        <pre><code>
+
+        <div class="border border-primary mb-2 mt-2"><pre><code>
 public function index()
 {
     $data['people'] = $this->_peopleModel->getPeople();
@@ -178,31 +171,28 @@ public function index()
     echo view('people', $data);
     echo view('footer');
 }
-        </code></pre>
-        </div>
+        </code></pre></div>
 
         <br>
         Die View gibt die erhaltenen Informationen aller Personen schließlich mit Hilfe einer Schleife aus.
         <br>
-        <div class="border border-dark">
-        <pre><code>
-<tbody>
-<?php
+        <div class="border border-primary mb-2 mt-2"><pre><code>
+&lttbody&gt
+&lt?php
 if ($people):
     foreach ($people as $person) :
-        ?>
-<tr>
-            <td><?= $person->id ?></td>
-            <td><?= $person->prename . " " . $person->name ?></td>
-            <td><?= $person->street ?></td>
+        ?&gt
+&lttr&gt
+            &lttd&gt&lt?= $person->id ?&gt&lt/td&gt
+            &lttd&gt&lt?= $person->prename . " " . $person->name ?&gt&lt/td&gt
+            &lttd&gt&lt?= $person->street ?&gt&lt/td&gt
             ...
-        </tr>
-<?php endforeach;
+        &lt/tr&gt
+&lt?php endforeach;
 endif;
-?>
-</tbody>
-        </code></pre>
-        </div>
+?&gt
+&lt/tbody&gt
+        </code></pre></div>
 
         <br>
         <h5>Sessions:</h5>
@@ -210,34 +200,26 @@ endif;
         nicht gespeichert. Um dieses Problem zu lösen, werden in der grundlegenden Webanwendung Sessions verwendet.
         Nach erfolgreicher Eingabe der Login-Informationen des Nutzers werden diese wie folgt in einer Session gespeichert.
 
-        <div class="border border-dark">
-        <pre><code>
+        <div class="border border-primary mb-2 mt-2"><pre><code>
 $this->_session->set([
     'id' => $user->id,
     'email' => $user->email,
     'isLoggedIn' => true,
     'token' => $user->token
-        </code></pre>
-        </div>
+        </code></pre></div>
 
         Solange die Session nicht abgelaufen ist oder durch einen Logout beendet wurde,
         wird beim Aufrufen anderer Unterseiten die Session-ID <i>'id'</i> mit dem Webserver abgeglichen.
         Aber auch alle anderen Daten können bei Bedarf aus der Session ausgelesen werden.
         Die Session kann über das Betätigen des Logout-Knopfes und mit der dahinter liegenden <i><b>logout</b></i>-Funktion beendet werden.
 
-        <div class="border border-dark">
-        <pre><code>
+        <div class="border border-primary mb-2 mt-2"><pre><code>
 public function logout()
 {
     $this->_session->destroy();
     return redirect()->to('/');
 }
-        </code></pre>
-        </div>
-
-
-
-
+        </code></pre></div>
 
     </div>
 </div>

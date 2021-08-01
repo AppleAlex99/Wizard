@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <title>Grundlegende Webanwendung</title>
+    <title>PWA0 - Grundlegende Webanwendung</title>
 </head>
 <body>
 
@@ -26,7 +26,7 @@
             <p>Kapitel</p>
 
             <li class="active">
-                <a href="start.html"  aria-expanded="false" class="dropdown-toggle">Startseite</a>
+                <a href="index.html" aria-expanded="false" class="dropdown-toggle">Startseite</a>
             </li>
 
             <li style="background-color: lightgrey">
@@ -78,7 +78,7 @@
     </nav>
 
     <!-- Page Content  -->
-    <div id="content" class="text-left border border-dark">
+    <div id="content" class="text-left border border-primary mt-3 mb-3">
 
         <h1>Grundlegende Webanwendung</h1>
     Bevor eine eine PWA erstellt werden kann, muss als erstes eine grundlegende Webanwendungen entstehen, die den Inhalt enthält, der später den Besuchern/Nutzern der Webseite dargeboten werden soll.
@@ -88,14 +88,20 @@
     Nach erfolgreichem Login mit E-Mail-Adresse und Passwort findet eine Weiterleitung auf die Seite der Personentabelle statt.
     Diese enthält die von allen Benutzern hinzugefügten Personen.
 
+        <br>
+        <br>
         <img src="img/Personentabelle.png" class="img-thumbnail" alt="Personentabelle" >
+        <br>
+        <br>
+        Über den blauen Button "Add Person", der sich links oberhalb der Tabele befindet, kann eine neue Person mit den erforderlichen Attributen zu der Tabelle hinzugefügt werden.
+        Dabei wird das Attribut "Created" automatisch mit dem Token des eingeloggten Nutzers besetzt, der die Person erstellt.
+        Des Weiteren ist es möglich, eine Person aus der Tabelle über den Stift auf gelbem Hintergund zu bearbeiten oder über den Eimer auf rotem Hintergrund zu löschen.
+        <br>
+        <br>
         <img src="img/AddPerson.png" class="img-thumbnail" alt="Person hinzufügen" >
 
-    Über den blauen Button "Add Person", der sich links oberhalb der Tabele befindet, kann eine neue Person mit den erforderlichen Attributen zu der Tabelle hinzugefügt werden.
-    Dabei wird das Attribut "Created" automatisch mit dem Token des eingeloggten Nutzers besetzt, der die Person erstellt.
-    Des Weiteren ist es möglich, eine Person aus der Tabelle über den Stift auf gelbem Hintergund zu bearbeiten oder über den Eimer auf rotem Hintergrund zu löschen.
-    <br>
-    <br>
+        <br>
+        <br>
     Oberhalb der Tabelle befindet sich eine Anzeige, ob der Nutzer aktuell offline oder online ist sowie die Möglichkeit für einen Logout.
     Die online/offline-Anzeige ist jedoch noch ohne Funktion, da die grundlegende Anwendung keinerlei offline-Funktionalität bereit stellt.
     <br>

@@ -62,6 +62,7 @@ a:focus {
     background: #7386D5;
     color: #fff;
     transition: all 0.3s;
+    font-family: Georgia;
 }
 
 #sidebar.active {
@@ -150,8 +151,9 @@ a.article:hover {
     padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-left: 20%;
+    margin-right: 20%;
+    font-family: Georgia;
 }
 
 /* ---------------------------------------------------

@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <title>Grundlegende Webanwendung</title>
+    <title>PWA0 - Datenbank</title>
 </head>
 <body>
 
@@ -26,7 +26,7 @@
             <p>Kapitel</p>
 
             <li class="active">
-                <a href="start.html"  aria-expanded="false" class="dropdown-toggle">Startseite</a>
+                <a href="index.html" aria-expanded="false" class="dropdown-toggle">Startseite</a>
             </li>
 
             <li class="active">
@@ -78,7 +78,7 @@
     </nav>
 
     <!-- Page Content  -->
-    <div id="content" class="text-left border border-dark">
+    <div id="content" class="text-left border border-primary mt-3 mb-3">
         <h2>Datenbank</h2>
         Die Datenbank des Beispiels besteht lediglich aus 2 Tabellen, den User (Nutzern) und den Persons (Personen).
         Die Nutzer sind dabei diejenigen, die sich auf der Webseite registriert haben.
@@ -86,7 +86,6 @@
         <br>
         <br>
         <h5>Spalten der Personen:</h5>
-        <div class="border border-dark">
             <ul>
                 <li><b>ID:</b> Jede Person hat eine einzigartige ID, die vom Datenbanksystem automatisch vergeben wird</li>
                 <li><b>Name:</b> Nachname der Person</li>
@@ -97,23 +96,14 @@
                 <li><b>Created:</b> Nutzerkürzel (Token) vom Ersteller (Nutzer) der Person</li>
                 <li><b>Edited:</b> Token des Nutzers, die diese Person als letztes bearbeitet hat</li>
             </ul>
-        </div>
         <br>
         <h5>Spalten der Nutzer:</h5>
-        <div class="border border-dark">
             <ul>
                 <li><b>ID:</b> Jeder Nutzer hat eine einzigartige ID, die vom Datenbanksystem automatisch vergeben wird</li>
                 <li><b>Email:</b> E-Mail-Adresse für den Login</li>
                 <li><b>Password:</b> Passwort für den Login</li>
                 <li><b>Token:</b> Das persönliche Token des Nutzers</li>
             </ul>
-        </div>
-
-
-
-
-
-
     </div>
 </div>
 </body>
