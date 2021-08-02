@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="styles.css">
-    <link rel="script" href="script.js">
     <link rel="manifest" href="manifest.webmanifest">
 
     <link rel="apple-touch-icon" href="img/icon192.png">
@@ -21,75 +20,71 @@
 </head>
 <body>
 
-<div class="wrapper">
-    <!-- Sidebar  -->
-    <nav id="sidebar">
-        <div class="sidebar-header">
-            <h3>PWA Wizard</h3>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col col-2">
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>PWA Wizard</h3>
+                </div>
+
+                <ul class="list-unstyled components">
+                    <p>Kapitel</p>
+
+                    <li class="active">
+                        <a href="index.html">Startseite</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="pwa0.html">Beispiel</a>
+                    </li>
+
+                    <li class="active">
+                        <a style="font-size: small; text-indent:20px" href="Datenbank.html">- Datenbank</a>
+                    </li>
+
+                    <li style="background-color: lightgrey">
+                        <a style="font-size: small; text-indent:20px" href="Funktionsweise.html">- Funktionsweise</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="pwa1.html">Ausführung 1</a>
+                    </li>
+
+                    <li class="active">
+                        <a style="font-size: small; text-indent:20px" href="Manifest.html">- Web-App-Manifest</a>
+                    </li>
+
+                    <li class="active">
+                        <a style="font-size: small; text-indent:20px" href="ServiceWorker.html">- ServiceWorker</a>
+                    </li>
+
+                    <li class="active">
+                        <a style="font-size: small; text-indent:20px" href="Fallbackpage.html">- Fallbackpage</a>
+                    </li>
+
+                    <li class="active">
+                        <a style="font-size: small; text-indent:20px" href="Lighthouse.html">- Lighthouse</a>
+                    </li>
+
+                    <li class="active">
+                        <a style="font-size: small; text-indent:20px" href="WebAPI.html">- Web-API</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="pwa2.html">Ausführung 2</a>
+                    </li>
+
+                    <li class="active">
+                        <a href="pwa3.html">Ausführung 3</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
-        <ul class="list-unstyled components">
-            <p>Kapitel</p>
+        <div class="col col-2"></div>
 
-            <li class="active">
-                <a href="index.html" aria-expanded="false" class="dropdown-toggle">Startseite</a>
-            </li>
-
-            <li class="active">
-                <a href="pwa0.html"  aria-expanded="false" class="dropdown-toggle">Beispiel</a>
-            </li>
-
-            <li class="active">
-                <a style="font-size: small; text-indent:20px" href="Datenbank.html"
-                   aria-expanded="false" class="dropdown-toggle">- Datenbank</a>
-            </li>
-
-            <li style="background-color: lightgrey">
-                <a style="font-size: small; text-indent:20px" href="Funktionsweise.html"
-                   aria-expanded="false" class="dropdown-toggle">- Funktionsweise</a>
-            </li>
-
-            <li class="active">
-                <a href="pwa1.html"  aria-expanded="false" class="dropdown-toggle">Ausführung 1</a>
-            </li>
-
-            <li class="active">
-                <a style="font-size: small; text-indent:20px" href="Manifest.html"
-                   aria-expanded="false" class="dropdown-toggle">- Web-App-Manifest</a>
-            </li>
-
-            <li class="active">
-                <a style="font-size: small; text-indent:20px" href="ServiceWorker.html"
-                   aria-expanded="false" class="dropdown-toggle">- ServiceWorker</a>
-            </li>
-
-            <li class="active">
-                <a style="font-size: small; text-indent:20px" href="Fallbackpage.html"
-                   aria-expanded="false" class="dropdown-toggle">- Fallbackpage</a>
-            </li>
-
-            <li class="active">
-                <a style="font-size: small; text-indent:20px" href="Lighthouse.html"
-                   aria-expanded="false" class="dropdown-toggle">- Lighthouse</a>
-            </li>
-
-            <li class="active">
-                <a style="font-size: small; text-indent:20px" href="WebAPI.html"
-                   aria-expanded="false" class="dropdown-toggle">- Web-API</a>
-            </li>
-
-            <li class="active">
-                <a href="pwa2.html"  aria-expanded="false" class="dropdown-toggle">Ausführung 2</a>
-            </li>
-
-            <li class="active">
-                <a href="pwa3.html"  aria-expanded="false" class="dropdown-toggle">Ausführung 3</a>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- Page Content  -->
-    <div id="content" class="text-left border border-primary mt-3 mb-3">
+        <div class="col col-5 mb-4 mt-4 border border-primary">
 
         <h2>Funktionsweise</h2>
         Die grundlegenden Webanwendung funktioniert strikt nach dem MVC-Konzept von CodeIgniter.
@@ -235,9 +230,9 @@ public function logout()
 
         <button type="button"onclick="location.href='Funktionsweise.html'" class="btn btn-primary">Nach oben</button>
 
+        </div>
 
-
-
+        <div class="col col-2"></div>
     </div>
 </div>
 

@@ -16,7 +16,6 @@ const ASSETS = [
     "/WebAPI.html",
     "/manifest.webmanifest",
     "/app.js",
-    "/script.js",
     "/serviceworker.js",
     "/styles.css",
 ];
