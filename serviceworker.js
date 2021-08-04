@@ -1,5 +1,4 @@
-/*
-const CACHE_NAME = "offline";
+const CACHE_NAME = "offline-v2";
 const ASSETS = [
     "/",
     "/Datenbank.html",
@@ -48,4 +47,3 @@ self.addEventListener("fetch", event => {
     )
 });
 
- */
