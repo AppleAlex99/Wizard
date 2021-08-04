@@ -1,7 +1,7 @@
 {
   "name": "Wizard for PWA",
   "short_name": "Wizard",
-  "start_url": "http://localhost/Wizard",
+  "start_url": "http://localhost/",
   "description": "Wizard to learn how to implement your own PWA",
   "display": "standalone",
   "background_color": "#FFFFFF",
