@@ -22,71 +22,83 @@
 </head>
 <body>
 
-<div class="container-fluid" style="background-color: #d4d4d4">
+<div class="jumbotron text-center bg-light">
+    <h1>PWA Wizard</h1>
+</div>
+
+<div class="container-fluid">
     <div class="row">
-        <div class="col col-2">
-            <nav id="sidebar">
-                <div class="sidebar-header">
-                    <h3>PWA Wizard</h3>
-                </div>
-
-                <ul class="list-unstyled components">
-                    <p>Kapitel</p>
-
-                    <li class="active">
-                        <a href="index.html">Startseite</a>
+        <div class="col col-2 px-0">
+            <nav class="d-flex flex-column flex-shrink-0 p-3 bg-light" >
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link link-dark" aria-current="page">
+                            <b>Startseite</b>
+                        </a>
                     </li>
-
-                    <li class="active">
-                        <a href="pwa0.html">Beispiel</a>
+                    <li>
+                        <a href="pwa0.html" class="nav-link link-dark">
+                            <b>Beispiel</b>
+                        </a>
                     </li>
-
-                    <li class="active">
-                        <a style="font-size: small; text-indent:20px" href="Datenbank.html">- Datenbank</a>
+                    <li>
+                        <a href="Datenbank.html" class="nav-link link-dark">
+                            -Datenbank
+                        </a>
                     </li>
-
-                    <li class="active">
-                        <a style="font-size: small; text-indent:20px" href="Funktionsweise.html">- Funktionsweise</a>
+                    <li>
+                        <a href="Funktionsweise.html" class="nav-link link-dark">
+                            -Funktionsweise
+                        </a>
                     </li>
-
-                    <li class="active">
-                        <a href="pwa1.html">Ausführung 1</a>
+                    <li>
+                        <a href="pwa1.html" class="nav-link link-dark">
+                            <b>PWA 1</b>
+                        </a>
                     </li>
-
-                    <li class="active">
-                        <a style="font-size: small; text-indent:20px" href="Manifest.html">- Web-App-Manifest</a>
+                    <li>
+                        <a href="Manifest.html" class="nav-link link-dark">
+                            -Web-App-Manifest
+                        </a>
                     </li>
-
-                    <li style="background-color: lightgrey">
-                        <a style="font-size: small; text-indent:20px" href="ServiceWorker.html">- ServiceWorker</a>
+                    <li>
+                        <a href="ServiceWorker.html" class="nav-link active">
+                            -ServiceWorker
+                        </a>
                     </li>
-
-                    <li class="active">
-                        <a style="font-size: small; text-indent:20px" href="Fallbackpage.html">- Fallbackpage</a>
+                    <li>
+                        <a href="Fallbackpage.html" class="nav-link link-dark">
+                            -Fallbackpage
+                        </a>
                     </li>
-
-                    <li class="active">
-                        <a style="font-size: small; text-indent:20px" href="Lighthouse.html">- Lighthouse</a>
+                    <li>
+                        <a href="Lighthouse.html" class="nav-link link-dark">
+                            -Lighthouse
+                        </a>
                     </li>
-
-                    <li class="active">
-                        <a style="font-size: small; text-indent:20px" href="WebAPI.html">- Web-API</a>
+                    <li>
+                        <a href="WebAPI.html" class="nav-link link-dark">
+                            -Web-API
+                        </a>
                     </li>
-
-                    <li class="active">
-                        <a href="pwa2.html">Ausführung 2</a>
+                    <li>
+                        <a href="pwa2.html" class="nav-link link-dark">
+                            <b>PWA 2</b>
+                        </a>
                     </li>
-
-                    <li class="active">
-                        <a href="pwa3.html">Ausführung 3</a>
+                    <li>
+                        <a href="pwa3.html" class="nav-link link-dark">
+                            <b>PWA 3</b>
+                        </a>
                     </li>
                 </ul>
+                <hr>
             </nav>
         </div>
 
         <div class="col col-2"></div>
 
-        <div class="col col-6 mb-4 mt-4 border border-primary" style="background-color: #f3f3f3">
+        <div class="col col-6 mb-4 mt-0 bg-light">
 
             <div class="float-right mt-3">
                 <button type="button" onclick="location.href='Datenbank.html'" style="border: #f3f3f3; background-color: #f3f3f3">
