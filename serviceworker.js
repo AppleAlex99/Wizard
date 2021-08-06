@@ -1,3 +1,4 @@
+/*
 const CACHE_NAME = "offline";
 const ASSETS = [
     "/",
@@ -46,4 +47,4 @@ self.addEventListener("fetch", event => {
         })
     )
 });
-
+*/

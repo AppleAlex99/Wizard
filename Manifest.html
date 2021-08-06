@@ -96,7 +96,7 @@
             </nav>
         </div>
 
-        <div class="col col-2"></div>
+        <div class="col col-1"></div>
 
         <div class="col col-6 mb-4 mt-0 bg-light">
 
@@ -111,11 +111,10 @@
 
     <h2>Web-App-Manifest</h2>
 
-    Der erste Schritt für die Erstellung der ersten Ausführung von PWAs ist das Web-App-Manifest.
-    Dieses befindet sich im root-Verzeichnis des Projektes und beschreibt die Eigenschaften einer PWA.
-    Das macht die PWA über den Browser für alle Endgeräte installierbar.
-    Die Datei liegt im JSON Format vor (.JSON oder .webmanifest) und wird im Head aller
-    HTML-Seiten verlinkt.
+        Der erste Schritt für die Erstellung der ersten Ausführung von PWAs ist das Web-App-Manifest.
+        Es befindet sich im root-Verzeichnis des Projektes und beschreibt die Eigenschaften einer PWA.
+        Dadurch macht das Manifest die PWA über den Browser für alle Endgeräte installierbar.
+        Die Datei liegt im JSON Format vor (.JSON oder .webmanifest) und wird im Head aller HTML-Seiten verlinkt
 
     <div class="border border-primary mb-2 mt-2"><pre><code>
 &ltlink rel="manifest" href="manifest.webmanifest"&gt
@@ -129,36 +128,40 @@
     Lediglich Safari unterstützt das Web-App-Manifest nur teilweise.
     Welche Anforderungen sich konkret voneinander unterscheiden,
     ist <a href="https://web.dev/install-criteria/">hier</a> zu finden.
-
+    <br>
     Die Mindestanforderungen für ein Web-App-Manifest in Chrome sind die folgenden:
 
       <ul>
-        <li> short\_name oder name</li>
-        <li> 192x192 Icon</li>
-        <li> 512x512 Icon</li>
-        <li> start_url</li>
-        <li> display - muss auf fullscreen, standalone oder minimal-ui gesetzt sein</li>
-        <li> prefer_related_applications darf nicht vorhanden sein oder muss auf false gesetzt werden</li>
+          <li><b>short\_name</b> oder <b>name</b></li>
+          <li><b>192x192 Icon</b></li>
+          <li><b>512x512 Icon</b></li>
+          <li><b>start_url</b> - gibt an, wo die Anwendung gestartet werden soll</li>
+          <li><b>display</b> - muss auf fullscreen, standalone oder minimal-ui gesetzt sein</li>
+          <li><b>prefer_related_applications</b> - darf nicht vorhanden sein oder muss auf false gesetzt werden</li>
       </ul>
 
     Weitere Elemente, die im Web-App-Manifest gesetzt werden können, sind <a href=" https://web.dev/add-manifest/">hier</a> zu finden.
-
+    <br>
+    <br>
     Eine der Eigenschaften von "name" oder "short_name" muss enthalten sein.
     Bei einem längeren Namen der PWA kann es jedoch auch durchaus sinnvoll sein, beide Eigenschaften anzugeben.
-    Wenn beide angegeben werden, wird die Eigenschaft "short_name" an Stellen verwendet, an denen der
-    Platz begrenzt ist. Die Eigenschaft "name" wird hingegen angezeigt, wenn die App installiert wurde.
-
-    Das Web-App-Manifest muss mindestens ein Icon der Größe 192x192 und eins der Größe 512x512 im enthalten.
+    Wenn beide angegeben werden, wird die Eigenschaft "short_name" an Stellen verwendet, an denen der Platz begrenzt ist.
+    Die Eigenschaft "name" wird hingegen angezeigt, wenn die App installiert wurde.
+    <br>
+    <br>
+    Das Web-App-Manifest muss mindestens ein Icon der Größe 192x192 und eins der Größe 512x512 enthalten.
     Die Eigenschaft Icon ist ein Array und kann beliebig viele Icons enthalten.
-    Jedes Icon muss dabei eine Quelle ("src"), einen Typ ("type") und eine Größe ("size") als Attribut haben.
-    Des Weiteren sollte es mindestens ein Icon mit "purpuse": "maskable any"
-    für die Unterstüzung des Betriebssystems Android geben.
-
-    Die Eigenschaft "start_url" im Manifest gibt an, wo die Anwendung gestartet werden soll.
-
+    Jedes Icon muss dabei eine Quelle ("src"), einen Typ ("type")
+    und eine Größe ("size") als Attribut haben.
+    Des Weiteren sollte es mindestens ein Icon mit "purpuse": "maskable any" für die Unterstüzung
+    des Betriebssystems Android geben
+    <br>
+    Die Eigenschaft "start_url" im Manifest gibt die URL an, die geladen wird,
+    wenn ein Benutzer die Anwendung von einem Gerät startet.
+    <br>
     Mit Hilfe der Eigenschaft "display" kann eingestellt werden, wie die PWA dargestellt werden soll.
-    Standalone ist dabei die Eigenschaft, mit der die PWA noch mehr wie eine native App aussieht,
-    da keine URL oder andere für Browser typischen Dinge angezeigt werden.
+    Standalone ist dabei die Eigenschaft, mit der die PWA noch mehr wie eine native App aussieht, da keine URL oder
+    andere für Browser typischen Dinge angezeigt werden.
 
     <div class="border border-primary mb-2 mt-2"><pre><code>
 {
@@ -186,44 +189,46 @@
   ]
 }
         </code></pre></div>
-      Das Web-App-Manifest des Beispiels enthält neben den Mindestanforderungen noch einige andere Eigenschaften, wie eine Beschreibung ("description")
-      sowie die Farbgebung der PWA als installiert Version auf dem Smartphone ("background_color" und "theme_color") und die Orientierung ("orientation").
-      Die Orientierung gibt an, wie die PWA geöffnet wird. Im Fall des Beispiels im Portait-Modus.
-      Des Weiteren sind neben den beiden gezeigten noch 6 weitere Icons in anderen Größen im Web-App-Manifest enthalten.
-      Je mehr größen angegeben werden, desto besser kann sich das entsprechende Endgerät aussuchen, welches Icongröße am besten passt.
         <br>
-      <br>
-      Um nach der Fertigstellung des Web-App-Manifests zu überprüfen, ob es richtig eingebunden ist und der Browser alle eingegeben Elemente erkennt,
-      kann in Chrome mit Rechtsklick "Untersuchen" ausgewählt werden.
-      Darauf hin kann unter "Application" das Manifest ausgewählt und auf Fehler geprüft werden.
-      <br>
-      <br>
-    <img class="image-thumbnail" src="img/WAM_Chrome.png" alt="Manifest in Chrome">
-      <br>
-      <br>
-
-      Dabei werden, bei richtiger Einbindung, alle im Manifest festgelegten Bestandteile aufgelistet.
-      Bei Fehlern, die Art des Einbinden und die Rechtschreibung der Attribute des Manifests überprüfen.
-      <br>
-      Im Beispiel sieht man, dass alle Eigenschaften der Manifest-Datei auch im Browser angezeigt werden und somit funktionieren.
+        Das Web-App-Manifest des Beispiels enthält neben den Mindestanforderungen noch einige andere Eigenschaften,
+        wie eine Beschreibung ("description"), die Farbgebung der PWA als installierte Version ("background_color",
+        die "theme_color") und die Orientierung ("orientation").
+        Die Orientierung gibt an, wie die PWA geöffnet wird. Im Fall des Beispiels im Portait-Modus.
+        Des Weiteren sind neben den beiden gezeigten noch 6 weitere Icons in anderen Größen im Web-App-Manifest enthalten.
+        Je mehr größen angegeben werden, desto besser kann sich das entsprechende Endgerät aussuchen, welches Icongröße am besten passt.
+        <br>
+        <br>
+        Um nach der Fertigstellung des Web-App-Manifests zu überprüfen, ob es richtig eingebunden ist und der Browser
+        alle eingegeben Elemente erkennt, kann in Chrome mit Rechtsklick "Untersuchen" ausgewählt werden.
+        Darauf hin kann unter "Application" das Manifest ausgewählt und auf Fehler überprüft werden
       <br>
       <br>
-      Aufgrund dessen, dass das Apple Betriebssystem, für deren Smartphones, iOS die "icons" und die "theme_color" nicht unterstützt,
-      muss die PWA dahingehend etwas modifiziert werden.
+    <img class="img-thumbnail" src="img/WAM_Chrome.png" alt="Manifest in Chrome">
       <br>
-      Für die Unterstützung des Icon auf dem Homebildschirm muss dabei im Head jeder HTML-Seite eine Verlinkung zu dem Icon eingebunden werden, das bei iOS-Benutzern verwendet werden soll.
+      <br>
+        Dabei werden, bei richtiger Einbindung, alle im Manifest festgelegten Bestandteile aufgelistet.
+        Bei Fehlern, die Art des Einbinden, die "start_url" und die Rechtschreibung der Attribute des Manifests überprüfen.
+        <br>
+        Im Beispiel sieht man, dass alle Eigenschaften der Manifest-Datei auch im Browser angezeigt werden und somit funktionieren.
+      <br>
+      <br>
+        <b>Besonderheiten:</b> <br>
+            Aufgrund dessen, dass das Apple Betriebssystem, für deren Smartphones, iOS die "icons"
+            und die "theme_color" nicht unterstützt, muss die PWA dahingehend etwas modifiziert werden.
+            <br>
+            Für die Unterstützung des Icon auf dem Homebildschirm muss dabei im Head jeder HTML-Seite eine Verlinkung
+            zu dem Icon eingebunden werden, das bei iOS-Benutzern verwendet werden soll.
       <div class="border border-primary mb-2 mt-2"><pre><code>
 &ltlink rel="apple-touch-icon" href="icon/icon96.png"&gt
       </code></pre></div>
-      <br>
       <br>
       Der Ersatz der "theme_color" muss ebenfalls im Head jeder HTML-Seite wie folgt verlinkt sein.
       <div class="border border-primary mb-2 mt-2"><pre><code>
 &ltmeta name="apple-mobile-web-app-status-bar" content="#0032FF"&gt
       </code></pre></div>
-      <br>
-      <br>
-      Außerdem muss für die PWA-Optimierung für alle Betriebssysteme neben dem Festlegen der "theme_color" im Web-App-Manifest, diese ebenfalls im Head jeder HTML-Seite hinterlegt sein.
+    <br>
+      Außerdem muss für die PWA-Optimierung für alle Betriebssysteme neben dem Festlegen der "theme_color" im Web-App-Manifest,
+            diese ebenfalls im Head jeder HTML-Seite hinterlegt sein.
       <div class="border border-primary mb-2 mt-2"><pre><code>
 &ltmeta name="theme-color" content="#0032FF"&gt
       </code></pre></div>
@@ -243,7 +248,7 @@
 
         </div>
 
-        <div class="col col-2"></div>
+        <div class="col col-3"></div>
     </div>
 </div>
 

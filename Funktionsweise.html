@@ -96,7 +96,7 @@
             </nav>
         </div>
 
-        <div class="col col-2"></div>
+        <div class="col col-1"></div>
 
         <div class="col col-6 mb-4 mt-0 bg-light">
 
@@ -112,7 +112,7 @@
 
 
         <h2>Funktionsweise</h2>
-        Die grundlegenden Webanwendung funktioniert strikt nach dem MVC-Konzept von CodeIgniter.
+        Die grundlegende Webanwendung funktioniert strikt nach dem MVC-Konzept von CodeIgniter.
         Um zu visualisieren, wie das MVC-Pattern funktioniert, folgen 2 Ausschnitte aus dem Beispielcode,
         wie Daten in die Datenbank eingefügt werden und wie diese wieder auf der Webseite ausgegeben werden.
         <br>
@@ -189,9 +189,10 @@ public function getPeople(): array
         </code></pre></div>
         <br>
         Die <i><b>getPeople</b></i>-Funktion des Models wird daraufhin von der <i><b>index</b></i>-Funktion im Controller aufgerufen.
-        Diese speichert die erhaltenen Daten in das <i><b>$data['people']</b></i>-Array.
+        Diese schreibt die erhaltenen Daten in das <i><b>$data['people']</b>></i>-Array.
         Daraufhin werden die Bestandteile, die auf alle Unterseiten gleich sind, also der Header und der Footer,
-        gemeinsam mit der View der Personentabelle und den im <i><b>$data['people']</b></i>-Array gespeicherten Daten aufgerufen.
+        gemeinsam mit der View der Personentabelle aufgerufen.
+        Dabei werden die Daten des <i><b>$data['people']</b></i>-Array mit an die View übergeben, in der diese ausgegeben werden sollen.
         <br>
 
         <div class="border border-primary mb-2 mt-2"><pre><code>
@@ -224,12 +225,15 @@ endif;
 ?&gt
 &lt/tbody&gt
         </code></pre></div>
-
+        <br>
         <br>
         <h5>Sessions:</h5>
-        Da HTTP ein zustandsloses Protokoll ist, werden Informationen zwischen Aufrufen verschiedener Unterseiten
-        nicht gespeichert. Um dieses Problem zu lösen, werden in der grundlegenden Webanwendung Sessions verwendet.
-        Nach erfolgreicher Eingabe der Login-Informationen des Nutzers werden diese wie folgt in einer Session gespeichert.
+        Da HTTP ein zustandsloses Protokoll ist, werden Informationen zwischen Aufrufen verschiedener Unterseiten nicht gespeichert .
+        Dieses Problem wird durch die Verwendung von Sessions gelöst.
+        <br>
+        <br>
+        Nach erfolgreicher Eingabe der Login-Informationen des Nutzers wird die Session gesetzt.
+        Das bedeutet im Beispiel, dass folgende Informationen in der Session gespeichert werden.
 
         <div class="border border-primary mb-2 mt-2"><pre><code>
 $this->_session->set([
@@ -242,7 +246,8 @@ $this->_session->set([
         Solange die Session nicht abgelaufen ist oder durch einen Logout beendet wurde,
         wird beim Aufrufen anderer Unterseiten die Session-ID <i>'id'</i> mit dem Webserver abgeglichen.
         Aber auch alle anderen Daten können bei Bedarf aus der Session ausgelesen werden.
-        Die Session kann über das Betätigen des Logout-Knopfes und mit der dahinter liegenden <i><b>logout</b></i>-Funktion beendet werden.
+        Die Session kann über das Betätigen des Logout-Knopfes und mit der dahinter liegenden <i><b>logout</b></i>-Funktion
+        beendet werden.
 
         <div class="border border-primary mb-2 mt-2"><pre><code>
 public function logout()
@@ -266,7 +271,7 @@ public function logout()
         <br>
         </div>
 
-        <div class="col col-2"></div>
+        <div class="col col-3"></div>
     </div>
 </div>
 

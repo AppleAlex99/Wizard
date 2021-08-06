@@ -96,7 +96,7 @@
             </nav>
         </div>
 
-        <div class="col col-2"></div>
+        <div class="col col-1"></div>
 
         <div class="col col-6 mb-4 mt-0 bg-light">
 
@@ -112,20 +112,29 @@
 
 
         <h1>PWA Ausführung 1</h1>
-        Die erste Ausführung von Progressive Web Apps soll installierbar sein, eine offline- Fallbackpage
-        beinhalten und die Push-Benachrichtigungs-API verwenden können.
+            Eigenschaften der PWA Ausführung 1:
+            <ul>
+            <li><b>Installierbar:</b> Die PWA kann mit Hilfe des Web-App-Manifest und dem ServiceWorker zu Homebildschirm hinzugefügt
+            werden und von dort aus in einer eigenen Anwendung im Vollbildmodus gestartet werden</li>
+            <li><b>Fallbackpage:</b> Bei schwacher oder gar keiner Internetverbindung wird der Besucher der PWA über eine offline
+                Fallbackpage darauf hingewiesen, dass aktuell keine Internetverbindung besteht.</li>
+            <li><b>Web-API:</b> Web-APIs bringen viele Funktionen ins Web, die bisher nativen Apps vorbehalten waren.
+            Als Beispiel für eine beliebte Web-API wird die Push-Notification API erläutert.</li>
+            </ul>
+        <br>
         Damit eine PWA installierbar ist, sind mehrere Kriterien zu erfüllen:
         <br>
         <br>
             <ul>
-                <li> Die PWA darf noch nicht installiert sein</li>
-                <li> Die PWA muss über HTTPS gesichert sein</li>
-                <li> Die PWA muss ein Web-App-Manifest enthalten</li>
+                <li> Die PWA darf noch <b>nicht installiert</b> sein</li>
+                <li> Die PWA muss über <b>HTTPS</b> gesichert sein</li>
+                <li> Die PWA muss ein <b>Web-App-Manifest</b> enthalten</li>
                 <li> Die PWA enthält einen ServiceWorker <b>mit fetch-Event-Handler</b></li>
-                <li> Die PWA erfüllt eine User-Engagement-Heuristik</li>
+                <li> Die PWA erfüllt eine <b>User-Engagement-Heuristik</b></li>
             </ul>
         <br>
-        Die Sicherung über HTTPS und der Fakt, dass die PWA noch nicht installiert sein darf sind bereits gegeben.
+        Die Sicherung über HTTPS und der Fakt, dass die PWA noch nicht installiert sein darf sind bereits durch die
+        grundlegende Webanwendung gegeben.
         Nun fehlt als Mindestanforderung nur noch das Web-App-Manifest und der ServiceWorker.
         Die User-Engagement-Heuristic beschreibt, dass die Webseite erst für eine bestimmte Zeit
         vom Nutzer besucht sein muss, bis die Aufforderung zum Installieren auftaucht.
@@ -150,7 +159,7 @@
 
         </div>
 
-        <div class="col col-2"></div>
+        <div class="col col-3"></div>
     </div>
 </div>
 

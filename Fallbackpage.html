@@ -96,7 +96,7 @@
             </nav>
         </div>
 
-        <div class="col col-2"></div>
+        <div class="col col-1"></div>
 
         <div class="col col-6 mb-4 mt-0 bg-light">
 
@@ -112,9 +112,88 @@
 
             <h2>Fallbackpage</h2>
 
+            Die offline-Fallbackpage wird angezeigt, wenn keine Internetverbindung besteht und kann nach belieben gestaltet werden.
+            Da bei der PWA 1 ohne Internetverbindung die Fallbackpage auftaucht, ist diese die einzige Seite,
+            die offline zur Verfügung gestellt werden muss.
+            <br>
+            Das offline zur Verfügung stellen geschieht, wie bereits erwähnt, über das <i><b>install</b></i>-Event im ServiceWorker,
+            welches die dafür benötigten statischen Asstes im Cache bereitstellt.
+            <br>
+        <div class="border border-primary mb-2 mt-2"><pre><code>
+const CACHE_NAME = "offline";
+const OFFLINE_URL = "/fallback";
+const STATIC_ASSETS = [
+    "logo.ico",
+    "manifest.webmanifest",
+    "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    ...
+];
 
+self.addEventListener("install", (event) => {
+    event.waitUntil(
+        caches.open(CACHE_NAME).then(cache => {
+            cache.addAll(STATIC_ASSETS);
+            cache.add(new Request(OFFLINE_URL, { cache: "reload" }));
+        })
+    );
+    self.skipWaiting();
+});
+        </code></pre></div>
+<br>
+            Dabei wird im <i><b>install</b></i>-Event mit der <i><b>caches.open()</b></i>-Funktion ein neuer Cache mit dem in der
+            Konstante <b>CACHE_NAME</b> vergebenem Namen hinzugefügt.
+            Daraufhin werden alle für die offline-Fallbackpage notwendigen Assets, die der definierten Konstante
+            <b>STATIC_ASSETS</b> als Array hinzugefügt wurden, wie beispielsweise die Icons, das Web-App-Manifest und die CSS-Datei
+            (Bootstrap), mit der <i><b>cache.addAll()</b></i>-Funktion zum Cache hinzugefügt.
+            Die <i><b>cache.addAll()</b></i>-Funktion erwartet ein Array von Assets.
+            Soll ein einzelnes Asset gecached werden, so wird die <i><b>cache.add()</b></i>-Funktion verwendet.
+            <br>
+            <br>
+            Nachdem dem Hinzufügen der Assets, sind diese im Cache gespeichert und können im
+            "Cache Storage" unter dem gewählten Namen eingesehen werden.
 
+            <br>
+            <img class="img-thumbnail" src="img/Cache-Fallbackpage.png" alt="Cache Fallbackpage">
+            <br>
+            Das <i><b>fetch</b></i>-Event des ServiceWorker wird für diesen Zweck erweitert um mitzuteilen,
+            dass die Fallbackpage aufgerufen werden soll, wenn der Server keine Rückmeldung liefert.
+            Der EventListener horcht dabei auf Events aus dem kontrollierten Bereich und wird somit jedes mal ausgelöst.
+            Dabei prüft dieser im <i><b>try</b></i>-Block, ob eine Rückmeldung vom Server kommt.
 
+        <div class="border border-primary mb-2 mt-2"><pre><code>
+self.addEventListener("fetch", (event) => {
+    if (event.request.mode === "navigate") {
+        event.respondWith(
+            (async () => {
+                try {
+                    const preloadResponse = await event.preloadResponse;
+                    if (preloadResponse) {
+                        return preloadResponse;
+                    }
+
+                    const networkResponse = await fetch(event.request);
+                    return networkResponse;
+                } catch (error) {
+                    console.log("Fetch failed; returning offline page instead.", error);
+
+                    const cache = await caches.open(CACHE_NAME);
+                    const cachedResponse = await cache.match(OFFLINE_URL);
+                    return cachedResponse;
+                }
+            })()
+        );
+    } else {
+        event.respondWith(
+            caches.match(event.request).then(cacheRes => {
+                return cacheRes || fetch(event.request);
+            })
+        )
+    }
+});
+        </code></pre></div>
+            <br>
+            Erhält das <i><b>fetch</b></i>-Event eine Rückmeldung, so wird ganz normal auf die gewünschte Funktion bzw. Unterseite navigiert.
+            Passiert dies jedoch nicht, so werden die im Cache enthaltenen Inhalte, sprich die Fallbackpage, dem Cache entnommen und angezeigt.
 
 
 
@@ -134,7 +213,7 @@
 
 
         </div>
-        <div class="col col-2"></div></div>
+        <div class="col col-3"></div></div>
 </div>
 
 <script src="app.js"></script>
