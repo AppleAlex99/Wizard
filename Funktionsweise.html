@@ -113,14 +113,14 @@
 
         <h2>Funktionsweise</h2>
         Die grundlegende Webanwendung funktioniert strikt nach dem MVC-Konzept von CodeIgniter.
-        Um zu visualisieren, wie das MVC-Pattern funktioniert, folgen 2 Ausschnitte aus dem Beispielcode,
+        Um zu visualisieren, wie das MVC-Pattern funktioniert, folgen 2 Beispiele,
         wie Daten in die Datenbank eingefügt werden und wie diese wieder auf der Webseite ausgegeben werden.
         <br>
         <br>
         <h5>Daten Eingabe:</h5>
-        Für das Hinzufügen einer neuen Person in die Personentabelle,
+        Für das Hinzufügen einer neuen Person in die Personentabelle
         werden in der View alle Daten über ein Formular eingelesen und mit der
-        <i><b>Post</b></i>-Methode an die entsprechende Funktion des Controllers übergeben.
+        <i><b>post</b></i>-Methode an die entsprechende Funktion des Controllers übergeben.
         <br>
 
         <div class="border border-primary mb-2 mt-2"><pre><code>
@@ -189,8 +189,8 @@ public function getPeople(): array
         </code></pre></div>
         <br>
         Die <i><b>getPeople</b></i>-Funktion des Models wird daraufhin von der <i><b>index</b></i>-Funktion im Controller aufgerufen.
-        Diese schreibt die erhaltenen Daten in das <i><b>$data['people']</b>></i>-Array.
-        Daraufhin werden die Bestandteile, die auf alle Unterseiten gleich sind, also der Header und der Footer,
+        Diese schreibt die erhaltenen Daten in das <i><b>$data['people']</b></i>-Array.
+        Daraufhin werden die Bestandteile, die auf allen Unterseiten gleich sind, dies sind der Header und der Footer,
         gemeinsam mit der View der Personentabelle aufgerufen.
         Dabei werden die Daten des <i><b>$data['people']</b></i>-Array mit an die View übergeben, in der diese ausgegeben werden sollen.
         <br>
