@@ -18,6 +18,8 @@ const ASSETS = [
     "/app.js",
     "/serviceworker.js",
     "/styles.css",
+    "/img/AddPerson",
+    "/img/...Bilder Cachen!!!"
 ];
 
 self.addEventListener("install", (event) => {

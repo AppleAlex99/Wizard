@@ -18,12 +18,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <title>Startseite</title>
+    <title>Startseite - PWA Wizard</title>
 </head>
 <body>
 
 <div class="jumbotron text-center bg-light">
     <h1>PWA Wizard</h1>
+    <br>
+    <h3>Startseite</h3>
 </div>
 
 <div class="container-fluid">
@@ -43,56 +45,70 @@
                     </li>
                     <li>
                         <a href="Datenbank.html" class="nav-link link-dark">
-                            -Datenbank
+                            - Datenbank
                         </a>
                     </li>
                     <li>
                         <a href="Funktionsweise.html" class="nav-link link-dark">
-                            -Funktionsweise
+                            - Funktionsweise
                         </a>
                     </li>
                     <li>
                         <a href="pwa1.html" class="nav-link link-dark">
-                            <b>PWA 1</b>
+                            <b>Installierbare PWA</b>
                         </a>
                     </li>
                     <li>
                         <a href="Manifest.html" class="nav-link link-dark">
-                            -Web-App-Manifest
+                            - Web-App-Manifest
                         </a>
                     </li>
                     <li>
                         <a href="ServiceWorker.html" class="nav-link link-dark">
-                            -ServiceWorker
+                            - ServiceWorker
                         </a>
                     </li>
                     <li>
                         <a href="Fallbackpage.html" class="nav-link link-dark">
-                            -Fallbackpage
+                            - Fallbackpage
                         </a>
                     </li>
                     <li>
                         <a href="Lighthouse.html" class="nav-link link-dark">
-                            -Lighthouse
+                            - Lighthouse
                         </a>
                     </li>
                     <li>
                         <a href="WebAPI.html" class="nav-link link-dark">
-                            -Web-API
+                            - Web-API
                         </a>
                     </li>
                     <li>
                         <a href="pwa2.html" class="nav-link link-dark">
-                            <b>PWA 2</b>
+                            <b>Read-Only PWA</b>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Cache-Strategie.html" class="nav-link link-dark">
+                            - Cache-Strategie
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Dynamisches-Cachen.html" class="nav-link link-dark">
+                            - Dynamisches Cachen
                         </a>
                     </li>
                     <li>
                         <a href="pwa3.html" class="nav-link link-dark">
-                            <b>PWA 3</b>
+                            <b>Read-Write PWA</b>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="IndexedDB.html" class="nav-link link-dark">
+                            - IndexedDB
                         </a>
                     </li>
                 </ul>
-                <hr>
             </nav>
 
         </div>
@@ -110,7 +126,7 @@
                 </button>
             </div>
 
-        <h1>Startseite</h1>
+
         Diese Webseite enthält einen Wizard, der Progressive Web Apps (PWAs) erläutert, die Bestandteile erklärt und bei der eigenen Umsetzung unterstützt.
         <br>
         Progressive Web Apps sind eine im Jahr 2015 von Frances Berriman und Alex Russel entwickelte Technologie, die mittlerweile von so gut wie allen modernen Webbrowsern,
@@ -127,7 +143,7 @@
         Ähnlichkeiten bei PWA und nativer App sollen jedoch nicht nur im Design und der Handhabung, sondern auch in den Funktionen liegen.
         Nachdem eine PWA zum ersten mal besucht wurde, kann diese, je nach Ausführung, komplett offline funktionieren und die Ladezeiten sowie die Perfomance deutlich verbessern.
         Eine weitere Übereinstimmung bei PWAs und nativen Apps ist das Icon, dass dem Homenildschirm des Endgeräts hinzugefügt werden kann.
-        Aber auch auf die Ressourcen des Geräts kann durch moderne Web-APIs Zugriff gegeben werden um somit ein App-gleiches Erlebnis zu gewährleisten.
+        Aber auch auf die Ressourcen des Geräts kann durch moderne Web-APIs Zugriff gegeben werden, um somit ein App-gleiches Erlebnis zu gewährleisten.
         <br>
         Durch das Speichern von Ressourcen im Cache haben PWAs ein sehr schnelles Antwortverhalten.
         Des Weiteren lassen diese sich, wie eine native App, intuitiv bedienen und schonen den Speicher des Endgeräts, da sie meistens weniger als 1mb an Größe haben.
@@ -139,34 +155,51 @@
         <br>
         <br>
             <h3>Ausführungen von PWAs</h3>
-            <h6>Grundlegende Webanwendung</h6>
+            <br>
+            <h5>Grundlegende Webanwendung</h5>
         Die grundlegende Webanwendung stellt die Inhalte sowie die Funktionen zur Verfügung, auf der die verschiedenen PWAs aufbauen.
         Das Beispiel aus dem viele Ausschnitte im Laufe des Wizards verwendet werden, wird im Abschnitt des "Beispiels" erläutert.
         Dabei geht es um den Aufbau der Webseite, die dahinterstehende Datenbank und die Funktionsweise des MVC-Pattern von CodeIgniter 4.
-            <h6>Ausführung 1</h6>
+            <br>
+            <br>
+            <img src="img/Leeres%20Diagramm.png" width="50%" style="margin-left: auto; margin-right: auto; display: block">
+
+            <br>
+
+            <h5>Installierbare PWA</h5>
             <ul>
-                <i>Installierbar</i>
-                <i>Offline Fallbackpage</i>
-                <i>Push-Notifications</i>
+                <li>Installierbar</li>
+                <li>Offline Fallbackpage</li>
+                <li>Push-Benachrichtigungen</li>
             </ul>
         Die erste Progressive Web App ist installierbar, sprich kann ein Icon zum Homebildschirm hinzufügen, besitzt eine Fallbackpage,
         die angezeigt wird, wenn keine Internetverbindung besteht und verwendet eine Web-API.
-            <h6>Ausführung 2</h6>
+            <br>
+            <br>
+            <br>
+
+            <h5>Read-Only PWA</h5>
             <ul>
-                <i>Partielle offline Verfügbarkeit</i>
+                <li>Partielle offline-Verfügbarkeit</li>
             </ul>
         Die zweite Ausführung von PWAs hat keine Fallbackpage mehr, sondern stellt dem Benutzer alle statischen und dynamischen Inhalte offline zur Verfügung.
-            <h6>Ausführung 3</h6>
+            <br>
+            <br>
+            <br>
+
+            <h5>Read-Write PWA</h5>
             <ul>
-                <i>Vollständige offline Verfügbarkeit</i>
+                <li>Vollständige offline-Verfügbarkeit</li>
             </ul>
         Die dritte Ausführung hat ergänzend dazu die Möglichkeit, dass der Benutzer offline Änderungen hinzufügen kann, die bei der nächsten Verbindung mit dem Internet
         zur online Datenbank hinzugefügt werden.
 
             <br>
             <br>
+            <button type="button"onclick="location.href='index.html'" class="btn btn-primary">Nach oben</button>
+
             <div class="float-right">
-                <button type="button"onclick="location.href='pwa0.html'" class="btn btn-primary">Beispiel <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-forward-fill" viewBox="0 0 16 16">
+                <button type="button" onclick="location.href='pwa0.html'" class="btn btn-primary">Beispiel <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-forward-fill" viewBox="0 0 16 16">
                     <path d="m9.77 12.11 4.012-2.953a.647.647 0 0 0 0-1.114L9.771 5.09a.644.644 0 0 0-.971.557V6.65H2v3.9h6.8v1.003c0 .505.545.808.97.557z"/>
                 </svg></button>
             </div>

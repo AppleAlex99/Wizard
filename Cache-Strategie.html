@@ -18,14 +18,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <title>PWA1 - Fallbackpage</title>
+    <title>PWA2 - Cache-Strategie</title>
 </head>
 <body>
 
 <div class="jumbotron text-center bg-light">
     <h1>PWA Wizard</h1>
     <br>
-    <h3>Fallbackpage</h3>
+    <h3>Cache-Strategie</h3>
 </div>
 
 <div class="container-fluid">
@@ -69,7 +69,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="Fallbackpage.html" class="nav-link active">
+                        <a href="Fallbackpage.html" class="nav-link link-dark">
                             - Fallbackpage
                         </a>
                     </li>
@@ -89,7 +89,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="Cache-Strategie.html" class="nav-link link-dark">
+                        <a href="Cache-Strategie.html" class="nav-link active">
                             - Cache-Strategie
                         </a>
                     </li>
@@ -124,102 +124,18 @@
                     </svg>
                 </button>
             </div>
+            Text
 
-
-            Die offline-Fallbackpage wird angezeigt, wenn keine Internetverbindung besteht.
-            Diese kann nach Belieben gestaltet werden.
-            Da bei der PWA 1 ohne Internetverbindung die Fallbackpage auftaucht, ist diese die einzige Seite,
-            die offline zur Verfügung gestellt werden muss.
-            <br>
-            Die Fallbackpage wird, wie bereits erwähnt, offline zur Verfügung gestellt, indem über das im ServiceWorker
-            enthaltene <i><b>install</b></i>-Event die benötigten statischen Assets zum Cache hinzugefügt werden.
-            <br>
-        <div class="border border-primary mb-2 mt-2"><pre><code>
-const CACHE_NAME = "offline";
-const OFFLINE_URL = "/fallback";
-const STATIC_ASSETS = [
-    "logo.ico",
-    "manifest.webmanifest",
-    "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    ...
-];
-
-self.addEventListener("install", (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => {
-            cache.addAll(STATIC_ASSETS);
-            cache.add(new Request(OFFLINE_URL, { cache: "reload" }));
-        })
-    );
-    self.skipWaiting();
-});
-        </code></pre></div>
-<br>
-            Dabei wird im <i><b>install</b></i>-Event mit der <i><b>caches.open()</b></i>-Funktion ein neuer Cache mit dem in der
-            Konstante <b>CACHE_NAME</b> vergebenen Namen hinzugefügt.
-            Daraufhin werden alle für die offline-Fallbackpage notwendigen Assets, die der definierten Konstante
-            <b>STATIC_ASSETS</b> als Array hinzugefügt wurden, wie beispielsweise die Icons, das Web-App-Manifest und die CSS-Datei
-            (Bootstrap), mit der <i><b>cache.addAll()</b></i>-Funktion zum Cache hinzugefügt.
-            Die <i><b>cache.addAll()</b></i>-Funktion erwartet ein Array von Assets.
-            Soll ein einzelnes Asset gecached werden, so wird die <i><b>cache.add()</b></i>-Funktion verwendet.
-            <br>
-            <br>
-            Nach dem Hinzufügen der Assets sind diese im Cache gespeichert und können im
-            "Cache Storage" unter dem gewählten Namen eingesehen werden.
-
-            <br>
-            <img class="img-thumbnail" src="img/Cache-Fallbackpage.png" alt="Cache Fallbackpage">
-            <br>
-            <br>
-            Das <i><b>fetch</b></i>-Event des ServiceWorker wird für diesen Zweck erweitert um mitzuteilen,
-            dass die Fallbackpage aufgerufen werden soll, wenn der Server keine Rückmeldung liefert.
-            Der EventListener horcht dabei auf Events aus dem kontrollierten Bereich und wird somit jedes Mal ausgelöst.
-            Dabei prüft dieser im <i><b>try</b></i>-Block, ob eine Rückmeldung vom Server kommt.
-
-        <div class="border border-primary mb-2 mt-2"><pre><code>
-self.addEventListener("fetch", (event) => {
-    if (event.request.mode === "navigate") {
-        event.respondWith(
-            (async () => {
-                try {
-                    const preloadResponse = await event.preloadResponse;
-                    if (preloadResponse) {
-                        return preloadResponse;
-                    }
-
-                    const networkResponse = await fetch(event.request);
-                    return networkResponse;
-                } catch (error) {
-                    console.log("Fetch failed; returning offline page instead.", error);
-
-                    const cache = await caches.open(CACHE_NAME);
-                    const cachedResponse = await cache.match(OFFLINE_URL);
-                    return cachedResponse;
-                }
-            })()
-        );
-    } else {
-        event.respondWith(
-            caches.match(event.request).then(cacheRes => {
-                return cacheRes || fetch(event.request);
-            })
-        )
-    }
-});
-        </code></pre></div>
-            <br>
-            Erhält das <i><b>fetch</b></i>-Event eine Rückmeldung, so wird ganz normal auf die gewünschte Funktion bzw.
-            Unterseite navigiert.
-            Passiert dies jedoch nicht, so werden die im Cache enthaltenen Inhalte, sprich die Fallbackpage, angezeigt.
 
 
 
             <br>
             <br>
-            <button type="button"onclick="location.href='Fallbackpage.html'" class="btn btn-primary">Nach oben</button>
+            <button type="button"onclick="location.href='Cache-Strategie.html'" class="btn btn-primary">Nach oben</button>
 
             <div class="float-right">
-                <button type="button"onclick="location.href='Lighthouse.html'" class="btn btn-primary">Lighthouse <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-forward-fill" viewBox="0 0 16 16">
+                <button type="button"onclick="location.href='Dynamisches-Cachen.html'" class="btn btn-primary">Dynamisches Cachen <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                                                                            fill="currentColor" class="bi bi-forward-fill" viewBox="0 0 16 16">
                     <path d="m9.77 12.11 4.012-2.953a.647.647 0 0 0 0-1.114L9.771 5.09a.644.644 0 0 0-.971.557V6.65H2v3.9h6.8v1.003c0 .505.545.808.97.557z"/>
                 </svg></button>
             </div>
@@ -227,9 +143,10 @@ self.addEventListener("fetch", (event) => {
             <br>
             <br>
 
-
         </div>
-        <div class="col col-3"></div></div>
+
+        <div class="col col-3"></div>
+    </div>
 </div>
 
 <script src="app.js"></script>
