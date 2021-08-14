@@ -126,8 +126,23 @@
                 </button>
             </div>
 
-
-
+            <h5>Eigenschaften der Read-Only PWA:</h5>
+            <ul>
+                <li><b>Offline Nutzung:</b> Die PWA hat alle Eigenschaften der installierbaren PWA, jedoch können nun alle Assets im Cache hinterlegt werden
+                    und bei Verlust der Internetverbindung dennoch aufgerufen werden.
+                    Dazu zählen statische Inhalte, wie das HTML-Gerüst, aber auch dynamische Inhalte, also jene Daten, die sich häufig ändern.
+                    Das sind beispielsweise die Daten, die aus der Datenbank abgefragt werden.
+                    Mit der Read-Only PWA ist es also möglich, die Inhalte der Webseite offline einzusehen.</li>
+                <li><b>Fallbackpage:</b> Je nach Cache-Strategie die angewendet wird, ist eine offline Fallbackpage nicht mehr notwendig.
+                    Im Beispiel werden nach dem Login alle Daten, bis auf die Login-Seite, im Cache abgelegt und sind von da an offline abrufbar.
+                    Bei größeren Webseiten, bei denen nicht alles gecached werden kann, macht es durchaus Sinn, die Fallbackpage bestehen zu lassen,
+                    falls eine nicht im Cache gespeicherte Seite aufgerufen wird.</li>
+            </ul>
+            <br>
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/Read-Only_PWA_Bild.png" alt="PWA_2">
+            <br>
+            <br>
 
             <br>
             <br>

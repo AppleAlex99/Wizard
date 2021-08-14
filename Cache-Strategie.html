@@ -124,8 +124,120 @@
                     </svg>
                 </button>
             </div>
-            Text
 
+            <h3>Cache-Strategien</h3>
+            Neben der Frage, welche Daten gecached werden sollen, muss ebenfalls überlegt werden, wann die Daten gecached werden sollen und wann diese Daten bereitgestellt werden bzw. wann auf die Assets im Cache zugegriffen wird.
+            Dafür gibt es viele verschiedene Strategien, die für verschiedene Anwendungsbereiche sinnvoll sind.
+            Von diesen werden im folgenden drei beliebte Strategien kurz vorgestellt.
+            <br>
+            <br>
+
+            <h5>Beim installieren cachen:</h5>
+            Bei dieser Strategie werden beim <i><b>install</b></i>-Event die Caches erstellt und die festgelegten Assets hinzugefügt.
+            Die Strategie ist sinnvoll für statische Inhalte, die sich selten ändern und fügt die Daten zu dem Zeitpunkt zum Cache hinzu, wenn der ServiceWorker installiert wird.
+
+            <br>
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/Cache-web-dev-strategie.png" alt="Cache on install" width="50%">
+            <div class="text-center">
+                Quelle: https://web.dev/offline-cookbook/
+            </div>
+            <br>
+            <br>
+
+            <h5>Bei Nutzerinteraktion cachen:</h5>
+            Diese Strategie ist bei sehr großen PWAs sinnvoll, da der Nutzer selbst bestimmen kann, welche Daten gecached werden sollen.
+            Das macht besonders sinn, wenn es um Artikel einer Onlinezeitschrift oder um Videos einer Plattform geht.
+
+            <br>
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/Cache_on_Interaction.png" alt="Cache on interaction" width="50%">
+            <div class="text-center">
+                Quelle: https://web.dev/offline-cookbook/
+            </div>
+            <br>
+            <br>
+
+            <h5>Bei Push-Benachrichtigung cachen:</h5>
+            Bei dieser Strategie wird der Cache mit Daten gefüllt, sobald der Nutzer eine Push-Benachrichtigung erhält.
+            Dabei werden meistens nur Daten gespeichert, die mit der Push-Benachrichtigung in Verbindung stehen, wie beispielsweise Chat-Nachrichten oder E-Mails.
+
+            <br>
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/Cache_on_PushMessage.png" alt="Cache on Push" width="50%">
+            <div class="text-center">
+                Quelle: https://web.dev/offline-cookbook/
+            </div>
+            <br>
+            <br>
+            <i>Wichtig:</i><br>
+            Sind die Daten einmal im Cache und es soll eine Änderung vorgenommen werden, so muss neben der Veränderung des Inhalts auch eine Veränderung vom ServiceWorker stattfinden,
+            damit diese in den Cache übernommen wird.
+            Das geht am besten, indem die Caches versioniert werden:
+            <br>
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+const CACHE_NAME = "offline-v1";
+const CACHE_NAME = "offline-v2";
+        </code></pre></div>
+            Das liegt daran, dass nur eine vorgenommene Änderung im ServiceWorker das install-Event erneut auslöst und somit den Cache des Browsers erneuert,
+            sprich mit den neuen Inhalten füllt.
+            <br>
+            <br>
+            Alle weiteren Strategien zum cachen von Assets sind <a href="https://web.dev/offline-cookbook/">hier</a> zu finden.
+            <br>
+            <br>
+            <br>
+            <h3>Strategien zur Bereitstellung der Daten</h3>
+            Nachdem die Cache-Strategie festgelegt wurde, ist es ebenfalls äußerst wichtig festzulegen,
+            wie der Browser nun mit den Daten im Cache und den Netzwerkdaten umzugehen hat.
+            Dafür werden ebenfalls drei Strategien zur Verdeutlichung der Thematik kurz vorgestellt
+            <br>
+            <br>
+
+            <h5>Nur Cache:</h5>
+            Bei der "nur Cache"-Strategie werden alle Assets lediglich aus dem Cache entnommen.
+            Das macht Sinn, wenn die Webseite aus statischen Inhalten besteht, die sich nur sehr selten bis gar nicht verändern.
+
+            <br>
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/Cache_only.png" alt="Cache only" width="50%">
+            <div class="text-center">
+                Quelle: https://web.dev/offline-cookbook/
+            </div>
+            <br>
+            <br>
+
+            <h5>Cache, Netzwerk-Fallback-Strategie:</h5>
+            Bei dieser Strategie werden die Daten in erster Instanz aus dem Cache entnommen.
+            Sind diese nicht vollständig oder fehlen ganz, wird auf die Netzwerkverbindung zurückgegriffen.
+            Diese Strategie wird auch "offline first"-Strategie genannt, da der Fokus auf den im Cache gespeicherten Asstes liegt.
+
+            <br>
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/Cache_Fallback.png" alt="Cache network fallback" width="50%">
+            <div class="text-center">
+                Quelle: https://web.dev/offline-cookbook/
+            </div>
+            <br>
+            <br>
+
+            <h5>Cache, dann Netzwerk:</h5>
+            Die "Cache then Network"-Strategie ist ideal für Webseiten, deren Inhalte sich häufig verändern.
+            Sie besteht aus zwei seperaten Anfragen.
+            Als erstes werden die Inhalte aus dem Cache dargestellt.
+            Gleichzeitig wird eine Netzwerkanfrage gesendet, die die gleichen Inhalte vom Webserver anfragt.
+            Sobald die Inhalte der Netzwerkanfrage eintreffen, werden sie sowohl im Cache als auch auf der Nutzeransicht ausgetauscht.
+
+            <br>
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/Cache_then_Network.jpg" alt="Cache then network" width="50%">
+            <div class="text-center">
+                Quelle: https://web.dev/offline-cookbook/
+            </div>
+            <br>
+            <br>
+
+            Alle weiteren Strategien zum Bereitstellen der Assets aus den Caches <a href="https://web.dev/offline-cookbook/">hier</a> zu finden.
 
 
 

@@ -3,7 +3,14 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="ddbd56ff-599f-462d-997e-10bb4599a838" name="local" url="http://localhost">
-        <fileTransfer mountedRoot="/Applications/XAMPP/xamppfiles/htdocs/Wizard" accessType="MOUNT" port="0" />
+        <fileTransfer mountedRoot="C:\xampp\htdocs\Wizard" accessType="MOUNT" port="0" />
+      </webServer>
+      <webServer id="ead21ef9-c34a-4a84-9ae0-6126b605adb8" name="ooowebhost" url="http://files.000webhost.com">
+        <fileTransfer host="files.000webhost.com" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
       </webServer>
     </option>
   </component>

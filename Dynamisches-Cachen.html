@@ -125,7 +125,169 @@
                 </button>
             </div>
 
-            Text
+            Nachdem die passende Strategie gewählt ist, muss überlegt werden, welche Daten gecached werden sollen.
+            Handelt es sich bei den Inhalten der Webseite lediglich um statische Assets, so ist diese Aufgabe recht einfach und schnell erledigt.
+            Kommen dynamische Assets hinzu, gestaltet sich diese Aufgabe als wesentlich komplizierter.
+            <br>
+            <br>
+            <br>
+            <h3>Statische Assets</h3>
+
+            <h5>Zu den statischen Assets gehören:</h5>
+            <ul>
+                <li>Alle verwendeten Bilder/Icons/Logos</li>
+                <li>Die CSS-Datei bzw. Boostrap</li>
+                <li>Die externe JavaScript-Datei (app.js)</li>
+                <li>Das Web-App-Manifest</li>
+                <li>Die HTML-Seiten</li>
+            </ul>
+
+            <br>
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/PWA2_StaticCache.png" alt="StaticCache">
+            <br>
+            <br>
+
+            Bei nur statischen Assets ist es sinnvoll, diese im <i><b>install</b></i>-Event zu cachen.
+            Dafür muss, wie beim Cachen der Fallbackpage der Cache geöffnet und gefüllt werden.
+
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+self.addEventListener("install", (event) => {
+    event.waitUntil(
+        caches.open(CACHE_NAME).then(cache => {
+            cache.addAll(ASSETS);
+        })
+    );
+    self.skipWaiting();
+});
+        </code></pre></div>
+            <br>
+
+            Das <i><b>activate</b></i>-Event verändert sich ebenfalls nicht, da lediglich der statische Cache geprüft werden muss.
+
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+self.addEventListener("activate", (event) => {
+    event.waitUntil(
+        caches.keys().then(keys => {
+            return Promise.all(keys
+                .filter(key => key !== CACHE_NAME)
+                .map(key => caches.delete(key))
+            )
+        })
+    );
+});
+        </code></pre></div>
+            <br>
+
+            Das <i><b>fetch</b></i>-Event hingegen ist deutlich anders aufgebaut, als bei der installierbaren PWA.
+            Es beantwortet erstmal alle Anfragen bzw Seitenaufrufe aus dem Cache.
+            Fehlen Assets teilweise, so werden diese vom Netzwerk angefragt (gefetched).
+
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+self.addEventListener("fetch", event => {
+    event.respondWith(
+        caches.match(event.request).then(response => {
+            return response || fetch(event.request);
+        })
+    )
+});
+        </code></pre></div>
+            <br>
+            <br>
+            <br>
+            <h3>Statische und dynamische Assets</h3>
+
+            Wenn es darum geht, dass die PWA sowohl statische, als auch dynamische Assets enthält, muss erstmal festgelegt werden, welche Assets statisch sind und welche dynamisch.
+            Zu den dynamischen Assets zählen alle die, die sich ständig verändern, also beispielsweise von Nutzern verändert werden können oder aus Datenbanken ausgegeben werden.
+            Im Beispiel der Personentabelle sind das alle Personen, die in der Tabelle hinzugefügt wurden und deren Attribute.
+            Des Weiteren muss überlegt werden, welche der dynamischen Daten relevant genug sind, um diese offline zur Verfügung zu stellen.
+        <br>
+            <br>
+            <h5>ServiceWorker:</h5>
+            Für das Cachen von dynamischen Assets muss der ServiceWorker erweitert werden.
+            Dort wird nun, neben dem statischen Cache, der dynamische Cache mit Assets befüllt.
+
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+const STATIC_CACHE = "static-v1";
+const DYNAMIC_CACHE = "dynamic-v1";
+
+const DYNAMIC_ASSETS = [
+    "http://localhost/people/getPeople",
+    "http://localhost/people/checkCookie"
+];
+
+const STATIC_ASSETS = [
+    "/logo.ico",
+    "/manifest.webmanifest",
+    "/people",
+    ...
+];
+        </code></pre></div>
+        <br>
+            <i>Wichtig:</i><br>
+            Die ServiceWorker-Datei darf nicht gecached werden!
+            <br>
+            <br>
+            <h5>Zu den dynamischen Assets gehören:</h5>
+            <ul>
+                <li>Die Funktionen, die auf die dynamischen Inhalte zugreifen, die gecached werden sollen</li>
+                <li>Funktionen zur Validierung der Nutzereingaben</li>
+            </ul>
+            <br>
+            Die statischen und dynamischen Assets werden im Beispiel im <i><b>install</b></i>-Event zu dem dementsprechenden Cache hinzugefügt.
+            Dabei werden die beiden Caches seperat und nacheinander mit der <i><b>caches.open</b></i>-Funktion erstellt.
+            Daraufhin werden diese mit Hilfe der <i><b>addAll</b></i> bzw. <i><b>add</b></i>-Funktion gefüllt.
+
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+self.addEventListener("install", (event) => {
+    event.waitUntil(
+        caches.open(STATIC_CACHE).then(cache => {
+            cache.addAll(STATIC_ASSETS)
+                .catch(err => {
+                });
+            cache.add(new Request(OFFLINE_URL, { cache: "reload" }));
+        })
+    );
+    event.waitUntil(
+        caches.open(DYNAMIC_CACHE).then(cache => {
+            cache.addAll(DYNAMIC_ASSETS);
+        })
+    );
+    self.skipWaiting();
+});
+        </code></pre></div>
+
+            <br>
+            <br>
+            <img class="img-thumbnail mx-auto d-block" src="img/PWA2_DynamicCache.png" alt="DynamicCache">
+            <br>
+            <br>
+
+            Des Weiteren werden, wie im vorherigen Kapitel bereits erklärt, im <i><b>activate</b></i>-Event die Caches gelöscht, die nicht dem aktuellen Cache entsprechen.
+            Hier kommt dazu, dass neben dem statischen Cache nun auch der dynamische Cache überprüft werden muss.
+
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+self.addEventListener("activate", (event) => {
+    event.waitUntil(
+        caches.keys().then(keys => {
+            return Promise.all(keys
+                .filter(key => key !== STATIC_CACHE && key !== DYNAMIC_CACHE)
+                .map(key => caches.delete(key))
+            )
+        })
+    );
+});
+        </code></pre></div>
+            <br>
+
+
+
+
+
+
+
+
+
 
 
 

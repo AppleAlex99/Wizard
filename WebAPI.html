@@ -168,7 +168,7 @@ public function getAllSubscribers(){
     return $this->_subscribers->get()->getResult();
 }
 
-//Nutzer durch dessen endpoint ausfindig machen
+// Nutzer durch dessen endpoint ausfindig machen
 public function getSubscribersByEndpoint($endpoint){
     return $this->_subscribers
         ->where("endpoint", $endpoint)
@@ -331,7 +331,7 @@ function push_sendSubscriptionToServer(subscription, method) {
             Als letztes wird das Abonnement mit allen gegebenen Parametern, also dem publicKey, dem authToken und dem endpoint mit Hilfe der
             <i><b>push_sendSubscriptionToServer</b></i>-Methode als JSON durch die Verwendung von <i><b>fetch</b></i> an den Server gesendet.
             <br>
-            Die Methode push_unsubscribe der app.js-Datei macht das Abonnement rückgängig.
+            Die Methode <i><b>push_unsubscribe</b></i> der app.js-Datei macht das Abonnement rückgängig.
 
             <br>
             <br>
