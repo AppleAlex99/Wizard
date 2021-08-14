@@ -114,7 +114,7 @@
 
         <div class="col col-1"></div>
 
-        <div class="col col-6 mb-4 mt-0 bg-light">
+        <div class="col col-6 mb-4 mt-0">
 
             <div class="float-right mt-3">
                 <button type="button" onclick="location.href='https://github.com/Erdmanny/pwa_1'" style="border: #f3f3f3; background-color: #f3f3f3">
@@ -141,6 +141,13 @@
             Des Weiteren muss neben der serviceWorker.js-Datei eine weitere JavaScript-Datei hinzugefügt werden,
             im Beispiel die app.js-Datei, da der Service Worker auf einem eigenen Thread läuft und somit nicht auf den DOM
             der Webseite zugreifen kann.
+            <br>
+            <br>
+
+            <img src="img/service-worker-infografik.jpg" class="img-thumbnail" alt="Lifecycle">
+            <div class="text-center">
+            Quelle: https://www.netzbewegung.com/de/digitale-denkanstoesse/serviceworker/
+            </div>
 
         <div class="border border-primary mb-2 mt-2"><pre><code>
 &ltbody&gt
@@ -170,8 +177,9 @@ navigator.serviceWorker.register('serviceworker.js')
         Nachdem der ServiceWorker nun über die app.js registriert wurde, wird dieser automatisch vom Browser installiert.
         Nun braucht es in der serviceworker.js ein <i><b>install</b></i>-Event, ein <i><b>activate</b></i>-Event
         und ein <i><b>fetch</b></i>-Event.
-
-        <img class="img-thumbnail" src="img/SW.jpeg" alt="Ablauf SW">
+        <br>
+        <br>
+        <img class="img-thumbnail mx-auto d-block"  src="img/SW.jpeg" alt="Ablauf SW" width="50%">
         <br>
         <br>
         Das <i><b>install</b></i>-Event reagiert auf die Installation durch den Browser mit Hilfe des EventListener
@@ -238,9 +246,6 @@ self.addEventListener("fetch", (event) => {
             In der Abbildung ist zu sehen, dass die installierte Version der PWA als eigene Anwendung startet und nicht
             als Tab an den Chrome Browser gebunden ist.
             <br>
-            <img width="49%" class="img-thumbnail" src="img/Installieren.png" alt="Installieren">
-            <img width="49%" class="img-thumbnail" src="img/Installieren_Smartphone.JPG" alt="Installieren_Smartphone">
-            <br>
             <br>
             <img class="img-thumbnail" src="img/PC_Vergleich_PWA_Chrome.png" alt="Vergleich">
             <br>
@@ -248,9 +253,11 @@ self.addEventListener("fetch", (event) => {
             Des Weiteren ist zu erkennen, dass die PWA sich, wie eine native App aus dem Play Store,
             im Vollbildmodus zeigt und beispielsweise keine URL einblendet.
             <br>
-            <img width="33%" class="img-thumbnail" src="img/Chrome.JPG" alt="Chrome">
-            <img width="33%" class="img-thumbnail" src="img/Installiert.JPG" alt="Installiert">
-            <img width="33%" class="img-thumbnail" src="img/Installiert_vs_Chrome.JPG" alt="Installiert_vs_Chrome">
+            <div class="text-center">
+            <img width="20%" class="img-thumbnail" src="img/Chrome.JPG" alt="Chrome">
+            <img width="20%" class="img-thumbnail" src="img/Installiert.JPG" alt="Installiert">
+            <img width="20%" class="img-thumbnail" src="img/Installiert_vs_Chrome.JPG" alt="Installiert_vs_Chrome">
+            </div>
             <br>
             <br>
             Wie beim Web-App-Manifest kann nach der Fertigstellung der Komponenten des ServiceWorker ebenfalls überprüft werden,
@@ -263,10 +270,10 @@ self.addEventListener("fetch", (event) => {
 
             <br>
             <br>
-            <button type="button"onclick="location.href='ServiceWorker.html'" class="btn btn-primary">Nach oben</button>
+            <button type="button" onclick="location.href='ServiceWorker.html'" class="btn btn-primary">Nach oben</button>
 
             <div class="float-right">
-                <button type="button"onclick="location.href='Fallbackpage.html'" class="btn btn-primary">Fallbackpage <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-forward-fill" viewBox="0 0 16 16">
+                <button type="button" onclick="location.href='Fallbackpage.html'" class="btn btn-primary">Fallbackpage <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-forward-fill" viewBox="0 0 16 16">
                     <path d="m9.77 12.11 4.012-2.953a.647.647 0 0 0 0-1.114L9.771 5.09a.644.644 0 0 0-.971.557V6.65H2v3.9h6.8v1.003c0 .505.545.808.97.557z"/>
                 </svg></button>
             </div>
