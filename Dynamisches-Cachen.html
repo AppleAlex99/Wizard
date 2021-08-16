@@ -143,7 +143,6 @@
             </ul>
 
             <br>
-            <br>
             <img class="img-thumbnail mx-auto d-block" src="img/PWA2_StaticCache.png" alt="StaticCache" width="80%">
             <br>
             <br>
@@ -279,18 +278,219 @@ self.addEventListener("activate", (event) => {
 });
         </code></pre></div>
             <br>
+            Neben dem <i><b>install</b></i> und dem <i><b>activate</b></i>-Event muss ebenfalls das <i><b>fetch</b></i>-Event erweitert werden.
+            Dieses arbeitet nach der bereits erwähnten "Cache then Network"-Strategie.
+            Das <i><b>fetch</b></i>-Event der Beispiels unterscheidet dabei zwischen mehreren Ereignissen die eintreten können:
+            <br>
+            <br>
+            <ul>
+                <li><b>Zeile 1-10:</b> Sind die abgefragten dynamischen Assets im Cache enthalten,
+                    so werden diese aus dem Cache entnommen und angezeigt. Gleichzeitig wird eine Netzwerkanfrage gesendet
+                    und ein Klon der <i><b>response</b></i> mit Hilfe der <i><b>cache.put</b></i>-Funktion in den dynamischen
+                    Cache gespeichert. Daraufhin wird die <i><b>response</b></i> der Netzwerkanfrage angezeigt</li>
+                <li><b>Zeile 11-16:</b> Wenn die <i><b>fetch</b></i>-Anfrage der externen JavaScript-Datei (app.js) eine einzelne Person anfragt,
+                    um die Personendaten beispielsweise im Formular zur Bearbeitung anzuzeigen, so wird dieser Fall verwendet</li>
+                <li><b>Zeile 17-33:</b> Dieser Abschnitt behandelt die statischen Assets. Im <i><b>try</b></i>-Block wird versucht,
+                    die statischen Inhalte aus dem Cache zu erzeugen. Sind diese nicht vorhanden,
+                    so greift der <i><b>catch</b></i>-Block und die Fallbackpage wird angezeigt</li>
+            </ul>
 
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+self.addEventListener("fetch", (event) => {
+    if (DYNAMIC_ASSETS.indexOf(event.request.url) !== -1) {
+        event.respondWith(
+            caches.open(DYNAMIC_CACHE).then(function (cache) {
+                return fetch(event.request).then(function (response) {
+                    cache.put(event.request, response.clone());
+                    return response;
+                })
+            })
+        )
+    } else if (event.request.url.includes("editPerson?")) {
+        event.respondWith(
+            caches.match("/people/editPerson").then(cacheRes => {
+                return cacheRes || fetch(event.request)
+            })
+        )
+    } else {
+        if (event.request.mode === "navigate") {
+            event.respondWith(
+                (async () => {
+                    try {
+                        const cache = await caches.open(STATIC_CACHE);
+                        if (await cache.match(event.request)){
+                            return await cache.match(event.request)
+                        } else {
+                            return await fetch(event.request);
+                        }
+                    } catch (error) {
+                        const cache = await caches.open(STATIC_CACHE);
+                        return await cache.match(OFFLINE_URL);
+                    }
+                })()
+            );
+        }
+        ...
+    }
+});
+        </code></pre></div>
+            <br>
+            <br>
+            <h5>app.js:</h5>
+            Die in der app.js-Datei implementierte Funktion <i><b>initTable</b></i> baut eine leere Personentabelle auf.
+            Dort werden danach über die <i><b>writeToView</b></i>-Funktion die Daten eingefügt.
+            Dabei ist wichtig, dass die Tabelle der <i><b>initTable</b></i>-Funktion sowohl alle Attribute der Personen enthält,
+            als auch ein Feld für die Buttons zum editieren und löschen der Person.
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+const peopleTable = $("#peopleTable");
 
+function initTable() {
+    peopleTable.bootstrapTable({
+        columns: [{
+            field: "id",
+            title: "ID"
+        }, {
+            field: "fullname",
+            title: "Name"
+        },
+        ...
+        ]
+    })
+}
 
+initTable();
+        </code></pre></div>
+            <br>
 
+            Aktualisiert der Nutzer die Seite, wenn er online ist, so wird ein <i><b>fetch</b></i>-Event mit der angegebenen
+            URL ausgelöst.
 
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+if (navigator.onLine) {
+    people = fetch("http://localhost/people/getPeople")
+        .then(response => response.json())
+        .then(data => {
+            writeToView(data);
+        })
+        .catch(err => {
+            console.log("Security cookies not found");
+        })
+}
+        </code></pre></div>
+            <br>
 
+            Bei der URL handelt es sich um die im Controller enthaltene <i><b>getPeople</b></i>-Funktion,
+            welche ein JSON-Objekt zurückgibt.
 
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+caches.open("dynamic-v1").then(function (cache) {
+    cache.match("http://localhost/people/getPeople")
+        .then(response => {
+            if (!response) throw Error("No Data");
+            return response.json();
+        })
+        .then(data => {
+            writeToView(data);
+        })
+        .catch(() => people)
+});
+        </code></pre></div>
+            <br>
 
+            Durch das <i><b>fetch</b></i>-Event in der app.js-Datei wird das <i><b>fetch</b></i>-Event im ServiceWorker ausgelöst,
+            da die app.js, anders als der ServiceWorker, nicht auf einem eigenständigem Thread läuft.
+            Der ServiceWorker fängt daraufhin die aufgerufene URL ab, erkennt statische bzw. dynamische Daten und reagiert dementsprechend.
+            Sind die Assets statisch, so werden diese aus dem Cache geladen.
+            Wenn es sich allerdings um dynamische Daten handelt, so fragt der ServiceWorker die Daten am Server an,
+            fetched die Antwort, speichert eine Kopie im Cache und gibt die Antwort an die ursprüngliche Anfrage zurück.
+            Das dabei empfangene JSON Objekt wird dann über Bootstrap Table in HTML dargestellt.
+            <br>
+            Sollte keine Internetverbindung bestehen, so wird der dynamische Cache durch die <i><b>cache.open</b></i>-Funktion geöffnet
+            und die darin zuletzt vom Server erhaltenen Assets in der View ausgegeben.
+            <br>
+            <br>
+            Die <i><b>writeToView</b></i>-Funktion lädt die erhaltenen Inhalte in die Personentabelle.
 
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+function writeToView(people) {
+    peopleTable.bootstrapTable('load', people);
+}
+        </code></pre></div>
+            <br>
 
+            Der <i><b>EventListener('online')</b></i> sowie <i><b>EventListener('offline')</b></i> aktualisiert die Webseite,
+            sobald registriert wird, dass diese offline bzw. wieder online gegangen ist.
 
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+window.addEventListener('online', () => {
+    location.reload();
+})
 
+window.addEventListener('offline', () => {
+    location.reload();
+})
+        </code></pre></div>
+            <br>
+            <br>
+            <h5>Controller:</h5>
+            CodeIgniter wird für die Read-Only und die Read-Write PWA nicht mehr als "reines" MVC-Framework verwendet.
+            Daten werden nun durch die Verwendung von <i><b>ResponseTrait</b></i> über JavaScript vom Controller angefragt,
+            damit dieser API-Funktionalitäten bereitstellt.
+
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+//Vorher
+public function index()
+{
+    $data['people'] = $this->_peopleModel->getPeople();
+    echo view('header');
+    echo view('people', $data);
+    echo view('footer');
+}
+
+//Nachher
+public function index()
+{
+    echo view('header');
+    echo view('people');
+    echo view('footer');
+}
+        </code></pre></div>
+            <br>
+
+            Das bedeutet konkret, dass die <i><b>index</b></i>-Funktion kein <i><b>$data</b></i>-Array mehr enthält,
+            in das die Daten des Model geladen werden und die schließlich an die View übergeben werden.
+            <br>
+            <br>
+            Stattdessen müssen nun neue Funktionen implementiert werden, die die Daten abfragen können.
+            Im Beispiel der Personentabelle sollen alle Personen, die online zur Tabelle hinzugefügt wurden, offline weiter einsehbar sein.
+            Die <i><b>getPeople</b></i>-Funktion überprüft als aller erstes, ob die Cookies gesetzt sind,
+            da diese relevant für die Validierung der Nutzereingaben sind.
+            Sind diese gesetzt, so werden sie gelöscht und neu besetzt.
+            Daraufhin werden die Daten wie gewohnt über die <i><b>getPeople</b></i>-Funktion des Models aus der Datenbank entnommen
+            und in der Variable <i><b>$people</b></i> gespeichert.
+            <br>
+            Mit Hilfe der <i><b>for</b></i>-Schleife werden dann die Attribute "Adresse" und "Name" zusammengefasst,
+            da diese auch gemeinsam in einer Spalte der Tabelle auftauchen.
+            Des Weiteren werden für jede Person die beiden Buttons mit der jeweiligen ID generiert.
+
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+public function getPeople(): Response
+{
+    ... //unset und set cookies
+
+    $people = $this->_peopleModel->getPeople();
+
+    ... //Zusammenfassen der Attribute
+
+    $this->_session->destroy();
+    return $this->respond($people)
+        ->setContentType('application/json');
+}
+        </code></pre></div>
+            <br>
+            Daraufhin werden die Daten nicht, wie bei der Umsetzung nach dem MVC-Konzept,
+            direkt in die View geschrieben, sondern als Antwort vom Server im JSON-Format zurückgegeben,
+            damit JavaScript diese verarbeiten kann.
 
             <br>
             <br>

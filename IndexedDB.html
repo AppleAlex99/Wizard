@@ -125,6 +125,187 @@
         </button>
       </div>
 
+      Daten, die vom Nutzer hinzugefügt werden, während keine Internetverbindung besteht, können nicht wie die anderen Assets,
+      im Cache zwischengespeichert werden.
+      Die Lösung ist die Verwendung einer IndexedDB.
+      Diese speichert <i><b>POST</b></i>-Request so lange ab, bis wieder eine Internetverbindung besteht.
+      <br>
+      <br>
+      Für die Verwendung von IndexedDB muss die externe JavaScript-Datei (app.js) erweitert werden.
+      Eine IndexedDB besteht aus mehreren <i><b>ObjectStores</b></i>, die wiederum Tabellen beinhalten,
+      in denen dann die Daten gespeichert werden.
+      <br>
+      <br>
+      Also muss als erstes eine <i><b>initIndexedDB</b></i>-Methode erstellt werden, die die IndexedDB und die
+      dazugehörigen <i><b>ObjectStores</b></i> initialisiert.
+      <i><b>onupgradeneeded</b></i> wird nur dann aufgerufen, wenn die Datenbank noch nicht existiert,
+      oder die Versionsnummer sich ändert.
+
+      <div class="border border-primary mb-2 mt-2"><pre><code>
+function initIndexedDB() {
+    let idb = window.indexedDB.open("people", 1);
+    idb.onupgradeneeded = event => {
+        let db = event.target.result;
+        db.createObjectStore("addPeople", {autoIncrement: true});
+        db.createObjectStore("editPeople", {autoIncrement: true});
+        db.createObjectStore("deletePeople", {autoIncrement: true});
+    };
+}
+        </code></pre></div>
+      <br>
+
+      Für jede Funktion, die offline durchgeführt werden kann, muss ein eigener <i><b>ObjectStore</b></i> erstellt werden.
+      <br>
+      <br>
+      Die Funktionsweise der IndexedDB wird nun am Beispiel des Hinzufügen erklärt.
+      <br>
+      <br>
+      Der Ablauf beim Editieren und Löschen ist gleich, lediglich einige Abschnitte von Funktionen unterscheiden
+      sich teilweise voneinander.
+      Der <i><b>EventListener("click")</b></i> reagiert als aller erstes auf den Klick des "Save"-Buttons der View.
+      Wurden nun also Personendaten eingetragen, so werden diese als erstes mit Hilfe der <i><b>checkAddInput</b></i>-Methode validiert.
+      Das ist eine neu hinzugefügte Funktion, die die Validierung über JavaScript übernimmt, da diese offline nicht über PHP möglich ist.
+      <br>
+      Ist die Validierung erfolgreich, so werden die gesetzten Werte in die <i><b>person</b></i>-Variable geschrieben.
+      <br>
+      <br>
+      Ist der Nutzer beim Hinzufügen der Person(en) online, so greift die <i><b>if</b></i>-Abfrage.
+      Die dabei erhaltenen Informationen werden dann in ein Array geschrieben und mit dem Aufruf der <i><b>addPeopleToSQL</b></i>-Funktion
+      an diese übergeben.
+
+      <div class="border border-primary mb-2 mt-2"><pre><code>
+if (document.getElementById("add-button") !== null) {
+    document.getElementById("add-button").addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        if (checkAddInput()) {
+            let person = {
+                "new-prename": document.getElementById("new-prename").value,
+                "new-surname": document.getElementById("new-surname").value,
+                ...
+            };
+            document.cookie = "success=Person added.; path=/"
+
+            if (navigator.onLine) {
+                let peopleArray = new Array(person);
+                addPeopleToSQL(peopleArray);
+                window.location.href = "http://localhost/people";
+            } else {
+                Object.assign(person,
+                    {
+                        "offline": "<i class='bi bi-plus-lg'></i>",
+                        "fullname": person["new-prename"] + " " + person["new-surname"],
+                        "street": person["new-street"],
+                        "address": person["new-postcode"] + " " + person["new-city"],
+                    });
+                addToAddPeopleIDB(person)
+                    .then(() => {
+                        window.location.href = "http://localhost/people";
+                    })
+                    .catch(error => {
+                        console.log("Error adding person to addPeopleIDB", error);
+                    })
+            }
+
+        }
+    })
+}
+        </code></pre></div>
+      <br>
+
+      Ist der Nutzer offline, so wird der <i><b>else</b></i>-Abschnitt ausgeführt.
+      In diesem Abschnitt wird als erstes das <i><b>Object</b></i> um die eingegeben Informationen erweitert.
+      Neben den eingegebenen Informationen wird ebenfalls ein "plus"-Symbol hinzugefügt, was dem Benutzer offline
+      die ausgeführte Operation in der Tabelle anzeigt.
+      Als letztes wird die <i><b>addToAddPeopleIDB</b></i>-Methode aufgerufen und die <i><b>person</b></i>-Variable mit übergeben.
+      Ist das erfolgreich, so wird der Nutzer auf die Tabelle navigiert, wenn nicht, wird eine Fehlermeldung in der Konsole erzeugt.
+      <br>
+      <br>
+      Die <i><b>checkAddInput</b></i>-Funktion überprüft die Nutzereingaben und validiert diese.
+      Erfüllen alle Angaben zur Person die Anforderungen, so wird <i><b>true</b></i> zurückgegeben, tun diese es nicht,
+      dann wird <i><b>false</b></i> zurückgegeben und die Fehlermeldung angezeigt.
+
+      <div class="border border-primary mb-2 mt-2"><pre><code>
+function checkAddInput() {
+    let numbers = /^[0-9]+$/;
+    if (document.getElementById("new-prename").value === "" ||
+        document.getElementById("new-surname").value === "") {
+        document.getElementById("error-new-prename").innerHTML = null;
+        document.getElementById("error-new-surname").innerHTML = null;
+        ...
+        if (document.getElementById("new-prename").value === "") {
+            document.getElementById("error-new-prename").innerHTML = "&ltdiv class='alert alert-danger' role='alert'&gtA prename is required.&lt/div&gt";
+        }
+
+        if (document.getElementById("new-surname").value === "") {
+            document.getElementById("error-new-surname").innerHTML = "&ltdiv class='alert alert-danger' role='alert'&gtA surname is required.&lt/div&gt";
+        }
+        ...
+        return false;
+    } else {
+        return true;
+    }
+}
+        </code></pre></div>
+      <br>
+
+      Die <i><b>addPeopleToSQL</b></i>-Funktion wird aufgerufen, wenn der Nutzer eine Person online hinzufügt.
+      Des Weiteren wird sie in der <i><b>if(navigator.onLine)</b></i>-Abfrage aufgerufen, um Personen,
+      die offline hinzugefügt wurden aus der <i><b>indexedDB</b></i> in die SQL-Datenbank zu schreiben.
+      <br>
+      <br>
+      Die <i><b>addPeopleToSQL</b></i>-Funktion erhält den <i><b>people</b></i>-Parameter, verarbeitet die erhaltenen Daten und übergibt
+      diese via <i><b>POST</b></i> an die angegebene URL.
+      Ist das erfolgreich, so wird die Funktion <i><b>clearAddPeopleIDB</b></i> aufgerufen, um die Personendaten zum Hinzufügen
+      einer Person aus der IndexedDB zu entfernen.
+
+      <div class="border border-primary mb-2 mt-2"><pre><code>
+function addPeopleToSQL(people) {
+    $.ajax({
+        url: "http://localhost/people/addPerson_Validation",
+        type: "POST",
+        data: {people: people},
+        success: () => {
+            clearAddPeopleIDB()
+                .then(() => {
+                    location.reload();
+                })
+                .catch(err => {
+                    console.log("Error in sendPeopleToSQL: ", err);
+                });
+        },
+        error: err => {
+            console.log("Error sending data to server", err);
+        }
+    })
+}
+        </code></pre></div>
+      <br>
+
+      Ist das erfolgreich, so wird die Seite neu geladen.
+      <br>
+      <br>
+      Die <i><b>clearAddPeopleIDB</b></i>-Funktion entfernt, wie bereits erwähnt,
+      die Datensätze aus der IndexedDB und wird aufgerufen, nachdem diese in der SQL-Datenbank enthalten sind.
+
+      <div class="border border-primary mb-2 mt-2"><pre><code>
+function clearAddPeopleIDB() {
+    return new Promise((resolve, reject) => {
+        let db = window.indexedDB.open("people", 1);
+
+        db.onsuccess = function () {
+            this.result.transaction("addPeople", "readwrite").objectStore("addPeople").clear();
+            console.log("Cleared add people");
+            resolve();
+        };
+
+        db.onerror = err => {
+            reject(err);
+        };
+    })
+}
+        </code></pre></div>
+      <br>
 
 
 
