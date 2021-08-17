@@ -283,6 +283,7 @@ function addPeopleToSQL(people) {
       <br>
 
       Ist das erfolgreich, so wird die Seite neu geladen.
+      Andernfalls wird in der Konsole eine Fehlermeldung ausgegeben.
       <br>
       <br>
       Die <i><b>clearAddPeopleIDB</b></i>-Funktion entfernt, wie bereits erwähnt,
@@ -295,7 +296,6 @@ function clearAddPeopleIDB() {
 
         db.onsuccess = function () {
             this.result.transaction("addPeople", "readwrite").objectStore("addPeople").clear();
-            console.log("Cleared add people");
             resolve();
         };
 
@@ -306,8 +306,130 @@ function clearAddPeopleIDB() {
 }
         </code></pre></div>
       <br>
+      
+      Die <i><b>addToAddPeopleIDB</b></i>-Funktion wird aufgerufen, wenn der Nutzer offline ist und Änderungen vornimmt.
+      Sie erhält den Parameter <i><b>people</b></i>, öffnet die IndexedDB und fügt die Daten mit Hilfe der <i><b>add</b></i>-Funktion
+      zum entsprechenden <i><b>ObjectStore</b></i> hinzu.
+      
+      <div class="border border-primary mb-2 mt-2"><pre><code>
+function addToAddPeopleIDB(people) {
+    return new Promise((resolve, reject) => {
+        let db = window.indexedDB.open("people");
 
+        db.onsuccess = function () {
+            let objStore = this.result.transaction("addPeople", "readwrite").objectStore("addPeople");
 
+            objStore.add(people);
+            resolve();
+        };
+        db.onerror = function (err) {
+            reject(err);
+        };
+
+    })
+}
+        </code></pre></div>
+      <br>
+      
+      Da es hierbei um die offline-Funktionalitäten rund um das Hinzufügen einer Person geht, wird der \verb|ObjectStore("addPeople")| verwendet.
+      <br>
+      <br>
+      Die offline Hinzugefügten Daten können über "Untersuchen" -> "Application" -> "IndexedDB" eingesehen werden.
+      <br>
+      <br>
+      <img src="" alt="" class="" width="">
+      %Bild aus dem Browser wenn offline Daten hinzugefügt wurde (untersuchen, dann IndexedDB auswählen)
+      <br>
+      <br>
+      Die <i><b>if(navigator.onLine)</b></i>-Abfrage muss erweitert werden.
+      Diese initialisiert als erstes den ServiceWorker und  die IndexedDB, wenn der Nutzer online ist.
+      
+            <div class="border border-primary mb-2 mt-2"><pre><code>
+if (navigator.onLine) {
+    fetch("http://localhost/people/checkCookie")
+        .then((resp) => resp.json())
+        .then(data => {
+            if (data) {
+                window.location.href = "http://localhost/";
+            } else {
+                initIndexedDB();
+                initServiceWorker();
+                ...
+                getPeopleAddIDB()
+                    .then(response => {
+                        if (response.length !== 0) {
+                            addPeopleToSQL(response);
+                        }
+                    });
+                    ...
+            }
+        })
+}
+        </code></pre></div>
+      <br>
+      
+      Daraufhin wird die Funktion <i><b>getPeopleAddIDB</b></i> aufgerufen.
+      Diese liefert alle zur IndexedDB hinzugefügten Personen zurück, die dann durch die bekannte Methode <i><b>addPeopleToSQL</b></i> zur SQL-Datenbank hinzugefügt werden.
+      
+                  <div class="border border-primary mb-2 mt-2"><pre><code>
+function getPeopleAddIDB() {
+    return new Promise(function (resolve, reject) {
+        let db = window.indexedDB.open("people", 1);
+        db.onsuccess = function () {
+            this.result.transaction("addPeople")
+                .objectStore("addPeople").getAll().onsuccess = function (event) {
+                resolve(event.target.result);
+            };
+        };
+
+        db.onerror = err => {
+            reject("Error in getAddIDB: ", err);
+        };
+    })
+}
+        </code></pre></div>
+      <br>
+      
+      Daten in der IndexedDB werden ebenso wie die Daten vom Server, die im Cache zwischengespeichert sind,
+      über HTML ausgegeben, um auch die offline hinzugefügten, bearbeiteten oder gelöschten Personen weiterhin offline einsehen zu können.
+      Dafür muss das <i><b>fetch</b></i>-Event der externen JavaScript-Datei wie folgt erweitert werden.
+      
+                        <div class="border border-primary mb-2 mt-2"><pre><code>
+caches.open("dynamic-v1").then(function (cache) {
+    cache.match("http://localhost/people/getPeople")
+        .then(response => {
+            if (!response) throw Error("No Data");
+            return response.json();
+        })
+        .then(data => {
+            ...
+            getPeopleAddIDB().then(addPeople => {
+                if (addPeople.length !== 0) {
+                    let combined = data.concat(addPeople);
+                    writeToView(combined);
+                } else {
+                    writeToView(data);
+                }
+            })
+        })
+        .catch(() => people)
+});
+        </code></pre></div>
+      <br>
+      
+      Das <i><b>fetch</b></i>-Event ruft die <i><b>getPeopleAddIDB</b></i>-Funktion auf, prüft, ob diese Assets enthält und schreibt diese in die View.
+      Somit werden offline hinzugefügte/bearbeitete/gelöschte Personen direkt clientseitig angezeigt.
+      <br>
+      <br>
+      <img src="" alt="" class="" width="">
+      <br>
+      <br>
+      %% Bild von offline Hinzugefügter/Bearbeiteter/Gelöschter Person offline zeigen
+
+      Offline hinzugefügte Personen können nicht erneut bearbeitet werden. 
+      Das liegt daran, dass die ID erst bei der nächsten Verbindung zum Internet durch das Datenbanksystem bereitgestellt wird. 
+      
+      
 
 
       <br>
