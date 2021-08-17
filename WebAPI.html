@@ -151,7 +151,7 @@
             Dieses enthält Funktionen um neue Abonnenten hinzuzufügen, diese zu aktualisieren,
             zu entfernen und um alle Abonnenten der Tabelle ausgegeben zu bekommen.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-php">
 // Abonnenten hinzufuegen, Prinzip beim loeschen und bearbeiten gleich
 public function insertSubscriber($endpoint, $auth, $p256dh){
     $data = [
@@ -175,7 +175,7 @@ public function getSubscribersByEndpoint($endpoint){
         ->get()
         ->getResult();
 }
-        </code></pre></div>
+        </code></pre>
             <br>
             <br>
             <h4>People-Controller:</h4>
@@ -187,11 +187,10 @@ public function getSubscribersByEndpoint($endpoint){
             Danach werden in die Variable <i><b>$keys_auth</b></i> alle Informationen der Abonnenten gespeichert, an die die Nachricht gesendet werden soll.
 
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-php">
 $subscribers = $this->_pushNotificationsModel->getAllSubscribers();
 
 foreach ($subscribers as $row){
-
     $keys_auth = array(
         "contentEncoding" => "aesgcm",
         "endpoint" => $row->endpoint,
@@ -200,11 +199,9 @@ foreach ($subscribers as $row){
             "p256dh" => $row->p256dh
         )
     );
-
     $message = "added";
-
     $this->sendMessage($keys_auth, $row->endpoint, $message, $this->request->getVar('new-prename'),  $this->request->getVar('new-surname'));
-        </code></pre></div>
+        </code></pre>
 
             Innerhalb der foreach-Schleife wird dann mit jedem Subscriber die Funktion sendMessage aufgerufen.
             <br>
@@ -218,9 +215,10 @@ foreach ($subscribers as $row){
             <h4>People-View:</h4>
             Nach der Anpassung der Datenbank und des Controllers muss nun als drittes den Views ein Button hinzugefügt werden,
             auf den die Nutzer klicken können, um sich für die Push-Benachrichtigungen zu registrieren.
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+
+            <pre><code class="language-html">
 &ltbutton id="pushButton" class="btn btn-primary mr-2 d-flex justify-content-center align-items-center"&gtPush on&lt/button&gt
-        </code></pre></div>
+        </code></pre>
             Im Beispiel wurde dies mittels eines Button gelöst.
             Eine andere Möglichkeit ist das Anzeigen eines Popup-Fensters, indem der Nutzer die Benachrichtigungen aktivieren kann.
 
@@ -231,7 +229,7 @@ foreach ($subscribers as $row){
             und durch die <i><b>registration.pushManager.getSubscription</b></i>-Funktionen kann der Nutzer nun Nachrichten vom Server erhalten.
             Als weiteres muss die app.js einen <i><b>click</b></i>-Event-Listener enthalten, der auf das Klicken des Benutzers auf den Push-Button horcht.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 const applicationServerKey =
     'BAwBLsFBXsZCFS_Mvc7AEwmQGQlS4gzEqwOouF2s7PWS7zXkvdoRcYQrnGpxNHccBXtVdfZqiPRtjgKe1D5Z6s8';
 
@@ -271,10 +269,11 @@ const pushButton = document.getElementById('pushButton');
                 });
         });
     }
-        </code></pre></div>
+        </code></pre>
 
             Besteht zum Zeitpunkt des Klicks auf den Button noch kein Abonnement, so wird die <i><b>push_subscribe</b></i>-Methode aufgerufen.
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+
+            <pre><code class="language-javascript">
 function push_subscribe() {
     return checkNotificationPermission()
         .then(() => navigator.serviceWorker.ready)
@@ -298,14 +297,14 @@ function push_subscribe() {
             }
         });
 }
-        </code></pre></div>
+        </code></pre>
 
             Die <i><b>push_subscribe</b></i>-Methode fragt daraufhin über die <i><b>checkNotificationPermission</b></i>-Methode ab, ob Push-Benachrichtigungen
             vom Nutzer erlaubt/aktiviert worden sind.
             Sind diese aktiviert worden, so wird der <i><b>applicationServerKey</b></i> über die <i><b>urlBase64ToUint8Array</b></i>-Methode erzeugt,
             um damit die Unterstützung von Chrome zu garantieren.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 function push_sendSubscriptionToServer(subscription, method) {
     const key = subscription.getKey('p256dh');
     const token = subscription.getKey('auth');
@@ -326,7 +325,7 @@ function push_sendSubscriptionToServer(subscription, method) {
         }),
     }).then(() => subscription);
 }
-        </code></pre></div>
+        </code></pre>
 
             Als letztes wird das Abonnement mit allen gegebenen Parametern, also dem publicKey, dem authToken und dem endpoint mit Hilfe der
             <i><b>push_sendSubscriptionToServer</b></i>-Methode als JSON durch die Verwendung von <i><b>fetch</b></i> an den Server gesendet.
@@ -342,7 +341,7 @@ function push_sendSubscriptionToServer(subscription, method) {
             Der ServiceWorker horcht mit Hilfe eines <i><b>push</b></i>-EventListener auf einen Push, erstellt daraufhin die Nachricht und
             zeigt diese über die Funktion <i><b>showNotification</b></i> an.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 self.addEventListener('push', event => {
     if (!(self.Notification && self.Notification.permission === 'granted')){
         return;
@@ -369,9 +368,13 @@ self.addEventListener('push', event => {
         event.waitUntil(sendNotification(message));
     }
 })
-        </code></pre></div>
+        </code></pre>
+        <br>
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            Die zweite Funktion, die im ServiceWorker implementiert werden muss, wird ausgelöst, wenn der Nutzer auf den Banner der Push-Nachricht klickt.
+            Dabei wird das <i><b>notificationclick</b></i>-Event ausgelöst, welches im Beispiel beinhaltet, dass die Webseite aufgerufen wird.
+
+            <pre><code class="language-javascript">
 self.addEventListener('notificationclick', event => {
     console.log(('[Service Worker] Notification click received.'));
     event.notification.close();
@@ -394,11 +397,7 @@ self.addEventListener('notificationclick', event => {
         }
     }));
 })
-        </code></pre></div>
-
-            Die zweite Funktion, die im ServiceWorker implementiert werden muss, wird ausgelöst, wenn der Nutzer auf den Banner der Push-Nachricht klickt.
-            Dabei wird das <i><b>notificationclick</b></i>-Event ausgelöst, welches im Beispiel beinhaltet, dass die Webseite aufgerufen wird.
-
+        </code></pre>
 
 
 

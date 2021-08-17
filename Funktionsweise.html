@@ -138,19 +138,19 @@
         <i><b>post</b></i>-Methode an die entsprechende Funktion des Controllers übergeben.
         <br>
 
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-html">
 &ltform action="&lt?php echo base_url("people/addPerson_Validation")?&gt" method="post" id="new-person-form"&gt
     &ltlabel for="new-prename"&gtPrename:&lt/label&gt
     &ltinput type="text" class="form-control" name="new-prename" id="new-prename" placeholder="Peter"&gt
 &lt/form&gt
-        </code></pre></div>
+        </code></pre>
 
         <br>
         Die <i><b>addPerson_Validation</b></i>-Funktion führt die Validierung der
         Eingaben durch und ruft bei korrekten Eingaben die Funktion <i><b>addPerson</b></i> im Model auf.
         <br>
 
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-php">
 {
     echo view('header');
     echo view('addPerson', ['error' => $this->validator]);
@@ -168,14 +168,14 @@
 
 echo view('footer');
 }
-        </code></pre></div>
+        </code></pre>
 
         <br>
         Die <i><b>addPerson</b></i>-Funktion des Models schreibt letztlich die Informationen
         in ein <i><b>$data</b></i>-Array und schreibt dieses Array, mit Hilfe des <i><b>insert</b></i>-Befehls, in die Datenbank.
         <br>
 
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-php">
 public function addPerson($prename, $name, $street, $zip, $city, $created_by) {
     $data = [
         'prename' => $prename,
@@ -187,7 +187,7 @@ public function addPerson($prename, $name, $street, $zip, $city, $created_by) {
     ];
     $this->_people->insert($data);
 }
-        </code></pre></div>
+        </code></pre>
 
         <br>
         <br>
@@ -196,12 +196,12 @@ public function addPerson($prename, $name, $street, $zip, $city, $created_by) {
         Die <i><b>getPeople</b></i>-Funktion des Models greift auf die Tabelle der Personen,
         die in der Datenbank gespeichert sind, zu und liefert diese als Array zurück.
         <br>
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-php">
 public function getPeople(): array
 {
     return $this->_people->get()->getResult();
 }
-        </code></pre></div>
+        </code></pre>
         <br>
         Die <i><b>getPeople</b></i>-Funktion des Models wird daraufhin von der <i><b>index</b></i>-Funktion im Controller aufgerufen.
         Diese schreibt die erhaltenen Daten in das <i><b>$data['people']</b></i>-Array.
@@ -210,7 +210,7 @@ public function getPeople(): array
         Dabei werden die Daten des <i><b>$data['people']</b></i>-Array mit an die View übergeben, in der diese ausgegeben werden sollen.
         <br>
 
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-php">
 public function index()
 {
     $data['people'] = $this->_peopleModel->getPeople();
@@ -218,12 +218,12 @@ public function index()
     echo view('people', $data);
     echo view('footer');
 }
-        </code></pre></div>
+        </code></pre>
 
         <br>
         Die View gibt die erhaltenen Informationen aller Personen schließlich mit Hilfe einer Schleife aus.
         <br>
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-php">
 &lttbody&gt
 &lt?php
 if ($people):
@@ -239,7 +239,7 @@ if ($people):
 endif;
 ?&gt
 &lt/tbody&gt
-        </code></pre></div>
+        </code></pre>
         <br>
         <br>
         <h5>Sessions:</h5>
@@ -250,13 +250,13 @@ endif;
         Nach erfolgreicher Eingabe der Login-Informationen des Nutzers wird die Session gesetzt.
         Das bedeutet im Beispiel, dass folgende Informationen in der Session gespeichert werden.
 
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-php">
 $this->_session->set([
     'id' => $user->id,
     'email' => $user->email,
     'isLoggedIn' => true,
     'token' => $user->token
-        </code></pre></div>
+        </code></pre>
 
         Solange die Session nicht abgelaufen ist oder durch einen Logout beendet wurde,
         wird beim Aufrufen anderer Unterseiten die Session-ID <i>'id'</i> mit dem Webserver abgeglichen.
@@ -264,13 +264,13 @@ $this->_session->set([
         Die Session kann über das Betätigen des Logout-Knopfes und mit der dahinter liegenden <i><b>logout</b></i>-Funktion
         beendet werden.
 
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-php">
 public function logout()
 {
     $this->_session->destroy();
     return redirect()->to('/');
 }
-        </code></pre></div>
+        </code></pre>
 
         <br>
         <br>

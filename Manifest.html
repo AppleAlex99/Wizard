@@ -131,9 +131,9 @@
         Dadurch macht das Manifest die PWA über den Browser für alle Endgeräte installierbar.
         Die Datei liegt im JSON Format vor (.JSON oder .webmanifest) und wird im Head aller HTML-Seiten verlinkt.
 
-    <div class="border border-primary mb-2 mt-2"><pre><code>
+    <pre><code class="language-html">
 &ltlink rel="manifest" href="manifest.webmanifest"&gt
-        </code></pre></div>
+        </code></pre>
 
     Das Manifest wird von Chrome, Edge, Opera, Firefox, UC Browser
     und dem Browser von Samsung vollständig unterstützt.
@@ -178,7 +178,7 @@
     Standalone ist dabei die Eigenschaft, die die PWA noch mehr einer nativen App ähneln lässt, da keine URL oder
     andere für Browser typischen Dinge angezeigt werden.
 
-    <div class="border border-primary mb-2 mt-2"><pre><code>
+    <pre><code class="language-json">
 {
   "name": "PWA 1",
   "short_name": "PWA 1",
@@ -203,7 +203,7 @@
     }
   ]
 }
-        </code></pre></div>
+        </code></pre>
         <br>
         Das Web-App-Manifest des Beispiels enthält neben den Mindestanforderungen noch einige andere Eigenschaften,
         wie eine Beschreibung ("description"), die Farbgebung der PWA als installierte Version ("background_color",
@@ -234,20 +234,23 @@
             <br>
             Für die Unterstützung des Icon auf dem Homebildschirm muss dabei im Head jeder HTML-Seite eine Verlinkung
             zu dem Icon eingebunden werden, das bei iOS-Benutzern verwendet werden soll.
-      <div class="border border-primary mb-2 mt-2"><pre><code>
+
+      <pre><code class="language-html">
 &ltlink rel="apple-touch-icon" href="icon/icon96.png"&gt
-      </code></pre></div>
+      </code></pre>
       <br>
+
       Der Ersatz der "theme_color" muss ebenfalls im Head jeder HTML-Seite wie folgt verlinkt sein.
-      <div class="border border-primary mb-2 mt-2"><pre><code>
+      <pre><code class="language-html">
 &ltmeta name="apple-mobile-web-app-status-bar" content="#0032FF"&gt
-      </code></pre></div>
+      </code></pre>
     <br>
+
       Außerdem muss für die PWA-Optimierung für alle Betriebssysteme neben dem Festlegen der "theme_color" im Web-App-Manifest,
             diese ebenfalls im Head jeder HTML-Seite hinterlegt sein.
-      <div class="border border-primary mb-2 mt-2"><pre><code>
+      <pre><code class="language-html">
 &ltmeta name="theme-color" content="#0032FF"&gt
-      </code></pre></div>
+      </code></pre>
 
             <br>
             <br>

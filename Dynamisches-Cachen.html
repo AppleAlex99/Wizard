@@ -150,7 +150,7 @@
             Bei nur statischen Assets ist es sinnvoll, diese im <i><b>install</b></i>-Event zu cachen.
             Dafür muss, wie beim Cachen der Fallbackpage der Cache geöffnet und gefüllt werden.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
@@ -159,12 +159,12 @@ self.addEventListener("install", (event) => {
     );
     self.skipWaiting();
 });
-        </code></pre></div>
+        </code></pre>
             <br>
 
             Das <i><b>activate</b></i>-Event verändert sich ebenfalls nicht, da lediglich der statische Cache geprüft werden muss.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 self.addEventListener("activate", (event) => {
     event.waitUntil(
         caches.keys().then(keys => {
@@ -175,14 +175,14 @@ self.addEventListener("activate", (event) => {
         })
     );
 });
-        </code></pre></div>
+        </code></pre>
             <br>
 
             Das <i><b>fetch</b></i>-Event hingegen ist deutlich anders aufgebaut, als bei der installierbaren PWA.
             Es beantwortet erstmal alle Anfragen bzw Seitenaufrufe aus dem Cache.
             Fehlen Assets teilweise, so werden diese vom Netzwerk angefragt (gefetched).
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 self.addEventListener("fetch", event => {
     event.respondWith(
         caches.match(event.request).then(response => {
@@ -190,7 +190,7 @@ self.addEventListener("fetch", event => {
         })
     )
 });
-        </code></pre></div>
+        </code></pre>
             <br>
             <br>
             <br>
@@ -206,7 +206,7 @@ self.addEventListener("fetch", event => {
             Für das Cachen von dynamischen Assets muss der ServiceWorker erweitert werden.
             Dort wird nun, neben dem statischen Cache, der dynamische Cache mit Assets befüllt.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 const STATIC_CACHE = "static-v1";
 const DYNAMIC_CACHE = "dynamic-v1";
 
@@ -221,7 +221,7 @@ const STATIC_ASSETS = [
     "/people",
     ...
 ];
-        </code></pre></div>
+        </code></pre>
         <br>
             <i>Wichtig:</i><br>
             Die ServiceWorker-Datei darf nicht gecached werden!
@@ -237,7 +237,7 @@ const STATIC_ASSETS = [
             Dabei werden die beiden Caches seperat und nacheinander mit der <i><b>caches.open</b></i>-Funktion erstellt.
             Daraufhin werden diese mit Hilfe der <i><b>addAll</b></i> bzw. <i><b>add</b></i>-Funktion gefüllt.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+           <pre><code class="language-javascript">
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(STATIC_CACHE).then(cache => {
@@ -254,7 +254,7 @@ self.addEventListener("install", (event) => {
     );
     self.skipWaiting();
 });
-        </code></pre></div>
+        </code></pre>
 
             <br>
             <br>
@@ -265,7 +265,7 @@ self.addEventListener("install", (event) => {
             Des Weiteren werden, wie im vorherigen Kapitel bereits erklärt, im <i><b>activate</b></i>-Event die Caches gelöscht, die nicht dem aktuellen Cache entsprechen.
             Hier kommt dazu, dass neben dem statischen Cache nun auch der dynamische Cache überprüft werden muss.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 self.addEventListener("activate", (event) => {
     event.waitUntil(
         caches.keys().then(keys => {
@@ -276,7 +276,7 @@ self.addEventListener("activate", (event) => {
         })
     );
 });
-        </code></pre></div>
+        </code></pre>
             <br>
             Neben dem <i><b>install</b></i> und dem <i><b>activate</b></i>-Event muss ebenfalls das <i><b>fetch</b></i>-Event erweitert werden.
             Dieses arbeitet nach der bereits erwähnten "Cache then Network"-Strategie.
@@ -295,7 +295,7 @@ self.addEventListener("activate", (event) => {
                     so greift der <i><b>catch</b></i>-Block und die Fallbackpage wird angezeigt</li>
             </ul>
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 self.addEventListener("fetch", (event) => {
     if (DYNAMIC_ASSETS.indexOf(event.request.url) !== -1) {
         event.respondWith(
@@ -333,7 +333,7 @@ self.addEventListener("fetch", (event) => {
         ...
     }
 });
-        </code></pre></div>
+        </code></pre>
             <br>
             <br>
             <h5>app.js:</h5>
@@ -341,7 +341,7 @@ self.addEventListener("fetch", (event) => {
             Dort werden danach über die <i><b>writeToView</b></i>-Funktion die Daten eingefügt.
             Dabei ist wichtig, dass die Tabelle der <i><b>initTable</b></i>-Funktion sowohl alle Attribute der Personen enthält,
             als auch ein Feld für die Buttons zum editieren und löschen der Person.
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 const peopleTable = $("#peopleTable");
 
 function initTable() {
@@ -359,13 +359,13 @@ function initTable() {
 }
 
 initTable();
-        </code></pre></div>
+        </code></pre>
             <br>
 
             Aktualisiert der Nutzer die Seite, wenn er online ist, so wird ein <i><b>fetch</b></i>-Event mit der angegebenen
             URL ausgelöst.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 if (navigator.onLine) {
     people = fetch("http://localhost/people/getPeople")
         .then(response => response.json())
@@ -376,13 +376,13 @@ if (navigator.onLine) {
             console.log("Security cookies not found");
         })
 }
-        </code></pre></div>
+        </code></pre>
             <br>
 
             Bei der URL handelt es sich um die im Controller enthaltene <i><b>getPeople</b></i>-Funktion,
             welche ein JSON-Objekt zurückgibt.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 caches.open("dynamic-v1").then(function (cache) {
     cache.match("http://localhost/people/getPeople")
         .then(response => {
@@ -394,7 +394,7 @@ caches.open("dynamic-v1").then(function (cache) {
         })
         .catch(() => people)
 });
-        </code></pre></div>
+        </code></pre>
             <br>
 
             Durch das <i><b>fetch</b></i>-Event in der app.js-Datei wird das <i><b>fetch</b></i>-Event im ServiceWorker ausgelöst,
@@ -411,17 +411,17 @@ caches.open("dynamic-v1").then(function (cache) {
             <br>
             Die <i><b>writeToView</b></i>-Funktion lädt die erhaltenen Inhalte in die Personentabelle.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 function writeToView(people) {
     peopleTable.bootstrapTable('load', people);
 }
-        </code></pre></div>
+        </code></pre>
             <br>
 
             Der <i><b>EventListener('online')</b></i> sowie <i><b>EventListener('offline')</b></i> aktualisiert die Webseite,
             sobald registriert wird, dass diese offline bzw. wieder online gegangen ist.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 window.addEventListener('online', () => {
     location.reload();
 })
@@ -429,7 +429,7 @@ window.addEventListener('online', () => {
 window.addEventListener('offline', () => {
     location.reload();
 })
-        </code></pre></div>
+        </code></pre>
             <br>
             <br>
             <h5>Controller:</h5>
@@ -437,7 +437,7 @@ window.addEventListener('offline', () => {
             Daten werden nun durch die Verwendung von <i><b>ResponseTrait</b></i> über JavaScript vom Controller angefragt,
             damit dieser API-Funktionalitäten bereitstellt.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-php">
 //Vorher
 public function index()
 {
@@ -454,7 +454,7 @@ public function index()
     echo view('people');
     echo view('footer');
 }
-        </code></pre></div>
+        </code></pre>
             <br>
 
             Das bedeutet konkret, dass die <i><b>index</b></i>-Funktion kein <i><b>$data</b></i>-Array mehr enthält,
@@ -473,7 +473,7 @@ public function index()
             da diese auch gemeinsam in einer Spalte der Tabelle auftauchen.
             Des Weiteren werden für jede Person die beiden Buttons mit der jeweiligen ID generiert.
 
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-php">
 public function getPeople(): Response
 {
     ... //unset und set cookies
@@ -486,7 +486,7 @@ public function getPeople(): Response
     return $this->respond($people)
         ->setContentType('application/json');
 }
-        </code></pre></div>
+        </code></pre>
             <br>
             Daraufhin werden die Daten nicht, wie bei der Umsetzung nach dem MVC-Konzept,
             direkt in die View geschrieben, sondern als Antwort vom Server im JSON-Format zurückgegeben,

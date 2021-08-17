@@ -149,11 +149,11 @@
             Quelle: https://www.netzbewegung.com/de/digitale-denkanstoesse/serviceworker/
             </div>
 
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-html">
 &ltbody&gt
     &ltscript src="app.js"&gt&lt/script&gt
 &lt/body&gt
-        </code></pre></div>
+        </code></pre>
             <br>
             Die app.js wird im Body einer jeden HTML-Seite eingebunden und registriert im ersten Schritt den ServiceWorker,
             wenn der verwendete Browser diese unterstützt.
@@ -163,7 +163,7 @@
             Unterstützt der Browser ServiceWorker nicht, so wird in der Konsole eine entsprechende negative Rückmeldung
             samt des Fehlercodes ausgegeben.
 
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-javascript">
 navigator.serviceWorker.register('serviceworker.js')
     .then(() => {
             console.log('[SW] Service worker has been registered');
@@ -172,8 +172,9 @@ navigator.serviceWorker.register('serviceworker.js')
             console.error('[SW] Service worker registration failed', e);
         }
     );
-        </code></pre></div>
+        </code></pre>
         <br>
+
         Nachdem der ServiceWorker nun über die app.js registriert wurde, wird dieser automatisch vom Browser installiert.
         Nun braucht es in der serviceworker.js ein <i><b>install</b></i>-Event, ein <i><b>activate</b></i>-Event
         und ein <i><b>fetch</b></i>-Event.
@@ -189,7 +190,7 @@ navigator.serviceWorker.register('serviceworker.js')
         Dazu wird die Cache API des ServiceWorker genutzt, welche es erlaubt, die durch Netzwerkanfragen gelieferten Assets
         domainspezifisch und dauerhaft zu speichern.
 
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-javascript">
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
@@ -199,7 +200,7 @@ self.addEventListener("install", (event) => {
     );
     self.skipWaiting();
 });
-        </code></pre></div>
+        </code></pre>
             <br>
             Mehr zum <i><b>install</b></i>-Event und den Ressourcen, die gecached werden, in Kapitel der
             offline Fallbackpage und der Read-Only PWA.
@@ -211,7 +212,7 @@ self.addEventListener("install", (event) => {
             des ServiceWorker-Scripts genutzt wurden.
             Dabei werden alle alten Caches gelöscht, die nicht dem aktuellen Cache entsprechen.
 
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-javascript">
 self.addEventListener("activate", (event) => {
     event.waitUntil(
         caches.keys().then(keys => {
@@ -222,7 +223,7 @@ self.addEventListener("activate", (event) => {
         })
     );
 });
-        </code></pre></div>
+        </code></pre>
             <br>
             Nach der Aktivierung hat der ServiceWorker Zugriff auf alle Datein und Seiten und kann über
             das <i><b>fetch</b></i>-Event festlegen, wie mit den Ressourcen und Serveranfragen umgegangen werden soll.
@@ -230,12 +231,13 @@ self.addEventListener("activate", (event) => {
             (im Fall des Beispiels alle Ressourcen, da der ServiceWorker sich im root-Verzeichnis befindet),
             geladen wird.
             Mehr zum <i><b>fetch</b></i>-Event und wie dieses die offline-Fallbackpage steuert ist im Kapitel der Fallbackpage zu finden.
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-javascript">
 self.addEventListener("fetch", (event) => {
     console.log('fetch Event', event);
 });
-        </code></pre></div>
+        </code></pre>
             <br>
+
             Dank des Web-App-Manifests und dem im ServiceWorker enthaltenen <i><b>fetch</b></i>-Event ist die PWA nun installierbar.
             <br>
             Die sogenannte <b>Add to Home Screen (A2HS)</b>-Action kann beim Chrome Browser am PC über einen Pfeil durchgeführt werden,

@@ -175,10 +175,10 @@
             damit diese in den Cache übernommen wird.
             Das geht am besten, indem die Caches versioniert werden:
             <br>
-            <div class="border border-primary mb-2 mt-2"><pre><code>
+            <pre><code class="language-javascript">
 const CACHE_NAME = "offline-v1";
 const CACHE_NAME = "offline-v2";
-        </code></pre></div>
+        </code></pre>
             Das liegt daran, dass nur eine vorgenommene Änderung im ServiceWorker das install-Event erneut auslöst und somit den Cache des Browsers erneuert,
             sprich mit den neuen Inhalten füllt.
             <br>

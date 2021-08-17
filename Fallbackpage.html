@@ -134,7 +134,7 @@
             Die Fallbackpage wird, wie bereits erwähnt, offline zur Verfügung gestellt, indem über das im ServiceWorker
             enthaltene <i><b>install</b></i>-Event die benötigten statischen Assets zum Cache hinzugefügt werden.
             <br>
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-javascript">
 const CACHE_NAME = "offline";
 const OFFLINE_URL = "/fallback";
 const STATIC_ASSETS = [
@@ -153,7 +153,7 @@ self.addEventListener("install", (event) => {
     );
     self.skipWaiting();
 });
-        </code></pre></div>
+        </code></pre>
 <br>
             Dabei wird im <i><b>install</b></i>-Event mit der <i><b>caches.open()</b></i>-Funktion ein neuer Cache mit dem in der
             Konstante <b>CACHE_NAME</b> vergebenen Namen hinzugefügt.
@@ -176,7 +176,7 @@ self.addEventListener("install", (event) => {
             Der EventListener horcht dabei auf Events aus dem kontrollierten Bereich und wird somit jedes Mal ausgelöst.
             Dabei prüft dieser im <i><b>try</b></i>-Block, ob eine Rückmeldung vom Server kommt.
 
-        <div class="border border-primary mb-2 mt-2"><pre><code>
+        <pre><code class="language-javascript">
 self.addEventListener("fetch", (event) => {
     if (event.request.mode === "navigate") {
         event.respondWith(
@@ -186,12 +186,10 @@ self.addEventListener("fetch", (event) => {
                     if (preloadResponse) {
                         return preloadResponse;
                     }
-
                     const networkResponse = await fetch(event.request);
                     return networkResponse;
                 } catch (error) {
-                    console.log("Fetch failed; returning offline page instead.", error);
-
+                    //Fetch fehlgeschlagen, Fallbackpage wird angezeigt
                     const cache = await caches.open(CACHE_NAME);
                     const cachedResponse = await cache.match(OFFLINE_URL);
                     return cachedResponse;
@@ -206,7 +204,7 @@ self.addEventListener("fetch", (event) => {
         )
     }
 });
-        </code></pre></div>
+        </code></pre>
             <br>
             Erhält das <i><b>fetch</b></i>-Event eine Rückmeldung, so wird ganz normal auf die gewünschte Funktion bzw.
             Unterseite navigiert.
