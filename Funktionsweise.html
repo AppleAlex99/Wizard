@@ -144,8 +144,8 @@
     &ltinput type="text" class="form-control" name="new-prename" id="new-prename" placeholder="Peter"&gt
 &lt/form&gt
         </code></pre>
-
         <br>
+
         Die <i><b>addPerson_Validation</b></i>-Funktion führt die Validierung der
         Eingaben durch und ruft bei korrekten Eingaben die Funktion <i><b>addPerson</b></i> im Model auf.
         <br>
@@ -169,8 +169,8 @@
 echo view('footer');
 }
         </code></pre>
-
         <br>
+
         Die <i><b>addPerson</b></i>-Funktion des Models schreibt letztlich die Informationen
         in ein <i><b>$data</b></i>-Array und schreibt dieses Array, mit Hilfe des <i><b>insert</b></i>-Befehls, in die Datenbank.
         <br>
@@ -188,8 +188,8 @@ public function addPerson($prename, $name, $street, $zip, $city, $created_by) {
     $this->_people->insert($data);
 }
         </code></pre>
-
         <br>
+
         <br>
         <h5>Daten Ausgabe:</h5>
         Die Ausgabe aller Personen aus der Datenbank funktioniert in umgekehrter Reihenfolge.

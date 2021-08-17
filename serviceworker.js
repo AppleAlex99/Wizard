@@ -1,5 +1,5 @@
 /*
-const CACHE_NAME = "offline";
+const CACHE_NAME = "offline-v2";
 const ASSETS = [
     "/",
     "/Datenbank.html",
@@ -16,10 +16,14 @@ const ASSETS = [
     "/WebAPI.html",
     "/manifest.webmanifest",
     "/app.js",
-    "/serviceworker.js",
     "/styles.css",
-    "/img/AddPerson",
-    "/img/...Bilder Cachen!!!"
+    "/Cache-Strategie.html",
+    "/Dynamisches-Cachen.html",
+    "/IndexedDB.html",
+    "/img/icon192.png",
+    "/img/icon512.png",
+    "/img/PWA_Logo.png",
+    //Alle anderen Bilder
 ];
 
 self.addEventListener("install", (event) => {
@@ -50,3 +54,4 @@ self.addEventListener("fetch", event => {
     )
 });
 */
+
