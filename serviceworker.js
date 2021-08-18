@@ -1,8 +1,8 @@
-
+/*
 const CACHE_NAME = "offline-v3";
 const ASSETS = [
     "/",
-    "/Wizard/Datenbank.html",
+    "/Datenbank.html",
     "/Fallbackpage.html",
     "/Funktionsweise.html",
     "/index.html",
@@ -54,9 +54,6 @@ const ASSETS = [
     "/img/SW.jpeg",
     "/img/SWPruefen.png",
     "/img/WAM_Chrome.png",
-
-
-    //Alle anderen Bilder
 ];
 
 self.addEventListener("install", (event) => {
@@ -86,5 +83,5 @@ self.addEventListener("fetch", event => {
         })
     )
 });
-
+*/
 
