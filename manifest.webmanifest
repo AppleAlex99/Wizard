@@ -5,7 +5,7 @@
   "description": "Wizard to learn how to implement your own PWA",
   "display": "standalone",
   "background_color": "#FFFFFF",
-  "theme_color": "#7386D5",
+  "theme_color": "#FFFFFF",
   "orientation": "portrait-primary",
   "icons": [
     {
