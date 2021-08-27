@@ -351,7 +351,9 @@ function addToAddPeopleIDB(people) {
       <br>
       <img src="" alt="" class="" width="">
       %Bild aus dem Browser wenn offline Daten hinzugefügt wurde (untersuchen, dann IndexedDB auswählen)
-      <br>
+
+        <img src="" alt="Bild PWA_3" class="img-thumbnail mx-auto d-block" width="auto">
+
       <br>
       Die <i><b>if(navigator.onLine)</b></i>-Abfrage muss erweitert werden.
       Diese initialisiert als erstes den ServiceWorker und  die IndexedDB, wenn der Nutzer online ist.
@@ -436,8 +438,10 @@ caches.open("dynamic-v1").then(function (cache) {
       <br>
       <br>
       %% Bild von offline Hinzugefügter/Bearbeiteter/Gelöschter Person offline zeigen
+        <img src="" alt="Bild_PWA_3_Add_Del_Edit" class="img-thumbnail mx-auto d-block" width="auto">
 
-      Offline hinzugefügte Personen können nicht erneut bearbeitet werden. 
+
+            Offline hinzugefügte Personen können nicht erneut bearbeitet werden.
       Das liegt daran, dass die ID erst bei der nächsten Verbindung zum Internet durch das Datenbanksystem bereitgestellt wird.
 
             <br>
