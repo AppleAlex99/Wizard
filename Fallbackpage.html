@@ -110,8 +110,8 @@
                 </a>
             </li>
             <li>
-                <a href="Dynamisches-Cachen.html" class="nav-link link-dark">
-                    - Dynamisches Cachen
+                <a href="Cachen.html" class="nav-link link-dark">
+                    - Cachen
                 </a>
             </li>
             <li>
@@ -141,7 +141,7 @@
 
             Die offline-Fallbackpage wird angezeigt, wenn keine Internetverbindung besteht.
             Diese kann nach Belieben gestaltet werden.
-            Da bei der PWA 1 ohne Internetverbindung die Fallbackpage auftaucht, ist diese die einzige Seite,
+            Da bei der installierbaren PWA ohne Internetverbindung die Fallbackpage auftaucht, ist diese die einzige Seite,
             die offline zur Verfügung gestellt werden muss.
             <br>
             Die Fallbackpage wird, wie bereits erwähnt, offline zur Verfügung gestellt, indem über das im ServiceWorker
@@ -159,9 +159,9 @@ const STATIC_ASSETS = [
 
 self.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => {
+        caches.open(STATIC_CACHE).then(cache => {
             cache.addAll(STATIC_ASSETS);
-            cache.add(new Request(OFFLINE_URL, { cache: "reload" }));
+            cache.add(OFFLINE_URL);
         })
     );
     self.skipWaiting();
@@ -195,17 +195,10 @@ self.addEventListener("fetch", (event) => {
         event.respondWith(
             (async () => {
                 try {
-                    const preloadResponse = await event.preloadResponse;
-                    if (preloadResponse) {
-                        return preloadResponse;
-                    }
-                    const networkResponse = await fetch(event.request);
-                    return networkResponse;
+                    return await fetch(event.request);
                 } catch (error) {
-                    //Fetch fehlgeschlagen, Fallbackpage wird angezeigt
-                    const cache = await caches.open(CACHE_NAME);
-                    const cachedResponse = await cache.match(OFFLINE_URL);
-                    return cachedResponse;
+                    const cache = await caches.open(STATIC_CACHE);
+                    return await cache.match(OFFLINE_URL);
                 }
             })()
         );

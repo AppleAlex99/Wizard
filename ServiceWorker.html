@@ -110,8 +110,8 @@
                 </a>
             </li>
             <li>
-                <a href="Dynamisches-Cachen.html" class="nav-link link-dark">
-                    - Dynamisches Cachen
+                <a href="Cachen.html" class="nav-link link-dark">
+                    - Cachen
                 </a>
             </li>
             <li>
@@ -177,14 +177,17 @@
             samt des Fehlercodes ausgegeben.
 
         <pre><code class="language-javascript">
-navigator.serviceWorker.register('serviceworker.js')
-    .then(() => {
-            console.log('[SW] Service worker has been registered');
-        },
-        e => {
-            console.error('[SW] Service worker registration failed', e);
-        }
-    );
+function initServiceWorker() {
+    navigator.serviceWorker.register('/serviceworker.js')
+        .then(() => {
+            console.log('[SW] Registration successful.');
+        })
+        .catch(e => {
+            console.error('[SW] Registration failed: ', e);
+        });
+}
+
+initServiceWorker();
         </code></pre>
         <br>
 
@@ -206,9 +209,9 @@ navigator.serviceWorker.register('serviceworker.js')
         <pre><code class="language-javascript">
 self.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => {
+        caches.open(STATIC_CACHE).then(cache => {
             cache.addAll(STATIC_ASSETS);
-            cache.add(new Request(OFFLINE_URL, { cache: "reload" }));
+            cache.add(OFFLINE_URL);
         })
     );
     self.skipWaiting();

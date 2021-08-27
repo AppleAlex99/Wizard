@@ -110,8 +110,8 @@
                 </a>
             </li>
             <li>
-                <a href="Dynamisches-Cachen.html" class="nav-link active">
-                    - Dynamisches Cachen
+                <a href="Cachen.html" class="nav-link active">
+                    - Cachen
                 </a>
             </li>
             <li>
@@ -259,10 +259,8 @@ const STATIC_ASSETS = [
 self.addEventListener("install", (event) => {
     event.waitUntil(
         caches.open(STATIC_CACHE).then(cache => {
-            cache.addAll(STATIC_ASSETS)
-                .catch(err => {
-                });
-            cache.add(new Request(OFFLINE_URL, { cache: "reload" }));
+            cache.addAll(STATIC_ASSETS);
+            cache.add(OFFLINE_URL);
         })
     );
     event.waitUntil(
@@ -347,8 +345,13 @@ self.addEventListener("fetch", (event) => {
                     }
                 })()
             );
+        } else {
+            event.respondWith(
+                caches.match(event.request).then(cacheRes => {
+                    return cacheRes || fetch(event.request);
+                })
+            )
         }
-        ...
     }
 });
         </code></pre>
@@ -460,17 +463,13 @@ window.addEventListener('offline', () => {
 public function index()
 {
     $data['people'] = $this->_peopleModel->getPeople();
-    echo view('header');
     echo view('people', $data);
-    echo view('footer');
 }
 
 //Nachher
 public function index()
 {
-    echo view('header');
     echo view('people');
-    echo view('footer');
 }
         </code></pre>
             <br>
@@ -500,7 +499,6 @@ public function getPeople(): Response
 
     ... //Zusammenfassen der Attribute
 
-    $this->_session->destroy();
     return $this->respond($people)
         ->setContentType('application/json');
 }

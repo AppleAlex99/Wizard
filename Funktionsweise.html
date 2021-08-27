@@ -110,8 +110,8 @@
                 </a>
             </li>
             <li>
-                <a href="Dynamisches-Cachen.html" class="nav-link link-dark">
-                    - Dynamisches Cachen
+                <a href="Cachen.html" class="nav-link link-dark">
+                    - Cachen
                 </a>
             </li>
             <li>
@@ -164,7 +164,6 @@
 
         <pre><code class="language-php">
 {
-    echo view('header');
     echo view('addPerson', ['error' => $this->validator]);
 
     $this->_peopleModel->addPerson(
@@ -177,8 +176,6 @@
     );
     $this->_session->setFlashdata('success', 'Person added');
     return $this->response->redirect(site_url("people"));
-
-echo view('footer');
 }
         </code></pre>
         <br>
@@ -223,12 +220,10 @@ public function getPeople(): array
         <br>
 
         <pre><code class="language-php">
-public function index()
+public function index(): string
 {
     $data['people'] = $this->_peopleModel->getPeople();
-    echo view('header');
-    echo view('people', $data);
-    echo view('footer');
+    return view('people', $data);
 }
         </code></pre>
 

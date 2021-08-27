@@ -110,8 +110,8 @@
                 </a>
             </li>
             <li>
-                <a href="Dynamisches-Cachen.html" class="nav-link link-dark">
-                    - Dynamisches Cachen
+                <a href="Cachen.html" class="nav-link link-dark">
+                    - Cachen
                 </a>
             </li>
             <li>
@@ -206,7 +206,7 @@ if (document.getElementById("add-button") !== null) {
             } else {
                 Object.assign(person,
                     {
-                        "offline": "<i class='bi bi-plus-lg'></i>",
+                        "offline": "&lti class='bi bi-plus-lg'&gt&lt/i&gt",
                         "fullname": person["new-prename"] + " " + person["new-surname"],
                         "street": person["new-street"],
                         "address": person["new-postcode"] + " " + person["new-city"],
@@ -311,7 +311,6 @@ function clearAddPeopleIDB() {
             this.result.transaction("addPeople", "readwrite").objectStore("addPeople").clear();
             resolve();
         };
-
         db.onerror = err => {
             reject(err);
         };
@@ -394,7 +393,6 @@ function getPeopleAddIDB() {
                 resolve(event.target.result);
             };
         };
-
         db.onerror = err => {
             reject("Error in getAddIDB: ", err);
         };
