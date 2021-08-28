@@ -146,7 +146,7 @@
             <br>
             <br>
 
-            <h5>Beim installieren cachen:</h5>
+            <h5>Beim Installieren cachen:</h5>
             Bei dieser Strategie werden beim <i><b>install</b></i>-Event die Caches erstellt und die festgelegten Assets hinzugefügt.
             Die Strategie ist sinnvoll für statische Inhalte, die sich selten ändern und fügt die Daten zu dem Zeitpunkt zum Cache hinzu, wenn der ServiceWorker installiert wird.
 
@@ -161,7 +161,7 @@
 
             <h5>Bei Nutzerinteraktion cachen:</h5>
             Diese Strategie ist bei sehr großen PWAs sinnvoll, da der Nutzer selbst bestimmen kann, welche Daten gecached werden sollen.
-            Das macht besonders sinn, wenn es um Artikel einer Onlinezeitschrift oder um Videos einer Plattform geht.
+            Das ergibt Sinn, wenn es um Artikel einer Onlinezeitschrift oder um Videos einer Plattform geht.
 
             <br>
             <br>
@@ -184,7 +184,7 @@
             </div>
             <br>
             <br>
-            <i>Wichtig:</i><br>
+            <h5><i>Wichtig:</i></h5>
             Sind die Daten einmal im Cache und es soll eine Änderung vorgenommen werden, so muss neben der Veränderung
             des Inhalts auch eine Veränderung vom ServiceWorker stattfinden,
             damit diese in den Cache übernommen wird.
@@ -199,7 +199,7 @@ const CACHE_NAME = "offline-v2";
             sprich mit den neuen Inhalten füllt.
             <br>
             <br>
-            Alle weiteren Strategien zum cachen von Assets sind <a href="https://web.dev/offline-cookbook/">hier</a> zu finden.
+            Alle weiteren Strategien zum Cachen von Assets sind <a href="https://web.dev/offline-cookbook/">hier</a> zu finden.
             <br>
             <br>
             <br>
@@ -211,7 +211,7 @@ const CACHE_NAME = "offline-v2";
             <br>
 
             <h5>Nur Cache:</h5>
-            Bei der "nur Cache"-Strategie werden alle Assets lediglich aus dem Cache entnommen.
+            Bei der "Cache-Only"-Strategie werden alle Assets lediglich aus dem Cache entnommen.
             Das macht Sinn, wenn die Webseite aus statischen Inhalten besteht, die sich nur sehr selten bis gar nicht verändern.
 
             <br>
@@ -226,7 +226,7 @@ const CACHE_NAME = "offline-v2";
             <h5>Cache, Netzwerk-Fallback-Strategie:</h5>
             Bei dieser Strategie werden die Daten in erster Instanz aus dem Cache entnommen.
             Sind diese nicht vollständig oder fehlen ganz, wird auf die Netzwerkverbindung zurückgegriffen.
-            Diese Strategie wird auch "offline first"-Strategie genannt, da der Fokus auf den im Cache gespeicherten Asstes liegt.
+            Diese Strategie wird auch <i>"offline first"</i>-Strategie genannt, da der Fokus auf den im Cache gespeicherten Asstes liegt.
 
             <br>
             <br>

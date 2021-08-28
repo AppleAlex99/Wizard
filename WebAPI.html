@@ -136,7 +136,7 @@
         <div class="col">
             <h1>Web-API</h1>
 
-            Am Beispiel der Push-Benachrichtigungen wird nun die Verwendung von Web-APIs in Progressive Web Apps erläutert.
+            Am Beispiel der Push-Benachrichtigungen wird nun die Verwendung von Web-APIs in PWAs erläutert.
             Im Beispiel der Personentabelle werden die Push-Benachrichtigungen jedes mal gesendet, wenn eine Person hinzugefügt, geändert oder gelöscht wird.
             <br>
             <br>
@@ -159,8 +159,8 @@
             <h4>PushNotifications-Model:</h4>
             Neben der Datenbank muss ebenfalls ein neues Model (PushNotificationsModel) hinzugefügt werden,
             welches die Daten behandelt, die für die Push-Benachrichtigungen notwendig sind.
-            Dieses enthält Funktionen um neue Abonnenten hinzuzufügen, diese zu aktualisieren,
-            zu entfernen und um alle Abonnenten der Tabelle ausgegeben zu bekommen.
+            Dieses enthält Funktionen, um neue Abonnenten hinzuzufügen, diese zu aktualisieren,
+            zu entfernen und um alle Abonnenten der Tabelle auszugeben.
 
             <pre><code class="language-php">
 // Abonnenten hinzufuegen, Prinzip beim loeschen und bearbeiten gleich
@@ -211,12 +211,13 @@ foreach ($subscribers as $row){
         )
     );
     $message = "added";
-    $this->sendMessage($keys_auth, $row->endpoint, $message, $this->request->getVar('new-prename'),  $this->request->getVar('new-surname'));
+    $this->sendMessage($keys_auth, $row->endpoint, $message, $this->request->getVar('new-prename'),
+                $this->request->getVar('new-surname'));
         </code></pre>
 
-            Innerhalb der foreach-Schleife wird dann mit jedem Subscriber die Funktion sendMessage aufgerufen.
+            Innerhalb der <i><b>foreach</b></i>-Schleife wird dann mit jedem Subscriber die Funktion <i><b>sendMessage</b></i> aufgerufen.
             <br>
-            Die <i><b>sendMessage</b></i>-Funktion erstellt die Nachricht, die angezeigt werden soll sowie das WebPush Objekt und versendet schlussendlich die Nachricht.
+            Diese Funktion erstellt die Nachricht, die angezeigt werden soll sowie das WebPush Objekt und versendet schlussendlich die Nachricht.
             <br>
             Die <i><b>push_subscription</b></i>-Funktion besteht aus einem switch-case und ruft, je nach Aktion, die dazugehörige Funktion des Models auf,
             die dann die Person zu den Abonnenten hinzufügt, löscht oder bearbeitet.
@@ -224,14 +225,14 @@ foreach ($subscribers as $row){
             <br>
             <br>
             <h4>People-View:</h4>
-            Nach der Anpassung der Datenbank und des Controllers muss nun als drittes den Views ein Button hinzugefügt werden,
+            Nach der Anpassung der Datenbank und des Controllers muss nun als Drittes den Views ein Button hinzugefügt werden,
             auf den die Nutzer klicken können, um sich für die Push-Benachrichtigungen zu registrieren.
 
             <pre><code class="language-html">
 &ltbutton id="pushButton" class="btn btn-primary mr-2 d-flex justify-content-center align-items-center"&gtPush on&lt/button&gt
         </code></pre>
             Im Beispiel wurde dies mittels eines Button gelöst.
-            Eine andere Möglichkeit ist das Anzeigen eines Popup-Fensters, indem der Nutzer die Benachrichtigungen aktivieren kann.
+            Eine andere Möglichkeit ist das Anzeigen eines Popup-Fensters, in dem der Nutzer die Benachrichtigungen aktivieren kann.
 
             <br>
             <br>
@@ -242,7 +243,7 @@ foreach ($subscribers as $row){
 
             <pre><code class="language-javascript">
 const applicationServerKey =
-    'BAwBLsFBXsZCFS_Mvc7AEwmQGQlS4gzEqwOouF2s7PWS7zXkvdoRcYQrnGpxNHccBXtVdfZqiPRtjgKe1D5Z6s8';
+    'BAwBLsFBXsZ...';
 
 const pushButton = document.getElementById('pushButton');
 
@@ -338,7 +339,8 @@ function push_sendSubscriptionToServer(subscription, method) {
 }
         </code></pre>
 
-            Als letztes wird das Abonnement mit allen gegebenen Parametern, also dem publicKey, dem authToken und dem endpoint mit Hilfe der
+            Als Letztes wird das Abonnement mit allen gegebenen Parametern, also dem <i><b>publicKey</b></i>,
+            dem <i><b>authToken</b></i> und dem <i><b>endpoint</b></i> mit Hilfe der
             <i><b>push_sendSubscriptionToServer</b></i>-Methode als JSON durch die Verwendung von <i><b>fetch</b></i> an den Server gesendet.
             <br>
             Die Methode <i><b>push_unsubscribe</b></i> der app.js-Datei macht das Abonnement rückgängig.
@@ -387,11 +389,8 @@ self.addEventListener('push', event => {
 
             <pre><code class="language-javascript">
 self.addEventListener('notificationclick', event => {
-    console.log(('[Service Worker] Notification click received.'));
     event.notification.close();
-
     const url = event.notification.data.url;
-    console.log(url);
 
     event.waitUntil(clients.matchAll({
         type: 'window'

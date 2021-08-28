@@ -142,7 +142,7 @@
         Der erste Schritt für die Erstellung der installierbaren PWA ist das Web-App-Manifest.
         Es befindet sich im root-Verzeichnis des Projektes und beschreibt die Eigenschaften einer PWA.
         Dadurch macht das Manifest die PWA über den Browser für alle Endgeräte installierbar.
-        Die Datei liegt im JSON Format vor (.JSON oder .webmanifest) und wird im Head aller HTML-Seiten verlinkt.
+        Die Datei liegt im JSON Format vor (.json oder .webmanifest) und wird im Head aller HTML-Seiten verlinkt.
 
     <pre><code class="language-html">
 &ltlink rel="manifest" href="manifest.webmanifest"&gt
@@ -168,26 +168,26 @@
           <li><b>prefer_related_applications</b> - darf nicht vorhanden sein oder muss auf false gesetzt werden</li>
       </ul>
 
-    Weitere Elemente, die im Web-App-Manifest gesetzt werden können, sind <a href=" https://web.dev/add-manifest/">hier</a> zu finden.
+    Weitere Elemente, die im Web-App-Manifest gesetzt werden können, sind <a href="https://web.dev/add-manifest/">hier</a> zu finden.
     <br>
     <br>
-    Eine der Eigenschaften von "name" oder "short_name" muss enthalten sein.
+    Eine der Eigenschaften von <i><b>name</b></i> oder <i><b>short_name</b></i> muss enthalten sein.
     Bei einem längeren Namen der PWA kann es jedoch auch durchaus sinnvoll sein, beide Eigenschaften anzugeben.
-    Wenn beide angegeben werden, wird die Eigenschaft "short_name" an Stellen verwendet, an denen der Platz begrenzt ist.
-    Die Eigenschaft "name" wird hingegen angezeigt, wenn die App installiert wurde.
+    Wenn beide angegeben werden, wird die Eigenschaft <i><b>short_name</b></i> an Stellen verwendet, an denen der Platz begrenzt ist.
+    Die Eigenschaft <i><b>name</b></i> wird hingegen angezeigt, wenn die App installiert wurde.
     <br>
     <br>
     Das Web-App-Manifest muss mindestens ein Icon der Größe 192x192 und eins der Größe 512x512 enthalten.
     Die Eigenschaft Icon ist ein Array und kann beliebig viele Icons enthalten.
-    Jedes Icon muss dabei eine Quelle ("src"), einen Typ ("type")
-    und eine Größe ("size") als Attribut haben.
-    Des Weiteren sollte es mindestens ein Icon mit "purpuse": "maskable any" für die Unterstüzung
+    Jedes Icon muss dabei eine Quelle (<i><b>src</b></i>), einen Typ (<i><b>type</b></i>)
+    und eine Größe (<i><b>size</b></i>) als Attribut haben.
+    Des Weiteren sollte es mindestens ein Icon mit <i><b>purpuse: maskable any</b></i> für die Unterstüzung
     des Betriebssystems Android geben
     <br>
-    Die Eigenschaft "start_url" im Manifest gibt die URL an, die geladen wird,
+    Die Eigenschaft <i><b>start_url</b></i> im Manifest gibt die URL an, die geladen wird,
     wenn ein Benutzer die Anwendung von einem Gerät startet.
     <br>
-    Mit Hilfe der Eigenschaft "display" kann eingestellt werden, wie die PWA dargestellt werden soll.
+    Mit Hilfe der Eigenschaft <i><b>display</b></i> kann eingestellt werden, wie die PWA dargestellt werden soll.
     Standalone ist dabei die Eigenschaft, die die PWA noch mehr einer nativen App ähneln lässt, da keine URL oder
     andere für Browser typischen Dinge angezeigt werden.
 
@@ -219,8 +219,8 @@
         </code></pre>
         <br>
         Das Web-App-Manifest des Beispiels enthält neben den Mindestanforderungen noch einige andere Eigenschaften,
-        wie eine Beschreibung ("description"), die Farbgebung der PWA als installierte Version ("background_color",
-        die "theme_color") und die Orientierung ("orientation").
+        wie eine Beschreibung (<i><b>description</b></i>), die Farbgebung der PWA als installierte Version (<i><b>background_color</b></i>,
+        die <i><b>theme_color</b></i>) und die Orientierung (<i><b>orientation</b></i>).
         Die Orientierung gibt an, wie die PWA geöffnet wird.
         Des Weiteren sind neben den beiden gezeigten noch 6 weitere Icons in anderen Größen im Web-App-Manifest enthalten.
         Je mehr Größen angegeben werden, desto besser kann sich das entsprechende Endgerät aussuchen, welche Icongröße am besten passt.
@@ -235,15 +235,15 @@
       <br>
       <br>
         Dabei werden, bei richtiger Einbindung, alle im Manifest festgelegten Bestandteile aufgelistet.
-        Wenn Fehler auftreten, ist zunächst die Art des Einbindens, dann die "start_url" und als letztes die Rechtschreibung der
+        Wenn Fehler auftreten, ist zunächst die Art des Einbindens, dann die <i><b>start_url</b></i> und als letztes die Rechtschreibung der
         Attribute des Manifests zu überprüfen.
         <br>
         Im Beispiel sieht man, dass alle Eigenschaften der Manifest-Datei auch im Browser angezeigt werden und somit funktionieren.
       <br>
       <br>
         <b>Besonderheiten:</b> <br>
-            Aufgrund dessen, dass das Apple Betriebssystem iOS die "icons"
-            und die "theme_color" nicht unterstützt, muss die PWA dahingehend etwas modifiziert werden.
+            Aufgrund dessen, dass das Apple Betriebssystem iOS die <i><b>icons</b></i>
+            und die <i><b>theme_color</b></i> nicht unterstützt, muss die PWA dahingehend etwas modifiziert werden.
             <br>
             Für die Unterstützung des Icon auf dem Homebildschirm muss dabei im Head jeder HTML-Seite eine Verlinkung
             zu dem Icon eingebunden werden, das bei iOS-Benutzern verwendet werden soll.
@@ -253,14 +253,14 @@
       </code></pre>
       <br>
 
-      Der Ersatz der "theme_color" muss ebenfalls im Head jeder HTML-Seite wie folgt verlinkt sein.
+        Der Ersatz der <i><b>theme_color</b></i> muss ebenfalls im Head jeder HTML-Seite wie folgt verlinkt sein.
       <pre><code class="language-html">
 &ltmeta name="apple-mobile-web-app-status-bar" content="#0032FF"&gt
       </code></pre>
     <br>
 
-      Außerdem muss für die PWA-Optimierung für alle Betriebssysteme neben dem Festlegen der "theme_color" im Web-App-Manifest,
-            diese ebenfalls im Head jeder HTML-Seite hinterlegt sein.
+        Außerdem muss für die PWA-Optimierung für alle Betriebssysteme neben dem Festlegen der <i><b>theme_color</b></i> im Web-App-Manifest,
+        diese ebenfalls im Head jeder HTML-Seite hinterlegt sein.
       <pre><code class="language-html">
 &ltmeta name="theme-color" content="#0032FF"&gt
       </code></pre>

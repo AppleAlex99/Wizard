@@ -337,13 +337,11 @@ function addToAddPeopleIDB(people) {
         db.onerror = function (err) {
             reject(err);
         };
-
     })
 }
         </code></pre>
       <br>
-      
-      Da es hierbei um die offline-Funktionalitäten rund um das Hinzufügen einer Person geht, wird der \verb|ObjectStore("addPeople")| verwendet.
+    Da es hierbei um die offline-Funktionalitäten rund um das Hinzufügen einer Person geht, wird der <i><b>ObjectStore("addPeople")</b></i> verwendet.
       <br>
       <br>
       Die offline Hinzugefügten Daten können über "Untersuchen" -> "Application" -> "IndexedDB" eingesehen werden.

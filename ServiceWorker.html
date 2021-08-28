@@ -203,7 +203,7 @@ initServiceWorker();
         (self.addEventListener("install")).
         Dieses Event wird dafür genutzt, den Cache des Browsers zu öffnen, diesen zu benennen und mit Assets zu füllen,
         damit die PWA offline funktionieren kann.
-        Dazu wird die Cache API des ServiceWorker genutzt, welche es erlaubt, die durch Netzwerkanfragen gelieferten Assets
+        Dazu wird die Cache-API des ServiceWorker genutzt, welche es erlaubt, die durch Netzwerkanfragen gelieferten Assets
         domainspezifisch und dauerhaft zu speichern.
 
         <pre><code class="language-javascript">
@@ -218,8 +218,8 @@ self.addEventListener("install", (event) => {
 });
         </code></pre>
             <br>
-            Mehr zum <i><b>install</b></i>-Event und den Ressourcen, die gecached werden, in Kapitel der
-            offline Fallbackpage und der Read-Only PWA.
+            Mehr zum <i><b>install</b></i>-Event und den Ressourcen, die gecached werden, im Kapitel der
+            <a href="Fallbackpage.html">offline-Fallbackpage</a> und der <a href="pwa2.html">Read-Only PWA</a>.
             <br>
             <br>
             Nachdem das <i><b>install</b></i>-Event im ServiceWorker ausgeführt wurde, wird der ServiceWorker aktiviert
@@ -241,12 +241,12 @@ self.addEventListener("activate", (event) => {
 });
         </code></pre>
             <br>
-            Nach der Aktivierung hat der ServiceWorker Zugriff auf alle Datein und Seiten und kann über
+            Nach der Aktivierung hat der ServiceWorker Zugriff auf alle Dateien und Seiten und kann über
             das <i><b>fetch</b></i>-Event festlegen, wie mit den Ressourcen und Serveranfragen umgegangen werden soll.
             Ein <i><b>fetch</b></i>-Event wird jedes mal abgesetzt, wenn eine Ressource, die der ServiceWorker kontrolliert
             (im Fall des Beispiels alle Ressourcen, da der ServiceWorker sich im root-Verzeichnis befindet),
             geladen wird.
-            Mehr zum <i><b>fetch</b></i>-Event und wie dieses die offline-Fallbackpage steuert ist im Kapitel der Fallbackpage zu finden.
+            Mehr zum <i><b>fetch</b></i>-Event und wie dieses die Fallbackpage steuert ist im Kapitel der Fallbackpage zu finden.
         <pre><code class="language-javascript">
 self.addEventListener("fetch", (event) => {
     console.log('fetch Event', event);
@@ -281,7 +281,7 @@ self.addEventListener("fetch", (event) => {
             <br>
             Wie beim Web-App-Manifest kann nach der Fertigstellung der Komponenten des ServiceWorker ebenfalls überprüft werden,
             ob dieser erkannt wird und richtig arbeitet.
-            Dafür ist im Chrome Browser nach erfolgtem Rechtsklick mit der Mouse "Untersuchen" auszuwählen.
+            Dafür ist im Chrome Browser nach erfolgtem Rechtsklick mit der Maus "Untersuchen" auszuwählen.
             Im Anschluss ist unter "Application" die Option "Service Workers" auszuwählen.
             <br>
             <br>

@@ -137,7 +137,7 @@
 <div class="container">
     <div class="row pt-3">
         <div class="col">
-            <h1>Dynamsiches Cachen</h1>
+            <h1>Dynamisches Cachen</h1>
 
             Nachdem die passende Strategie gewählt ist, muss überlegt werden, welche Daten gecached werden sollen.
             Handelt es sich bei den Inhalten der Webseite lediglich um statische Assets, so ist diese Aufgabe recht einfach
@@ -151,7 +151,7 @@
             <h5>Zu den statischen Assets gehören:</h5>
             <ul>
                 <li>Alle verwendeten Bilder/Icons/Logos</li>
-                <li>Die CSS-Datei bzw. Boostrap</li>
+                <li>Die CSS-Datei bzw. Bootstrap</li>
                 <li>Die externe JavaScript-Datei (app.js)</li>
                 <li>Das Web-App-Manifest</li>
                 <li>Die HTML-Seiten</li>
@@ -194,7 +194,7 @@ self.addEventListener("activate", (event) => {
             <br>
 
             Das <i><b>fetch</b></i>-Event hingegen ist deutlich anders aufgebaut, als bei der installierbaren PWA.
-            Es beantwortet erstmal alle Anfragen bzw Seitenaufrufe aus dem Cache.
+            Es beantwortet erstmal alle Anfragen beziehungsweise Seitenaufrufe aus dem Cache.
             Fehlen Assets teilweise, so werden diese vom Netzwerk angefragt (gefetched).
 
             <pre><code class="language-javascript">
@@ -240,7 +240,7 @@ const STATIC_ASSETS = [
 ];
         </code></pre>
         <br>
-            <i>Wichtig:</i><br>
+            <h5><i>Wichtig:</i></h5>
             Die ServiceWorker-Datei darf nicht gecached werden!
             <br>
             <br>
@@ -361,7 +361,7 @@ self.addEventListener("fetch", (event) => {
             Die in der app.js-Datei implementierte Funktion <i><b>initTable</b></i> baut eine leere Personentabelle auf.
             Dort werden danach über die <i><b>writeToView</b></i>-Funktion die Daten eingefügt.
             Dabei ist wichtig, dass die Tabelle der <i><b>initTable</b></i>-Funktion sowohl alle Attribute der Personen enthält,
-            als auch ein Feld für die Buttons zum editieren und löschen der Person.
+            als auch ein Feld für die Buttons zum Editieren und Löschen der Person.
             <pre><code class="language-javascript">
 const peopleTable = $("#peopleTable");
 
@@ -480,9 +480,9 @@ public function index()
             <br>
             Stattdessen müssen nun neue Funktionen implementiert werden, die die Daten abfragen können.
             Im Beispiel der Personentabelle sollen alle Personen, die online zur Tabelle hinzugefügt wurden, offline weiter einsehbar sein.
-            Die <i><b>getPeople</b></i>-Funktion überprüft als aller erstes, ob die Cookies gesetzt sind,
+            Die <i><b>getPeople</b></i>-Funktion überprüft als allererstes, ob die Cookies gesetzt sind,
             da diese relevant für die Validierung der Nutzereingaben sind.
-            Sind diese gesetzt, so werden sie gelöscht und neu besetzt.
+            Sind diese gesetzt, so werden sie gelöscht und neu gesetzt.
             Daraufhin werden die Daten wie gewohnt über die <i><b>getPeople</b></i>-Funktion des Models aus der Datenbank entnommen
             und in der Variable <i><b>$people</b></i> gespeichert.
             <br>
