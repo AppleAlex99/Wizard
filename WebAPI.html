@@ -136,12 +136,13 @@
         <div class="col">
             <h1>Web-API</h1>
 
-            Am Beispiel der Push-Benachrichtigungen wird nun die Verwendung von Web-APIs in PWAs erläutert.
-            Im Beispiel der Personentabelle werden die Push-Benachrichtigungen jedes mal gesendet, wenn eine Person hinzugefügt, geändert oder gelöscht wird.
+            Anhand der Push-Benachrichtigungen wird nun die Verwendung von Web-APIs in PWAs erläutert.
+            Im Beispiel der Personentabelle werden die Push-Benachrichtigungen jedes mal gesendet,
+            wenn eine Person hinzugefügt, geändert oder gelöscht wird.
             <br>
             <br>
             <h4>Datenbank</h4>
-            Zuerst muss die Datenbank um eine Tabelle, die der Abonnenten (subscribers), erweitert werden.
+            Zuerst muss die Datenbank um eine Tabelle, nämlich die der Abonnenten (Subscribers), erweitert werden.
             Dort werden alle Nutzer eingetragen, die sich für die Benachrichtigungen registriert haben.
             <br>
             <br>
@@ -157,13 +158,13 @@
             <br>
             <br>
             <h4>PushNotifications-Model:</h4>
-            Neben der Datenbank muss ebenfalls ein neues Model (PushNotificationsModel) hinzugefügt werden,
+            Neben der Datenbank muss zudem ein neues Model (PushNotificationsModel) hinzugefügt werden,
             welches die Daten behandelt, die für die Push-Benachrichtigungen notwendig sind.
             Dieses enthält Funktionen, um neue Abonnenten hinzuzufügen, diese zu aktualisieren,
             zu entfernen und um alle Abonnenten der Tabelle auszugeben.
 
             <pre><code class="language-php">
-// Abonnenten hinzufuegen, Prinzip beim loeschen und bearbeiten gleich
+// Abonnenten hinzufügen, Prinzip beim löschen und bearbeiten gleich
 public function insertSubscriber($endpoint, $auth, $p256dh){
     $data = [
         'endpoint' => $endpoint,
@@ -191,11 +192,13 @@ public function getSubscribersByEndpoint($endpoint){
             <br>
             <h4>People-Controller:</h4>
             Die Funktionen für das Hinzufügen, Löschen und Bearbeiten von Personen der Tabelle müssen erweitert werden,
-            da jedes mal eine Nachricht gesendet werden soll, wenn eine Änderung an der Personentabelle vorgenommen wird.
+            da jedes Mal eine Nachricht gesendet werden soll, wenn eine Änderung an der Personentabelle vorgenommen wird.
             <br>
-            Aus diesem Grund werden als erstes über die Funktion <i><b>getAllSubscribers</b></i> aus dem Model alle Abonnenten in die Variable <i><b>$subscribers</b></i> eingelesen.
+            Aus diesem Grund werden als erstes über die Funktion <i><b>getAllSubscribers</b></i> aus dem Model
+            alle Abonnenten in die Variable <i><b>$subscribers</b></i> eingelesen.
             <br>
-            Danach werden in die Variable <i><b>$keys_auth</b></i> alle Informationen der Abonnenten gespeichert, an die die Nachricht gesendet werden soll.
+            Danach werden in die Variable <i><b>$keys_auth</b></i> alle Informationen der Abonnenten gespeichert,
+            an die die Nachricht gesendet werden soll.
 
 
             <pre><code class="language-php">
@@ -225,7 +228,7 @@ foreach ($subscribers as $row){
             <br>
             <br>
             <h4>People-View:</h4>
-            Nach der Anpassung der Datenbank und des Controllers muss nun als Drittes den Views ein Button hinzugefügt werden,
+            Nach der Anpassung der Datenbank und des Controllers muss nun als Drittes den <i><b>Views</b></i> ein Button hinzugefügt werden,
             auf den die Nutzer klicken können, um sich für die Push-Benachrichtigungen zu registrieren.
 
             <pre><code class="language-html">
@@ -348,8 +351,8 @@ function push_sendSubscriptionToServer(subscription, method) {
             <br>
             <br>
             <h4>ServiceWorker:</h4>
-            Da nun der Push der Nachrichten fertiggestellt ist, ist es nun nur noch notwendig, die Nachrichten über den ServiceWorker zu erstellen
-            und danach auf dem Bildschirm des Nutzers auszugeben.
+            Da nun der Push der Nachrichten fertiggestellt ist, besteht jetzt lediglich noch das Erfordernis,
+            die Nachrichten über den ServiceWorker zu erstellen und danach auf dem Bildschirm des Nutzers auszugeben.
             Dafür wird der ServiceWorker um 2 Funktionen erweitert.
             Der ServiceWorker horcht mit Hilfe eines <i><b>push</b></i>-EventListener auf einen Push, erstellt daraufhin die Nachricht und
             zeigt diese über die Funktion <i><b>showNotification</b></i> an.

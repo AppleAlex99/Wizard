@@ -137,12 +137,12 @@
 <div class="container">
     <div class="row pt-3">
         <div class="col">
-            <h1>Dynamisches Cachen</h1>
+            <h1>Cachen</h1>
 
-            Nachdem die passende Strategie gewählt ist, muss überlegt werden, welche Daten gecached werden sollen.
+            Nachdem die passende Strategie gewählt ist, ist zu überlegen, welche Daten gecached werden sollen.
             Handelt es sich bei den Inhalten der Webseite lediglich um statische Assets, so ist diese Aufgabe recht einfach
             und schnell erledigt.
-            Kommen dynamische Assets hinzu, gestaltet sich diese Aufgabe als wesentlich komplizierter.
+            Kommen dynamische Assets hinzu, gestaltet sich die Umsetzung der passenden Cache-Strategie als wesentlich komplizierter.
             <br>
             <br>
             <br>
@@ -193,7 +193,7 @@ self.addEventListener("activate", (event) => {
         </code></pre>
             <br>
 
-            Das <i><b>fetch</b></i>-Event hingegen ist deutlich anders aufgebaut, als bei der installierbaren PWA.
+            Das <i><b>fetch</b></i>-Event hingegen ist deutlich anders aufgebaut als bei der installierbaren PWA.
             Es beantwortet erstmal alle Anfragen beziehungsweise Seitenaufrufe aus dem Cache.
             Fehlen Assets teilweise, so werden diese vom Netzwerk angefragt (gefetched).
 
@@ -211,12 +211,12 @@ self.addEventListener("fetch", event => {
             <br>
             <h3>Statische und dynamische Assets</h3>
 
-            Wenn es darum geht, dass die PWA sowohl statische, als auch dynamische Assets enthält, muss erstmal festgelegt werden,
+            Wenn es darum geht, dass die PWA sowohl statische als auch dynamische Assets enthält, muss erstmal festgelegt werden,
             welche Assets statisch sind und welche dynamisch.
             Zu den dynamischen Assets zählen alle die, die sich ständig verändern, also beispielsweise von Nutzern verändert
             werden können oder aus Datenbanken ausgegeben werden.
             Im Beispiel der Personentabelle sind das alle Personen, die in der Tabelle hinzugefügt wurden und deren Attribute.
-            Des Weiteren muss überlegt werden, welche der dynamischen Daten relevant genug sind, um diese offline zur Verfügung zu stellen.
+            Des Weiteren muss überlegt werden, welche der dynamischen Daten relevant genug sind, um diese offline zur Verfügung stellen zu wollen.
         <br>
             <br>
             <h5>ServiceWorker:</h5>
@@ -250,9 +250,9 @@ const STATIC_ASSETS = [
                 <li>Funktionen zur Validierung der Nutzereingaben</li>
             </ul>
             <br>
-            Die statischen und dynamischen Assets werden im Beispiel im <i><b>install</b></i>-Event zu dem dementsprechenden
+            Die statischen und dynamischen Assets werden im Beispiel im <i><b>install</b></i>-Event dem entsprechenden
             Cache hinzugefügt.
-            Dabei werden die beiden Caches seperat und nacheinander mit der <i><b>caches.open</b></i>-Funktion erstellt.
+            Dabei werden die beiden Caches separat und nacheinander mit der <i><b>caches.open</b></i>-Funktion erstellt.
             Daraufhin werden diese mit Hilfe der <i><b>addAll</b></i> bzw. <i><b>add</b></i>-Funktion gefüllt.
 
            <pre><code class="language-javascript">
@@ -296,12 +296,12 @@ self.addEventListener("activate", (event) => {
             <br>
             Neben dem <i><b>install</b></i> und dem <i><b>activate</b></i>-Event muss ebenfalls das <i><b>fetch</b></i>-Event erweitert werden.
             Dieses arbeitet nach der bereits erwähnten "Cache then Network"-Strategie.
-            Das <i><b>fetch</b></i>-Event der Beispiels unterscheidet dabei zwischen mehreren Ereignissen die eintreten können:
+            Das <i><b>fetch</b></i>-Event der Beispiel-PWA unterscheidet dabei zwischen mehreren Ereignissen die eintreten können:
             <br>
             <br>
             <ul>
                 <li><b>Zeile 1-10:</b> Sind die abgefragten dynamischen Assets im Cache enthalten,
-                    so werden diese aus dem Cache entnommen und angezeigt. Gleichzeitig wird eine Netzwerkanfrage gesendet
+                    so werden diese dem Cache entnommen und angezeigt. Gleichzeitig wird eine Netzwerkanfrage gesendet
                     und ein Klon der <i><b>response</b></i> mit Hilfe der <i><b>cache.put</b></i>-Funktion in den dynamischen
                     Cache gespeichert. Daraufhin wird die <i><b>response</b></i> der Netzwerkanfrage angezeigt</li>
                 <li><b>Zeile 11-16:</b> Wenn die <i><b>fetch</b></i>-Anfrage der externen JavaScript-Datei (app.js) eine einzelne Person anfragt,
@@ -419,12 +419,12 @@ caches.open("dynamic-v1").then(function (cache) {
             <br>
 
             Durch das <i><b>fetch</b></i>-Event in der app.js-Datei wird das <i><b>fetch</b></i>-Event im ServiceWorker ausgelöst,
-            da die app.js, anders als der ServiceWorker, nicht auf einem eigenständigem Thread läuft.
+            da die app.js, anders als der ServiceWorker, nicht auf einem eigenständigen Thread läuft.
             Der ServiceWorker fängt daraufhin die aufgerufene URL ab, erkennt statische bzw. dynamische Daten und reagiert dementsprechend.
             Sind die Assets statisch, so werden diese aus dem Cache geladen.
             Wenn es sich allerdings um dynamische Daten handelt, so fragt der ServiceWorker die Daten am Server an,
             fetched die Antwort, speichert eine Kopie im Cache und gibt die Antwort an die ursprüngliche Anfrage zurück.
-            Das dabei empfangene JSON Objekt wird dann über Bootstrap Table in HTML dargestellt.
+            Das dabei empfangene JSON-Objekt wird dann über Bootstrap Table in HTML dargestellt.
             <br>
             Sollte keine Internetverbindung bestehen, so wird der dynamische Cache durch die <i><b>cache.open</b></i>-Funktion geöffnet
             und die darin zuletzt vom Server erhaltenen Assets in der View ausgegeben.
@@ -483,7 +483,7 @@ public function index()
             Die <i><b>getPeople</b></i>-Funktion überprüft als allererstes, ob die Cookies gesetzt sind,
             da diese relevant für die Validierung der Nutzereingaben sind.
             Sind diese gesetzt, so werden sie gelöscht und neu gesetzt.
-            Daraufhin werden die Daten wie gewohnt über die <i><b>getPeople</b></i>-Funktion des Models aus der Datenbank entnommen
+            Daraufhin werden die Daten wie gewohnt über die <i><b>getPeople</b></i>-Funktion des Models der Datenbank entnommen
             und in der Variable <i><b>$people</b></i> gespeichert.
             <br>
             Mit Hilfe der <i><b>for</b></i>-Schleife werden dann die Attribute "Adresse" und "Name" zusammengefasst,
@@ -504,7 +504,7 @@ public function getPeople(): Response
 }
         </code></pre>
             <br>
-            Daraufhin werden die Daten nicht, wie bei der Umsetzung nach dem MVC-Konzept,
+            Anschließend werden die Daten nicht, wie bei der Umsetzung nach dem MVC-Konzept,
             direkt in die View geschrieben, sondern als Antwort vom Server im JSON-Format zurückgegeben,
             damit JavaScript diese verarbeiten kann.
             <br>

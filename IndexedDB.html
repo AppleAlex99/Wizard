@@ -151,8 +151,8 @@
       <br>
       Also muss als erstes eine <i><b>initIndexedDB</b></i>-Methode erstellt werden, die die IndexedDB und die
       dazugehörigen <i><b>ObjectStores</b></i> initialisiert.
-      <i><b>onupgradeneeded</b></i> wird nur dann aufgerufen, wenn die Datenbank noch nicht existiert,
-      oder die Versionsnummer sich ändert.
+      <i><b>onupgradeneeded</b></i> wird nur dann aufgerufen, wenn die Datenbank noch nicht existiert
+        oder die Versionsnummer sich ändert.
 
       <pre><code class="language-javascript">
 function initIndexedDB() {
@@ -170,7 +170,7 @@ function initIndexedDB() {
       Für jede Funktion, die offline durchgeführt werden kann, muss ein eigener <i><b>ObjectStore</b></i> erstellt werden.
       <br>
       <br>
-      Die Funktionsweise der IndexedDB wird nun am Beispiel des Hinzufügen erklärt.
+      Die Funktionsweise der IndexedDB wird nun am Beispiel des Hinzufügens erklärt.
       <br>
       <br>
       Der Ablauf beim Editieren und Löschen ist gleich, lediglich einige Abschnitte von Funktionen unterscheiden
@@ -227,8 +227,8 @@ if (document.getElementById("add-button") !== null) {
       <br>
 
       Ist der Nutzer offline, so wird der <i><b>else</b></i>-Abschnitt ausgeführt.
-      In diesem Abschnitt wird als erstes das <i><b>Object</b></i> um die eingegeben Informationen erweitert.
-      Neben den eingegebenen Informationen wird ebenfalls ein "plus"-Symbol hinzugefügt, was dem Benutzer offline
+      In diesem Abschnitt wird als erstes das <i><b>Object</b></i> um die eingegebenen Informationen erweitert.
+      Neben den eingegebenen Informationen wird ebenfalls ein "plus"-Symbol hinzugefügt, welches dem Benutzer offline
       die ausgeführte Operation in der Tabelle anzeigt.
       Als letztes wird die <i><b>addToAddPeopleIDB</b></i>-Methode aufgerufen und die <i><b>person</b></i>-Variable mit übergeben.
       Ist das erfolgreich, so wird der Nutzer auf die Tabelle navigiert, wenn nicht, wird eine Fehlermeldung in der Konsole erzeugt.
@@ -269,7 +269,7 @@ function checkAddInput() {
       <br>
       Die <i><b>addPeopleToSQL</b></i>-Funktion erhält den <i><b>people</b></i>-Parameter, verarbeitet die erhaltenen Daten und übergibt
       diese via <i><b>POST</b></i> an die angegebene URL.
-      Ist das erfolgreich, so wird die Funktion <i><b>clearAddPeopleIDB</b></i> aufgerufen, um die Personendaten zum Hinzufügen
+      Ist dies erfolgreich, so wird die Funktion <i><b>clearAddPeopleIDB</b></i> aufgerufen, um die Personendaten zum Hinzufügen
       einer Person aus der IndexedDB zu entfernen.
 
       <pre><code class="language-javascript">
@@ -295,8 +295,8 @@ function addPeopleToSQL(people) {
         </code></pre>
       <br>
 
-      Ist das erfolgreich, so wird die Seite neu geladen.
-      Andernfalls wird in der Konsole eine Fehlermeldung ausgegeben.
+      Ist dies erfolgreich, so wird die Seite neu geladen.
+      Anderenfalls wird in der Konsole eine Fehlermeldung ausgegeben.
       <br>
       <br>
       Die <i><b>clearAddPeopleIDB</b></i>-Funktion entfernt, wie bereits erwähnt,
@@ -344,10 +344,10 @@ function addToAddPeopleIDB(people) {
     Da es hierbei um die offline-Funktionalitäten rund um das Hinzufügen einer Person geht, wird der <i><b>ObjectStore("addPeople")</b></i> verwendet.
       <br>
       <br>
-      Die offline Hinzugefügten Daten können über "Untersuchen" -> "Application" -> "IndexedDB" eingesehen werden.
+      Die offline hinzugefügten Daten können über "Untersuchen" -> "Application" -> "IndexedDB" eingesehen werden.
       <br>
       <br>
-      <img src="" alt="" class="" width="">
+      <img src="" alt="" class="" width="auto">
       %Bild aus dem Browser wenn offline Daten hinzugefügt wurde (untersuchen, dann IndexedDB auswählen)
 
         <img src="" alt="Bild PWA_3" class="img-thumbnail mx-auto d-block" width="auto">
@@ -381,7 +381,8 @@ if (navigator.onLine) {
       <br>
       
       Daraufhin wird die Funktion <i><b>getPeopleAddIDB</b></i> aufgerufen.
-      Diese liefert alle zur IndexedDB hinzugefügten Personen zurück, die dann durch die bekannte Methode <i><b>addPeopleToSQL</b></i> zur SQL-Datenbank hinzugefügt werden.
+      Diese liefert alle zur IndexedDB hinzugefügten Personen zurück, die dann durch die bekannte Methode <i><b>addPeopleToSQL</b></i>
+      der SQL-Datenbank hinzugefügt werden.
       
               <pre><code class="language-javascript">
 function getPeopleAddIDB() {
@@ -428,7 +429,8 @@ caches.open("dynamic-v1").then(function (cache) {
         </code></pre>
       <br>
       
-      Das <i><b>fetch</b></i>-Event ruft die <i><b>getPeopleAddIDB</b></i>-Funktion auf, prüft, ob diese Assets enthält und schreibt diese in die View.
+      Das <i><b>fetch</b></i>-Event ruft die <i><b>getPeopleAddIDB</b></i>-Funktion auf, prüft sodann,
+      ob diese Assets enthält und schreibt diese in die View.
       Somit werden offline hinzugefügte/bearbeitete/gelöschte Personen direkt clientseitig angezeigt.
       <br>
       <br>
@@ -439,7 +441,7 @@ caches.open("dynamic-v1").then(function (cache) {
         <img src="" alt="Bild_PWA_3_Add_Del_Edit" class="img-thumbnail mx-auto d-block" width="auto">
 
 
-            Offline hinzugefügte Personen können nicht erneut bearbeitet werden.
+      Offline hinzugefügte Personen können nicht erneut bearbeitet werden.
       Das liegt daran, dass die ID erst bei der nächsten Verbindung zum Internet durch das Datenbanksystem bereitgestellt wird.
 
             <br>

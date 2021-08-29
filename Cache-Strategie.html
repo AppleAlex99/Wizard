@@ -140,7 +140,8 @@
 
 
             <h3>Cache-Strategien</h3>
-            Neben der Frage, welche Daten gecached werden sollen, muss ebenfalls überlegt werden, wann die Daten gecached werden sollen und wann diese Daten bereitgestellt werden bzw. wann auf die Assets im Cache zugegriffen wird.
+            Neben der Frage, welche Daten gecached werden sollen, ist zu überlegen, zu welchem Zeitpunkt die Daten gecached
+            und bereitgestellt werden sollen.
             Dafür gibt es viele verschiedene Strategien, die für verschiedene Anwendungsbereiche sinnvoll sind.
             Von diesen werden im folgenden drei beliebte Strategien kurz vorgestellt.
             <br>
@@ -148,7 +149,8 @@
 
             <h5>Beim Installieren cachen:</h5>
             Bei dieser Strategie werden beim <i><b>install</b></i>-Event die Caches erstellt und die festgelegten Assets hinzugefügt.
-            Die Strategie ist sinnvoll für statische Inhalte, die sich selten ändern und fügt die Daten zu dem Zeitpunkt zum Cache hinzu, wenn der ServiceWorker installiert wird.
+            Die Strategie ist sinnvoll für statische Inhalte, die sich selten ändern.
+            Die Daten werden zu dem Zeitpunkt dem Cache hinzugefügt, wenn der ServiceWorker installiert wird.
 
             <br>
             <br>
@@ -160,7 +162,7 @@
             <br>
 
             <h5>Bei Nutzerinteraktion cachen:</h5>
-            Diese Strategie ist bei sehr großen PWAs sinnvoll, da der Nutzer selbst bestimmen kann, welche Daten gecached werden sollen.
+            Diese Strategie ist bei größeren PWAs sinnvoll, da der Nutzer selbst bestimmen kann, welche Daten gecached werden sollen.
             Das ergibt Sinn, wenn es um Artikel einer Onlinezeitschrift oder um Videos einer Plattform geht.
 
             <br>
@@ -204,14 +206,14 @@ const CACHE_NAME = "offline-v2";
             <br>
             <br>
             <h3>Strategien zur Bereitstellung der Daten</h3>
-            Nachdem die Cache-Strategie festgelegt wurde, ist es ebenfalls äußerst wichtig festzulegen,
+            Nachdem die Cache-Strategie festgelegt wurde, ist zu entscheiden,
             wie der Browser nun mit den Daten im Cache und den Netzwerkdaten umzugehen hat.
-            Dafür werden ebenfalls drei Strategien zur Verdeutlichung der Thematik kurz vorgestellt
+            Dafür werden ebenfalls drei Strategien zur Verdeutlichung der Thematik kurz vorgestellt.
             <br>
             <br>
 
             <h5>Nur Cache:</h5>
-            Bei der "Cache-Only"-Strategie werden alle Assets lediglich aus dem Cache entnommen.
+            Bei der "Cache-Only"-Strategie werden alle Assets lediglich dem Cache entnommen.
             Das macht Sinn, wenn die Webseite aus statischen Inhalten besteht, die sich nur sehr selten bis gar nicht verändern.
 
             <br>
@@ -224,9 +226,9 @@ const CACHE_NAME = "offline-v2";
             <br>
 
             <h5>Cache, Netzwerk-Fallback-Strategie:</h5>
-            Bei dieser Strategie werden die Daten in erster Instanz aus dem Cache entnommen.
+            In erster Instanz werden hier die Daten dem Cache entnommen.
             Sind diese nicht vollständig oder fehlen ganz, wird auf die Netzwerkverbindung zurückgegriffen.
-            Diese Strategie wird auch <i>"offline first"</i>-Strategie genannt, da der Fokus auf den im Cache gespeicherten Asstes liegt.
+            Diese Strategie wird auch <i>"offline first"</i>-Strategie genannt, da der Fokus auf den im Cache gespeicherten Assets liegt.
 
             <br>
             <br>
@@ -239,8 +241,8 @@ const CACHE_NAME = "offline-v2";
 
             <h5>Cache, dann Netzwerk:</h5>
             Die "Cache then Network"-Strategie ist ideal für Webseiten, deren Inhalte sich häufig verändern.
-            Sie besteht aus zwei seperaten Anfragen.
-            Als erstes werden die Inhalte aus dem Cache dargestellt.
+            Sie besteht aus zwei separaten Anfragen.
+            Als erstes werden die Cache-Inhalte dargestellt.
             Gleichzeitig wird eine Netzwerkanfrage gesendet, die die gleichen Inhalte vom Webserver anfragt.
             Sobald die Inhalte der Netzwerkanfrage eintreffen, werden sie sowohl im Cache als auch auf der Nutzeransicht ausgetauscht.
 
@@ -253,7 +255,7 @@ const CACHE_NAME = "offline-v2";
             <br>
             <br>
 
-            Alle weiteren Strategien zum Bereitstellen der Assets aus den Caches <a href="https://web.dev/offline-cookbook/">hier</a> zu finden.
+            Alle weiteren Strategien zum Bereitstellen der Assets aus den Caches sind <a href="https://web.dev/offline-cookbook/">hier</a> zu finden.
 
             <br>
             <br>
@@ -264,7 +266,7 @@ const CACHE_NAME = "offline-v2";
             </a>
 
             <div class="float-right">
-                <a href="Cachen.html" class="btn btn-secondary">Dynamisches Cachen
+                <a href="Cachen.html" class="btn btn-secondary">Cachen
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-forward-fill" viewBox="0 0 16 16">
                         <path d="m9.77 12.11 4.012-2.953a.647.647 0 0 0 0-1.114L9.771 5.09a.644.644 0 0 0-.971.557V6.65H2v3.9h6.8v1.003c0 .505.545.808.97.557z"/>
