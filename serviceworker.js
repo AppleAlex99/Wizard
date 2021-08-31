@@ -15,7 +15,6 @@ const ASSETS = [
     "/WebAPI.html",
     "/Cache-Strategie.html",
     "/Cachen.html",
-    "/Lost-Update.html",
     "/IndexedDB.html",
     "/manifest.webmanifest",
     "/app.js",
