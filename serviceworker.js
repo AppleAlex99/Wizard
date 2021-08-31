@@ -1,5 +1,4 @@
-/*
-const CACHE_NAME = "offline-v3";
+const CACHE_NAME = "offline-v2";
 const ASSETS = [
     "/",
     "/Datenbank.html",
@@ -16,6 +15,7 @@ const ASSETS = [
     "/WebAPI.html",
     "/Cache-Strategie.html",
     "/Cachen.html",
+    "/Lost-Update.html",
     "/IndexedDB.html",
     "/manifest.webmanifest",
     "/app.js",
@@ -36,8 +36,10 @@ const ASSETS = [
     "/img/Cache_only.png",
     "/img/Cache_then_Network.jpg",
     "/img/Chrome.JPG",
+    "/img/Chrome_Add_IDB.jpg",
     "/img/Database_PWA_0.jpeg",
     "/img/Database_PWA_1.jpeg",
+    "/img/IDB_Add.jpg",
     "/img/Installieren.png",
     "/img/Installieren_Smartphone.JPG",
     "/img/Installiert.JPG",
@@ -48,6 +50,7 @@ const ASSETS = [
     "/img/PWA1-Bild.png",
     "/img/PWA2_DynamicCache.png",
     "/img/PWA2_StaticCache.png",
+    "/img/PWA3_Bild.jpg",
     "/img/PWA_Uebersicht.png",
     "/img/Read-Only_PWA_Bild.png",
     "/img/service-worker-infografik.jpg",
@@ -83,5 +86,5 @@ self.addEventListener("fetch", event => {
         })
     )
 });
-*/
+
 

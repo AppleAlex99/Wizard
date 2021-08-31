@@ -125,8 +125,8 @@
                 </a>
             </li>
             <li>
-                <a href="Problematiken.html" class="nav-link link-dark">
-                    - Problematiken
+                <a href="Lost-Update.html" class="nav-link link-dark">
+                    - Lost-Update
                 </a>
             </li>
         </ul>
@@ -347,11 +347,8 @@ function addToAddPeopleIDB(people) {
       Die offline hinzugefügten Daten können über "Untersuchen" -> "Application" -> "IndexedDB" eingesehen werden.
       <br>
       <br>
-      <img src="" alt="" class="" width="auto">
-      %Bild aus dem Browser wenn offline Daten hinzugefügt wurde (untersuchen, dann IndexedDB auswählen)
-
-        <img src="" alt="Bild PWA_3" class="img-thumbnail mx-auto d-block" width="auto">
-
+        <img src="img/Chrome_Add_IDB.jpg" alt="Bild_PWA3_Chrome_IDB" class="img-thumbnail mx-auto d-block" width="auto">
+      <br>
       <br>
       Die <i><b>if(navigator.onLine)</b></i>-Abfrage muss erweitert werden.
       Diese initialisiert als erstes den ServiceWorker und  die IndexedDB, wenn der Nutzer online ist.
@@ -434,13 +431,9 @@ caches.open("dynamic-v1").then(function (cache) {
       Somit werden offline hinzugefügte/bearbeitete/gelöschte Personen direkt clientseitig angezeigt.
       <br>
       <br>
-      <img src="" alt="" class="" width="">
+        <img src="img/IDB_Add.jpg" alt="Bild_PWA_3_Add" class="img-thumbnail mx-auto d-block" width="auto">
       <br>
       <br>
-      %% Bild von offline Hinzugefügter/Bearbeiteter/Gelöschter Person offline zeigen
-        <img src="" alt="Bild_PWA_3_Add_Del_Edit" class="img-thumbnail mx-auto d-block" width="auto">
-
-
       Offline hinzugefügte Personen können nicht erneut bearbeitet werden.
       Das liegt daran, dass die ID erst bei der nächsten Verbindung zum Internet durch das Datenbanksystem bereitgestellt wird.
 
@@ -453,7 +446,7 @@ caches.open("dynamic-v1").then(function (cache) {
             </a>
 
             <div class="float-right">
-                <a href="Problematiken.html" class="btn btn-secondary">Problematiken
+                <a href="Lost-Update.html" class="btn btn-secondary">Lost-Update-Problematik
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-forward-fill" viewBox="0 0 16 16">
                         <path d="m9.77 12.11 4.012-2.953a.647.647 0 0 0 0-1.114L9.771 5.09a.644.644 0 0 0-.971.557V6.65H2v3.9h6.8v1.003c0 .505.545.808.97.557z"/>
