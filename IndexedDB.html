@@ -275,9 +275,6 @@ function addPeopleToSQL(people) {
         data: {people: people},
         success: () => {
             clearAddPeopleIDB()
-                .then(() => {
-                    location.reload();
-                })
                 .catch(err => {
                     console.log("Error in sendPeopleToSQL: ", err);
                 });
@@ -350,23 +347,26 @@ function addToAddPeopleIDB(people) {
       
             <pre><code class="language-javascript">
 if (navigator.onLine) {
-    fetch("http://localhost/people/checkCookie")
-        .then((resp) => resp.json())
-        .then(data => {
-            if (data) {
-                window.location.href = "http://localhost/";
-            } else {
-                initIndexedDB();
-                initServiceWorker();
-                ...
-                getPeopleAddIDB()
-                    .then(response => {
-                        if (response.length !== 0) {
-                            addPeopleToSQL(response);
-                        }
-                    });
-                    ...
+    initIndexedDB();
+    initServiceWorker();
+    ...
+    getPeopleAddIDB()
+        .then(response => {
+            if (response.length !== 0) {
+                addPeopleToSQL(response);
             }
+        });
+    ...
+    people = fetch("http://localhost/people/getPeople")
+        .then(response => {
+            if (response.status === 401) {
+                window.location.href = "http://localhost/";
+            }
+            return response.json()
+        })
+        .then(data => {
+            networkDataReceived = true;
+            writeToView(data);
         })
 }
         </code></pre>
@@ -396,7 +396,7 @@ function getPeopleAddIDB() {
       
       Daten in der IndexedDB werden ebenso wie die Daten vom Server, die im Cache zwischengespeichert sind,
       über HTML ausgegeben, um auch die offline hinzugefügten, bearbeiteten oder gelöschten Personen weiterhin offline einsehen zu können.
-      Dafür muss das <i><b>fetch</b></i>-Event der externen JavaScript-Datei wie folgt erweitert werden.
+      Dafür muss die externe JavaScript-Datei wie folgt erweitert werden.
       
             <pre><code class="language-javascript">
 caches.open("dynamic-v1").then(function (cache) {
@@ -406,22 +406,27 @@ caches.open("dynamic-v1").then(function (cache) {
             return response.json();
         })
         .then(data => {
-            ...
-            getPeopleAddIDB().then(addPeople => {
-                if (addPeople.length !== 0) {
-                    let combined = data.concat(addPeople);
-                    writeToView(combined);
-                } else {
-                    writeToView(data);
-                }
-            })
+            if (!networkDataReceived) {
+                ...
+                getPeopleAddIDB().then(addPeople => {
+                    if (addPeople.length !== 0) {
+                        let combined = data.concat(addPeople);
+                        writeToView(combined);
+                    } else {
+                        writeToView(data);
+                    }
+                })
+            }
         })
-        .catch(() => people)
+        .catch(() => {
+            return people
+        })
+        .catch(err => console.log(err));
 });
         </code></pre>
       <br>
       
-      Das <i><b>fetch</b></i>-Event ruft die <i><b>getPeopleAddIDB</b></i>-Funktion auf, prüft sodann,
+      Die <i><b>caches.open</b></i>-Funktion ruft die <i><b>getPeopleAddIDB</b></i>-Funktion auf, prüft sodann,
       ob diese Assets enthält und schreibt diese in die View.
       Somit werden offline hinzugefügte/bearbeitete/gelöschte Personen direkt clientseitig angezeigt.
       <br>

@@ -148,18 +148,18 @@
                 <li><b>auth:</b> Wird vom Browser bereitgestellt und authentifiziert den Nutzer</li>
                 <li><b>p256dh:</b> Dieser Schlüssel wird als Teil des Abonnements zurückgegeben</li>
             </ul>
-            <img class="img-thumbnail mx-auto d-block" src="img/Database_PWA_1.jpeg" alt="Database_PWA_1" width="auto">
+            <img class="img-thumbnail mx-auto d-block" src="img/Database_PWA_1.png" alt="Database_PWA_1" width="auto">
 
             <br>
             <br>
             <h4>PushNotifications-Model:</h4>
             Neben der Datenbank muss zudem ein neues Model (PushNotificationsModel) hinzugefügt werden,
             welches die Daten behandelt, die für die Push-Benachrichtigungen notwendig sind.
-            Dieses enthält Funktionen, um neue Abonnenten hinzuzufügen, diese zu aktualisieren,
+            Dieses enthält Funktionen, um neue Abonnenten hinzuzufügen,
             zu entfernen und um alle Abonnenten der Tabelle auszugeben.
 
             <pre><code class="language-php">
-// Abonnenten hinzufügen, Prinzip beim löschen und bearbeiten gleich
+// Abonnenten hinzufügen, Prinzip beim löschen gleich
 public function insertSubscriber($endpoint, $auth, $p256dh){
     $data = [
         'endpoint' => $endpoint,
@@ -208,8 +208,7 @@ foreach ($subscribers as $row){
             "p256dh" => $row->p256dh
         )
     );
-    $message = "added";
-    $this->sendMessage($keys_auth, $row->endpoint, $message, $this->request->getVar('new-prename'),
+    $this->sendMessage($keys_auth, $row->endpoint, "added", $this->request->getVar('new-prename'),
                 $this->request->getVar('new-surname'));
         </code></pre>
 
@@ -252,9 +251,9 @@ const pushButton = document.getElementById('pushButton');
             .then(subscription => {
                 console.log("Subscription: " + JSON.stringify(subscription));
                 if (subscription === null) {
-                    pushButton.textContent = 'Allow Push';
+                    pushButton.textContent = 'Push off';
                 } else {
-                    pushButton.textContent = 'Stop Push';
+                    pushButton.textContent = 'Push on';
                 }
             });
 
@@ -269,11 +268,11 @@ const pushButton = document.getElementById('pushButton');
                             .then(res => {
                                 console.log("subscribe: " + res);
                             });
-                        pushButton.textContent = 'Stop Push';
+                        pushButton.textContent = 'Push on';
                     } else {
                         if (confirm("are you sure you want to unsubscribe?")) {
                             push_unsubscribe();
-                            pushButton.textContent = 'Allow Push'
+                            pushButton.textContent = 'Push off'
                         }
                     }
                 });
@@ -318,7 +317,6 @@ function push_subscribe() {
 function push_sendSubscriptionToServer(subscription, method) {
     const key = subscription.getKey('p256dh');
     const token = subscription.getKey('auth');
-    const contentEncoding = (PushManager.supportedContentEncodings || ['aesgcm'])[0];
 
     return fetch('http://localhost/people/push_subscription', {
         method,
@@ -331,9 +329,8 @@ function push_sendSubscriptionToServer(subscription, method) {
             "endpoint": subscription.endpoint,
             "publicKey": key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null,
             "authToken": token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null,
-            contentEncoding
         }),
-    }).then(() => subscription);
+    });
 }
         </code></pre>
 
@@ -387,23 +384,9 @@ self.addEventListener('push', event => {
 
             <pre><code class="language-javascript">
 self.addEventListener('notificationclick', event => {
+    console.log(('[Service Worker] Notification click received.'));
     event.notification.close();
-    const url = event.notification.data.url;
-
-    event.waitUntil(clients.matchAll({
-        type: 'window'
-    }).then(clientList => {
-        console.log(clientList);
-        for (let i = 0; i < clientList.length; i++) {
-            let client = clientList[i];
-            if (client.url === self.registration.scope && 'focus' in client) {
-                return client.focus();
-            }
-        }
-        if (clients.openWindow){
-            return clients.openWindow(url);
-        }
-    }));
+    event.waitUntil(clients.openWindow(event.notification.data.url));
 })
         </code></pre>
 

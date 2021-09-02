@@ -28,7 +28,7 @@
             crossorigin="anonymous"></script>
     <script src="app.js"></script>
 
-    <title>PWA2 - Dynanmisches Cachen</title>
+    <title>PWA2 - Cachen</title>
 
     <style>
         a {
@@ -223,8 +223,7 @@ const STATIC_CACHE = "static-v1";
 const DYNAMIC_CACHE = "dynamic-v1";
 
 const DYNAMIC_ASSETS = [
-    "http://localhost/people/getPeople",
-    "http://localhost/people/checkCookie"
+    "http://localhost/people/getPeople"
 ];
 
 const STATIC_ASSETS = [
@@ -269,7 +268,7 @@ self.addEventListener("install", (event) => {
 
             <br>
             <br>
-            <img class="img-thumbnail mx-auto d-block" src="img/PWA2_DynamicCache.png" alt="DynamicCache" width="auto">
+            <img class="img-thumbnail mx-auto d-block" src="img/PWA2_DynamicCache.jpg" alt="DynamicCache" width="auto">
             <br>
             <br>
 
@@ -373,28 +372,37 @@ function initTable() {
         ]
     })
 }
-
 initTable();
         </code></pre>
             <br>
 
             Aktualisiert der Nutzer die Seite, wenn er online ist, so wird ein <i><b>fetch</b></i>-Event mit der angegebenen
             URL ausgelöst.
+            Über die Boolean-Variable <i><b>networkDataReceived</b></i> wird abgefragt, ob Daten aus der Netzwerkanfrage erhalten wurden.
 
             <pre><code class="language-javascript">
+let people = null;
+let networkDataReceived = false;
+
 if (navigator.onLine) {
+    initServiceWorker();
     people = fetch("http://localhost/people/getPeople")
-        .then(response => response.json())
-        .then(data => {
-            writeToView(data);
+        .then(response => {
+            if (response.status === 401) {
+                window.location.href = "http://localhost/";
+            }
+            return response.json()
         })
-        .catch(err => {
-            console.log("Security cookies not found");
+        .then(data => {
+            networkDataReceived = true;
+            writeToView(data);
         })
 }
         </code></pre>
             <br>
 
+            Sind keine Daten enthalten, so werden die Daten aus dem Cache in die View geschrieben.
+            <br>
             Bei der URL handelt es sich um die im Controller enthaltene <i><b>getPeople</b></i>-Funktion,
             welche ein JSON-Objekt zurückgibt.
 
@@ -406,9 +414,14 @@ caches.open("dynamic-v1").then(function (cache) {
             return response.json();
         })
         .then(data => {
-            writeToView(data);
+            if (!networkDataReceived) {
+                writeToView(data);
+            }
         })
-        .catch(() => people)
+        .catch(() => {
+            return people;
+        })
+        .catch(err => console.log(err));
 });
         </code></pre>
             <br>
@@ -455,16 +468,16 @@ window.addEventListener('offline', () => {
 
             <pre><code class="language-php">
 //Vorher
-public function index()
+public function index(): string
 {
     $data['people'] = $this->_peopleModel->getPeople();
-    echo view('people', $data);
+    return view('people', $data);
 }
 
 //Nachher
-public function index()
+public function index(): string
 {
-    echo view('people');
+    return view('people');
 }
         </code></pre>
             <br>
