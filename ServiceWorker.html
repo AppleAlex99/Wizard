@@ -196,20 +196,14 @@ initServiceWorker();
         <br>
         Das <i><b>install</b></i>-Event reagiert auf die Installation durch den Browser mit Hilfe des EventListener
         (self.addEventListener("install")).
-        Dieses Event wird dafür genutzt, den Cache des Browsers zu öffnen, diesen zu benennen und mit Assets zu füllen,
+        Dieses Event wird dafür genutzt, den Cache des Browsers zu öffnen, diesen zu benennen und eventuell mit Assets zu füllen,
         damit die PWA offline funktionieren kann.
         Dazu wird die Cache-API des ServiceWorker genutzt, welche es erlaubt, die durch Netzwerkanfragen gelieferten Assets
         domainspezifisch und dauerhaft zu speichern.
 
         <pre><code class="language-javascript">
 self.addEventListener("install", (event) => {
-    event.waitUntil(
-        caches.open(STATIC_CACHE).then(cache => {
-            cache.addAll(STATIC_ASSETS);
-            cache.add(OFFLINE_URL);
-        })
-    );
-    self.skipWaiting();
+    console.log('install-Event', event);
 });
         </code></pre>
             <br>
@@ -225,14 +219,7 @@ self.addEventListener("install", (event) => {
 
         <pre><code class="language-javascript">
 self.addEventListener("activate", (event) => {
-    event.waitUntil(
-        caches.keys().then(keys => {
-            return Promise.all(keys
-                .filter(key => key !== CACHE_NAME)
-                .map(key => caches.delete(key))
-            )
-        })
-    );
+    console.log('activate-Event', event);
 });
         </code></pre>
             <br>
@@ -244,7 +231,7 @@ self.addEventListener("activate", (event) => {
             Mehr zum <i><b>fetch</b></i>-Event und wie dieses die Fallbackpage steuert ist im Kapitel der Fallbackpage zu finden.
         <pre><code class="language-javascript">
 self.addEventListener("fetch", (event) => {
-    console.log('fetch Event', event);
+    console.log('fetch-Event', event);
 });
         </code></pre>
             <br>

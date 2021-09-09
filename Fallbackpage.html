@@ -170,6 +170,10 @@ self.addEventListener("install", (event) => {
             (Bootstrap), mit der <i><b>cache.addAll()</b></i>-Funktion zum Cache hinzugefügt.
             Die <i><b>cache.addAll()</b></i>-Funktion erwartet ein Array von Assets.
             Soll ein einzelnes Asset gecached werden, so wird die <i><b>cache.add()</b></i>-Funktion verwendet.
+            Mit Hilfe von <i><b>self.skipWaiting()</b></i> wird der wartende ServiceWorker, nachdem die Caches befüllt wurden,
+            zu einem aktiven ServiceWorker.
+            Die <i><b>waitUntil()</b></i>-Methode sorgt dafür, dass der Prozess im kontrollierten Bereich komplett abgeschlossen ist, bevor
+            <i><b>self.skipWaiting()</b></i> ausgeführt wird.
             <br>
             <br>
             Nach dem Hinzufügen der Assets sind diese im Cache gespeichert und können im
@@ -179,10 +183,28 @@ self.addEventListener("install", (event) => {
             <img class="img-thumbnail mx-auto d-block" src="img/Cache-Fallbackpage.png" alt="Cache Fallbackpage" width="auto">
             <br>
             <br>
+            <pre><code class="language-javascript">
+self.addEventListener("activate", (event) => {
+    event.waitUntil(
+        caches.keys().then(keys => {
+            return Promise.all(keys
+                .filter(key => key !== CACHE_NAME)
+                .map(key => caches.delete(key))
+            )
+        })
+    );
+});
+        </code></pre>
+            <br>
+            Das <i><b>activate</b></i>-Event muss für die Verwendung der Fallbackpage ebenfalls erweitert werden,
+            damit es den genannten Aufgaben nachkommen kann, sprich Ressourcen aufräumt und das <i><b>Fetchen</b></i> ermöglicht.
+            <br>
+            <br>
             Das <i><b>fetch</b></i>-Event des ServiceWorker wird für diesen Zweck erweitert um mitzuteilen,
             dass die Fallbackpage aufgerufen werden soll, wenn der Server keine Rückmeldung liefert.
             Der EventListener horcht dabei auf Events aus dem kontrollierten Bereich und wird somit jedes Mal ausgelöst.
-            Dabei prüft dieser im <i><b>try</b></i>-Block, ob eine Rückmeldung vom Server kommt.
+            Handelt es sich um eine Navigation-Request prüft das <i><b>fetch</b></i>-Event im <i><b>try</b></i>-Block,
+            ob eine Rückmeldung vom Server kommt.
 
         <pre><code class="language-javascript">
 self.addEventListener("fetch", (event) => {
@@ -207,8 +229,7 @@ self.addEventListener("fetch", (event) => {
 });
         </code></pre>
             <br>
-            Erhält das <i><b>fetch</b></i>-Event eine Rückmeldung, so wird ganz normal auf die gewünschte Funktion bzw.
-            Unterseite navigiert.
+            Erhält das <i><b>fetch</b></i>-Event eine Rückmeldung, so wird ganz normal auf die gewünschte Unterseite navigiert.
             Passiert dies jedoch nicht, so werden die im Cache enthaltenen Inhalte, sprich die Fallbackpage, angezeigt.
 
             <br>
