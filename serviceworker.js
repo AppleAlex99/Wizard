@@ -1,4 +1,4 @@
-const CACHE_NAME = "offline-v3";
+const CACHE_NAME = "offline-v2";
 const ASSETS = [
     "/",
     "/Datenbank.html",
@@ -56,6 +56,7 @@ const ASSETS = [
     "/img/SW.jpeg",
     "/img/SWPruefen.png",
     "/img/WAM_Chrome.png",
+    "/img/FBP_IMG.jpg",
 ];
 
 self.addEventListener("install", (event) => {
