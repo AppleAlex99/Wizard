@@ -134,7 +134,7 @@
         <div class="col">
             <h1>ServiceWorker</h1>
 
-            Nachdem nun das Web-App-Manifest erfolgreich erstellt wurde, ist nun lediglich noch der ServiceWorker
+            Nachdem das Web-App-Manifest erfolgreich erstellt wurde, ist nun lediglich noch der ServiceWorker
             mit fetch-Event notwendig, um die PWA installierbar zu machen.
             <br>
             <br>
@@ -163,7 +163,7 @@
 &lt/body&gt
         </code></pre>
             <br>
-            Die app.js wird im Body einer jeden HTML-Seite eingebunden und registriert im ersten Schritt den ServiceWorker,
+            Die app.js wird im &ltbody&gt-Bereich einer jeden HTML-Seite eingebunden und registriert im ersten Schritt den ServiceWorker,
             wenn der verwendete Browser diese unterstützt.
             Die Unterstützung der ServiceWorker wird über navigator abgefragt.
             Ist die Abfrage erfolgreich, so wird der ServiceWorker über die <i><b>register('serviceworker.js')</b></i>-Funktion
@@ -181,7 +181,6 @@ function initServiceWorker() {
             console.error('[SW] Registration failed: ', e);
         });
 }
-
 initServiceWorker();
         </code></pre>
         <br>
@@ -191,7 +190,7 @@ initServiceWorker();
         und ein <i><b>fetch</b></i>-Event.
         <br>
         <br>
-        <img class="img-thumbnail mx-auto d-block"  src="img/SW.jpeg" alt="Ablauf SW" width="auto">
+        <img class="img-thumbnail mx-auto d-block"  src="img/SW.jpeg" alt="Ablauf SW" width="50%">
         <br>
         <br>
         Das <i><b>install</b></i>-Event reagiert auf die Installation durch den Browser mit Hilfe des EventListener
@@ -207,8 +206,8 @@ self.addEventListener("install", (event) => {
 });
         </code></pre>
             <br>
-            Mehr zum <i><b>install</b></i>-Event und den Ressourcen, die gecached werden, im Kapitel der
-            <a href="Fallbackpage.html">offline-Fallbackpage</a> und der <a href="pwa2.html">Read-Only PWA</a>.
+            Mehr zum <i><b>install</b></i>-Event und den Ressourcen, die gecached werden, im Kapitel
+            <a href="Fallbackpage.html">Fallbackpage</a> und <a href="Cachen.html">Cachen</a>.
             <br>
             <br>
             Nachdem das <i><b>install</b></i>-Event im ServiceWorker ausgeführt wurde, wird der ServiceWorker aktiviert
@@ -263,8 +262,7 @@ self.addEventListener("fetch", (event) => {
             <br>
             Wie beim Web-App-Manifest kann nach der Fertigstellung der Komponenten des ServiceWorker ebenfalls überprüft werden,
             ob dieser erkannt wird und richtig arbeitet.
-            Dafür ist im Chrome Browser nach erfolgtem Rechtsklick mit der Maus "Untersuchen" auszuwählen.
-            Im Anschluss ist unter "Application" die Option "Service Workers" auszuwählen.
+            Dafür ist im Chrome Browser nach erfolgtem Rechtsklick mit der Maus "Untersuchen" -> "Application" -> "Service Workers" auszuwählen.
             <br>
             <br>
             <img class="img-thumbnail mx-auto d-block" src="img/SWPruefen.png" alt="SWPrüfen" width="auto">

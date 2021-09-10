@@ -234,7 +234,7 @@ const STATIC_ASSETS = [
 ];
         </code></pre>
         <br>
-            <h5><i>Wichtig:</i></h5>
+            <h6><i>Wichtig:</i></h6>
             Die ServiceWorker-Datei darf nicht gecached werden!
             <br>
             <br>
@@ -290,7 +290,7 @@ self.addEventListener("activate", (event) => {
             <br>
             Neben dem <i><b>install</b></i> und dem <i><b>activate</b></i>-Event muss ebenfalls das <i><b>fetch</b></i>-Event erweitert werden.
             Dieses arbeitet nach der bereits erwähnten "Cache then Network"-Strategie.
-            Das <i><b>fetch</b></i>-Event der Beispiel-PWA unterscheidet dabei zwischen mehreren Ereignissen die eintreten können:
+            Das <i><b>fetch</b></i>-Event der Beispiel-PWA unterscheidet dabei zwischen mehreren Ereignissen, die eintreten können:
             <br>
             <br>
             <ul>
@@ -432,6 +432,7 @@ caches.open("dynamic-v1").then(function (cache) {
             Sind die Assets statisch, so werden diese aus dem Cache geladen.
             Wenn es sich allerdings um dynamische Daten handelt, so fragt der ServiceWorker die Daten am Server an,
             fetched die Antwort, speichert eine Kopie im Cache und gibt die Antwort an die ursprüngliche Anfrage zurück.
+            <br>
             Das dabei empfangene JSON-Objekt wird dann über Bootstrap Table in HTML dargestellt.
             <br>
             Sollte keine Internetverbindung bestehen, so wird der dynamische Cache durch die <i><b>cache.open</b></i>-Funktion geöffnet

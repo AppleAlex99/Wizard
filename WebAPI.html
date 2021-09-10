@@ -132,7 +132,7 @@
             <h1>Web-API</h1>
 
             Anhand der Push-Benachrichtigungen wird nun die Verwendung von Web-APIs in PWAs erläutert.
-            Im Beispiel der Personentabelle werden die Push-Benachrichtigungen jedes mal gesendet,
+            Im Beispiel der Personentabelle werden die Push-Benachrichtigungen jedes Mal gesendet,
             wenn eine Person hinzugefügt, geändert oder gelöscht wird.
             <br>
             <br>
@@ -229,12 +229,12 @@ foreach ($subscribers as $row){
 &ltbutton id="pushButton" class="btn btn-primary mr-2 d-flex justify-content-center align-items-center"&gtPush on&lt/button&gt
         </code></pre>
             Im Beispiel wurde dies mittels eines Button gelöst.
-            Eine andere Möglichkeit ist das Anzeigen eines Popup-Fensters, in dem der Nutzer die Benachrichtigungen aktivieren kann.
+            Eine andere Möglichkeit ist das Anzeigen eines Pop-Up-Fensters, in dem der Nutzer die Benachrichtigungen aktivieren kann.
 
             <br>
             <br>
             <h4>app.js:</h4>
-            Die app.js-Datei fragt ab, ob ein <i><b>push</b></i>-Button im Dokument gesetzt ist, registriert diesen daraufhin im ServiceWorker
+            Die app.js-Datei fragt ab, ob ein <i><b>push</b></i>-Button im Dokument gesetzt ist, registriert diesen daraufhin im ServiceWorker,
             und durch die <i><b>registration.pushManager.getSubscription</b></i>-Funktionen kann der Nutzer nun Nachrichten vom Server erhalten.
             Als weiteres muss die app.js einen <i><b>click</b></i>-Event-Listener enthalten, der auf das Klicken des Benutzers auf den Push-Button horcht.
 
@@ -334,10 +334,9 @@ function push_sendSubscriptionToServer(subscription, method) {
 }
         </code></pre>
 
-            Als Letztes wird das Abonnement mit allen gegebenen Parametern, also dem <i><b>publicKey</b></i>,
-            dem <i><b>authToken</b></i> und dem <i><b>endpoint</b></i> mit Hilfe der
+            Als Letztes wird das Abonnement mit allen gegebenen Parametern (<i><b>publicKey,</b></i>
+            <i><b>authToken und</b></i> <i><b>endpoint</b></i>) mit Hilfe der
             <i><b>push_sendSubscriptionToServer</b></i>-Methode als JSON durch die Verwendung von <i><b>fetch</b></i> an den Server gesendet.
-            <br>
             Die Methode <i><b>push_unsubscribe</b></i> der app.js-Datei macht das Abonnement rückgängig.
 
             <br>

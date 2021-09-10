@@ -146,7 +146,19 @@
             Bei dieser Strategie werden beim <i><b>install</b></i>-Event die Caches erstellt und die festgelegten Assets hinzugefügt.
             Die Strategie ist sinnvoll für statische Inhalte, die sich selten ändern.
             Die Daten werden zu dem Zeitpunkt dem Cache hinzugefügt, wenn der ServiceWorker installiert wird.
-
+            <br>
+            <br>
+            <h6><i>Wichtig:</i></h6>
+            Sind die Daten einmal im Cache und soll nun eine Änderung vorgenommen werden, so muss neben der Veränderung
+            selbst auch eine Veränderung des ServiceWorker stattfinden, damit diese in den Cache übernommen wird.
+            Das geht am besten, indem die Caches versioniert werden:
+            <br>
+            <pre><code class="language-javascript">
+const CACHE_NAME = "offline-v1";
+const CACHE_NAME = "offline-v2";
+        </code></pre>
+            Das liegt daran, dass nur eine vorgenommene Änderung im ServiceWorker das <i><b>install</b></i>-Event erneut auslöst und
+            somit den Cache des Browsers erneuert, sprich mit den neuen Inhalten füllt.
             <br>
             <br>
             <img class="img-thumbnail mx-auto d-block" src="img/Cache-web-dev-strategie.png" alt="Cache on install" width="auto">
@@ -179,21 +191,6 @@
             <div class="text-center">
                 Quelle: https://web.dev/offline-cookbook/
             </div>
-            <br>
-            <br>
-            <h5><i>Wichtig:</i></h5>
-            Sind die Daten einmal im Cache und es soll eine Änderung vorgenommen werden, so muss neben der Veränderung
-            des Inhalts auch eine Veränderung vom ServiceWorker stattfinden,
-            damit diese in den Cache übernommen wird.
-            Das geht am besten, indem die Caches versioniert werden:
-            <br>
-            <pre><code class="language-javascript">
-const CACHE_NAME = "offline-v1";
-const CACHE_NAME = "offline-v2";
-        </code></pre>
-            Das liegt daran, dass nur eine vorgenommene Änderung im ServiceWorker das install-Event erneut auslöst und
-            somit den Cache des Browsers erneuert,
-            sprich mit den neuen Inhalten füllt.
             <br>
             <br>
             Alle weiteren Strategien zum Cachen von Assets sind <a href="https://web.dev/offline-cookbook/">hier</a> zu finden.

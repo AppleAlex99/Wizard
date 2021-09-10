@@ -134,7 +134,7 @@
         <div class="col">
             <h1>Funktionsweise</h1>
 
-        Die grundlegende Webanwendung funktioniert strikt nach dem MVC-Konzept von CodeIgniter.
+        Die grundlegende Webanwendung funktioniert nach dem MVC-Konzept von CodeIgniter.
         Das bedeutet, dass die Präsentationsschicht durch die Logikschicht strikt von der Datenhaltungsschicht getrennt ist.
         Um zu visualisieren, wie das MVC-Pattern funktioniert, folgen 2 Beispiele,
         wie Daten in die Datenbank eingefügt werden und wie diese wieder auf der Webseite ausgegeben werden.
@@ -210,9 +210,7 @@ public function getPeople(): array
         <br>
         Die <i><b>getPeople</b></i>-Funktion des Models wird daraufhin von der <i><b>index</b></i>-Funktion im Controller aufgerufen.
         Diese schreibt die erhaltenen Daten in das <i><b>$data['people']</b></i>-Array.
-        Daraufhin werden die Bestandteile, die auf allen Unterseiten gleich sind, dies sind der Header und der Footer,
-        gemeinsam mit der View der Personentabelle aufgerufen.
-        Dabei werden die Daten des <i><b>$data['people']</b></i>-Array mit an die View übergeben, in der diese ausgegeben werden sollen.
+        Daraufhin wird die View gemeinsam mit den Daten des <i><b>$data['people']</b></i>-Array im <i><b>return view</b></i>-Statement übergeben.
         <br>
 
         <pre><code class="language-php">
